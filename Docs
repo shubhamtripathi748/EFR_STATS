@@ -1,5 +1,9 @@
 JSON_UNQUOTE(JSON_EXTRACT(your_longtext_column, '$.`key-with-hyphen`')) AS extracted_value
 
+[X-Request-ID:"d8e18241-ec69-49af-a986-7f1703574c15", X-Channel-ID:"5", x-fapi-interaction-id:"3ccaee28-0d1f-3898-adf4-c5c37ddd7a3e"]
+
+{"authorization":["Basic ZGV2OmRldjEyMw=="],"x-channel-id":["ADCBCCSSO"],"x-fapi-interaction-id":["0002d15e-8609-3942-a1df-c58335e9d314"],"content-type":["application/json; charset=utf-8"],"content-length":["68"],"host":["10.101.166.114:9085"],"connectio...
+
 JSON_UNQUOTE(JSON_EXTRACT(your_longtext_column, '$[?(@.key2)]')) AS extracted_value
 
 SELECT *
