@@ -1,3 +1,8 @@
+SELECT *
+FROM your_table
+WHERE JSON_EXTRACT(your_longtext_column, '$.your_key') = 'your_value';
+
+
 CALL FetchDataByDateRange('2024-01-01', '2024-01-31');
 
 DELIMITER //
