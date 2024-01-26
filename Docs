@@ -1,3 +1,4 @@
+["ADCBCCSSO"]
 consider your annual leave plans for the upcoming year.
 select JSON_UNQUOTE(JSON_EXTRACT(data2, '$."x-channel-id"')) from efr2;
 
