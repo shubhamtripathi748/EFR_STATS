@@ -1,3 +1,4 @@
+consider your annual leave plans for the upcoming year.
 select JSON_UNQUOTE(JSON_EXTRACT(data2, '$."x-channel-id"')) from efr2;
 
 JSON_UNQUOTE(JSON_EXTRACT(your_longtext_column, '$.`key-with-hyphen`')) AS extracted_value
