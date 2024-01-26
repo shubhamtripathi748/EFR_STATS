@@ -1,3 +1,5 @@
+SELECT JSON_UNQUOTE(JSON_EXTRACT(data3, '$[0]')) AS result
+FROM efr2;
 ["ADCBCCSSO"]
 consider your annual leave plans for the upcoming year.
 select JSON_UNQUOTE(JSON_EXTRACT(data2, '$."x-channel-id"')) from efr2;
