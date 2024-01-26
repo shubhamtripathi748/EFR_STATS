@@ -1,3 +1,5 @@
+JSON_UNQUOTE(JSON_EXTRACT(your_longtext_column, '$.`key-with-hyphen`')) AS extracted_value
+
 SELECT *
 FROM your_table
 WHERE JSON_EXTRACT(your_longtext_column, '$.your_key') = 'your_value';
