@@ -1,1 +1,25 @@
-Docs          
+DELIMITER //
+
+CREATE PROCEDURE FetchDataByDateRange(
+    IN start_date DATE,
+    IN end_date DATE
+)
+BEGIN
+    WITH CombinedData AS (
+        SELECT 
+            table1.*, 
+            table2.*
+        FROM 
+            table1
+        JOIN 
+            table2 ON table1.common_column = table2.common_column  -- Replace with the actual common column
+        WHERE 
+            table1.date_column BETWEEN start_date AND end_date
+            AND table2.date_column BETWEEN start_date AND end_date
+    )
+    
+    SELECT * FROM CombinedData;
+    
+END //
+
+DELIMITER ;
