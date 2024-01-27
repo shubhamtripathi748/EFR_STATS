@@ -1,3 +1,6 @@
+A PRIMARY KEY must include all columns in the table's 
+ partitioning function (prefixed columns are not considered
+
 SELECT *
 FROM your_table PARTITION (p_2024_01);
 
