@@ -1,5 +1,35 @@
 ALTER TABLE your_table
 ADD PARTITION (
+    PARTITION p_before_2024 VALUES LESS THAN (TO_DAYS('2024-01-01'))
+);
+Add Monthly Partitions Starting from 2024:
+
+DELIMITER //
+
+CREATE PROCEDURE AddMonthlyPartitions()
+BEGIN
+    DECLARE i INT DEFAULT 1;
+
+    WHILE i <= 12 DO
+        SET @sql = CONCAT('ALTER TABLE your_table ADD PARTITION (PARTITION p_', DATE_FORMAT('2024-01-01', '%Y%m'), 
+                          ' VALUES LESS THAN (', TO_DAYS('2024-01-01' + INTERVAL i MONTH), '))');
+        PREPARE stmt FROM @sql;
+        EXECUTE stmt;
+        DEALLOCATE PREPARE stmt;
+
+        SET i = i + 1;
+    END WHILE;
+END //
+
+DELIMITER ;
+
+-- Execute the stored procedure to add partitions for the next 12 months starting from 2024
+CALL AddMonthlyPartitions();
+
+
+
+ALTER TABLE your_table
+ADD PARTITION (
     PARTITION p_next_month VALUES LESS THAN (TO_DAYS(NOW()) + 32)
 );
 
