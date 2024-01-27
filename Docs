@@ -1,3 +1,9 @@
+SELECT * FROM your_table
+WHERE
+    YEAR(date_column) = your_year
+    AND MONTH(date_column) = your_month;
+
+
 CREATE TABLE your_table (
     id INT,
     date_column DATE,
