@@ -1,3 +1,6 @@
+SELECT *
+FROM your_table PARTITION (p_2024_01);
+
 ALTER TABLE test_table    
 MODIFY column_name datatype;  
 
