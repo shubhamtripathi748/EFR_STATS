@@ -1,3 +1,14 @@
+   CREATE TABLE test_table (
+    id INT,
+    requesttimestamp TIMESTAMP
+) PARTITION BY RANGE (extract(year_month from `requesttimestamp`)) (
+    PARTITION p_before_2024 VALUES LESS THAN (202400),
+    PARTITION p_2024_01 VALUES LESS THAN (202401),
+    PARTITION p_2024_02 VALUES LESS THAN (202402),
+    PARTITION p_max VALUES LESS THAN (MAXVALUE)
+);
+
+
 Create a New Partitioned Table:
 
 CREATE TABLE your_table_new (
