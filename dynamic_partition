@@ -1,3 +1,16 @@
+CREATE TABLE your_table (
+    id INT,
+    post_Date DATE,
+    -- other columns...
+    PRIMARY KEY (id, post_Date)
+) PARTITION BY RANGE COLUMNS (YEAR(post_Date), MONTH(post_Date)) (
+    PARTITION p_before_2024 VALUES LESS THAN (2024, 1),
+    PARTITION p_2024_01 VALUES LESS THAN (2024, 2),
+    PARTITION p_2024_02 VALUES LESS THAN (2024, 3),
+    -- Add more partitions as needed
+    PARTITION p_max VALUES LESS THAN (MAXVALUE, MAXVALUE)
+);
+
 A PRIMARY KEY must include all columns in the table's 
  partitioning function (prefixed columns are not considered
 
