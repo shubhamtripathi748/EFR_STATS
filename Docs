@@ -1,3 +1,26 @@
+CREATE TABLE your_table (
+    id INT,
+    date_column DATE,
+    -- other columns...
+) PARTITION BY RANGE COLUMNS (YEAR(date_column), MONTH(date_column)) (
+    PARTITION p0 VALUES LESS THAN (2000, 1),
+    PARTITION p1 VALUES LESS THAN (2000, 2),
+    PARTITION p2 VALUES LESS THAN (2000, 3),
+    -- Continue creating partitions for each year and month combination
+    PARTITION p_max VALUES LESS THAN (MAXVALUE, MAXVALUE)
+);
+
+
+
+CREATE TABLE your_table (
+   -- columns...
+) PARTITION BY RANGE (YEAR(date_column)) (
+   PARTITION p0 VALUES LESS THAN (1991),
+   PARTITION p1 VALUES LESS THAN (1992),
+   ...
+);
+
+
 SELECT JSON_UNQUOTE(JSON_EXTRACT(data3, '$[0]')) AS result
 FROM efr2;
 ["ADCBCCSSO"]
