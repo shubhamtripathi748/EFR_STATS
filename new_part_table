@@ -1,0 +1,18 @@
+Create a New Partitioned Table:
+
+CREATE TABLE your_table_new (
+    id INT,
+    datetimestamp TIMESTAMP,
+    -- other columns...
+) PARTITION BY RANGE COLUMNS (YEAR(datetimestamp), MONTH(datetimestamp)) (
+    PARTITION p_before_2024 VALUES LESS THAN (TO_DAYS('2024-01-01')),
+    PARTITION p_2024_01 VALUES LESS THAN (TO_DAYS('2024-02-01')),
+    PARTITION p_2024_02 VALUES LESS THAN (TO_DAYS('2024-03-01')),
+    -- Add more partitions as needed
+    PARTITION p_max VALUES LESS THAN (MAXVALUE, MAXVALUE)
+);
+Copy Data from the Old Table to the New Table:
+INSERT INTO your_table_new
+SELECT * FROM your_table;
+
+RENAME TABLE your_table TO your_table_backup, your_table_new TO your_table;
