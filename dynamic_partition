@@ -1,3 +1,16 @@
+ALTER TABLE test_table    
+MODIFY column_name datatype;  
+
+alter table test_table PARTITION BY RANGE (extract(year_month from `requesttimestamp`)) (
+    PARTITION p_before_2024 VALUES LESS THAN (202400),
+    PARTITION p_2024_01 VALUES LESS THAN (202401),
+    PARTITION p_2024_02 VALUES LESS THAN (202402),
+    PARTITION p_max VALUES LESS THAN (MAXVALUE)
+);
+
+
+
+
 In MySQL, dynamic partitioning, where the partitions are created based on the data values, is not directly supported. 
 However, you can use stored procedures and triggers to achieve a form of dynamic partitioning. 
 The idea is to periodically create new partitions based on the existing data in your table.
