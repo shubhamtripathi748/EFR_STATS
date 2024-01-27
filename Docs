@@ -1,3 +1,8 @@
+ALTER TABLE your_table
+ADD PARTITION (
+    PARTITION p_next_month VALUES LESS THAN (TO_DAYS(NOW()) + 32)
+);
+
 SELECT * FROM your_table
 WHERE
     YEAR(date_column) = your_year
