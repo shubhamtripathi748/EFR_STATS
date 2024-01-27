@@ -1,1 +1,46 @@
+In MySQL, dynamic partitioning, where the partitions are created based on the data values, is not directly supported. 
+However, you can use stored procedures and triggers to achieve a form of dynamic partitioning. 
+The idea is to periodically create new partitions based on the existing data in your table.
+
+1.Create the initial table with the first partition:
+
+CREATE TABLE your_table (
+    id INT,
+    datetimestamp TIMESTAMP,
+    -- other columns...
+) PARTITION BY RANGE COLUMNS (YEAR(datetimestamp), MONTH(datetimestamp)) (
+    PARTITION p_initial VALUES LESS THAN (2023, 1)
+);
+
+2.Create a stored procedure to add new partitions:
+DELIMITER //
+
+CREATE PROCEDURE AddMonthlyPartition()
+BEGIN
+    DECLARE current_year INT;
+    DECLARE current_month INT;
+
+    -- Get the current year and month
+    SELECT YEAR(NOW()), MONTH(NOW()) INTO current_year, current_month;
+
+    -- Create a new partition for the current year and month
+    SET @sql = CONCAT('ALTER TABLE your_table ADD PARTITION (PARTITION p_', current_year, '_', current_month,
+                      ' VALUES LESS THAN (', current_year, ', ', current_month + 1, '))');
+    PREPARE stmt FROM @sql;
+    EXECUTE stmt;
+    DEALLOCATE PREPARE stmt;
+END //
+
+DELIMITER ;
+
+3.Create a trigger to automatically call the stored procedure:
+
+CREATE EVENT IF NOT EXISTS monthly_partition_event
+ON SCHEDULE EVERY 1 MONTH
+DO
+BEGIN
+    CALL AddMonthlyPartition();
+END;
+or CALL AddMonthlyPartition();
+
 
