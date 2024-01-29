@@ -1,3 +1,15 @@
+CREATE DEFINER=`root`@`localhost` PROCEDURE `fetch_data_by_partition`(IN yearMonth int)
+BEGIN
+ declare partition_value varchar(255);
+ set partition_value=concat('p',yearMonth);
+	 SET @sql = CONCAT('SELECT * FROM amazon_employees_new PARTITION (', partition_value, ');');
+
+    -- Execute the dynamic SQL
+    PREPARE stmt FROM @sql;
+    EXECUTE stmt;
+    DEALLOCATE PREPARE stmt;
+END
+
 CREATE TABLE your_table (
     id INT,
     post_Date DATE,
