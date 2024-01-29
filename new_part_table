@@ -1,3 +1,5 @@
+'your_column' 
+
 CREATE PROCEDURE your_procedure()
 BEGIN
     -- Declare variables
