@@ -1,5 +1,24 @@
 DELIMITER //
 
+CREATE PROCEDURE fetch_data_by_partition(IN partition_value VARCHAR(255))
+BEGIN
+    -- Declare variables
+    DECLARE dynamic_sql VARCHAR(500);
+
+    -- Construct dynamic SQL with the partition value
+    SET dynamic_sql = CONCAT('SELECT * FROM your_table PARTITION (', partition_value, ');');
+
+    -- Execute the dynamic SQL
+    PREPARE stmt FROM dynamic_sql;
+    EXECUTE stmt;
+    DEALLOCATE PREPARE stmt;
+END //
+
+DELIMITER ;
+
+
+DELIMITER //
+
 CREATE PROCEDURE drop_partition_if_exists(
     IN table_name VARCHAR(255),
     IN partition_name VARCHAR(255)
