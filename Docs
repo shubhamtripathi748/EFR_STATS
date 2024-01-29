@@ -1,3 +1,6 @@
+ -- Add the last partition with MAXVALUE
+    SET @sql = CONCAT(@sql, 'PARTITION p', current_year, ' VALUES LESS THAN MAXVALUE);');
+
 DELIMITER //
 
 CREATE PROCEDURE your_procedure()
