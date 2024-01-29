@@ -1,4 +1,22 @@
- -- Declare variables
+CREATE PROCEDURE your_procedure()
+BEGIN
+    -- Declare variables
+    DECLARE x_channel_id VARCHAR(255);
+    DECLARE final_query VARCHAR(500);
+
+    -- Your original JSON extraction
+    SET x_channel_id = JSON_UNQUOTE(JSON_EXTRACT(JSON_UNQUOTE(JSON_EXTRACT(ms.HEADER_INFO, '$."x-channel-id"')), '$[0]'));
+
+    -- Construct final query using CONCAT
+    SET final_query = CONCAT('SELECT * FROM your_table WHERE x_channel_id_column = "', x_channel_id, '"');
+
+    -- Execute the final query
+    PREPARE stmt FROM final_query;
+    EXECUTE stmt;
+    DEALLOCATE PREPARE stmt;
+END //
+
+-- Declare variables
     DECLARE x_channel_id VARCHAR(255);
     DECLARE final_query VARCHAR(500);
 
