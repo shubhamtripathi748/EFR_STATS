@@ -1,3 +1,13 @@
+ -- Declare variables
+    DECLARE x_channel_id VARCHAR(255);
+    DECLARE final_query VARCHAR(500);
+
+    -- Your original JSON extraction
+    SET x_channel_id = JSON_UNQUOTE(JSON_EXTRACT(JSON_UNQUOTE(JSON_EXTRACT(ms.HEADER_INFO, '$."x-channel-id"')), '$[0]'));
+
+
+
+
 JSON_UNQUOTE(JSON_EXTRACT( JSON_UNQUOTE(JSON_EXTRACT(ms.HEADER_INFO, '$."x-channel-id"')), '$[0]'))
 DELIMITER //
 
