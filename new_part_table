@@ -1,4 +1,38 @@
-   CREATE TABLE test_table (
+DELIMITER //
+
+CREATE PROCEDURE drop_partition_if_exists(
+    IN table_name VARCHAR(255),
+    IN partition_name VARCHAR(255)
+)
+BEGIN
+    DECLARE partition_exists INT;
+
+    -- Check if the partition exists
+    SELECT COUNT(*)
+    INTO partition_exists
+    FROM information_schema.partitions
+    WHERE table_schema = DATABASE()
+        AND table_name = table_name
+        AND subpartition_name = partition_name;
+
+    -- Drop the partition if it exists
+    IF partition_exists > 0 THEN
+        SET @sql = CONCAT('ALTER TABLE ', table_name, ' DROP PARTITION ', partition_name);
+        PREPARE stmt FROM @sql;
+        EXECUTE stmt;
+        DEALLOCATE PREPARE stmt;
+        SELECT 'Partition dropped successfully.' AS result;
+    ELSE
+        SELECT 'Partition does not exist.' AS result;
+    END IF;
+END //
+
+DELIMITER ;
+
+
+
+
+CREATE TABLE test_table (
     id INT,
     requesttimestamp datetime
 ) PARTITION BY RANGE (extract(year_month from `requesttimestamp`)) (
