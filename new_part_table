@@ -1,3 +1,10 @@
+CREATE TEMPORARY TABLE IF NOT EXISTS temp_result AS (
+        CALL inner_procedure()
+    );
+
+    -- Fetch the result from the temporary table
+    SELECT * FROM temp_result;
+
 'your_column' 
 
 CREATE PROCEDURE your_procedure()
