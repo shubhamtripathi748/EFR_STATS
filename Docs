@@ -1,3 +1,33 @@
+DELIMITER //
+
+CREATE PROCEDURE your_procedure()
+BEGIN
+    -- Declare variables
+    DECLARE combinedyearmonth VARCHAR(7);
+
+    -- Set the combined year and month value
+    SET combinedyearmonth = CONCAT(YEAR(NOW()), '-', LPAD(MONTH(NOW()), 2, '0'));
+
+    -- Create a temporary table with the combined year and month value
+    CREATE TEMPORARY TABLE temp_table AS (
+        SELECT 
+            your_table.*,
+            combinedyearmonth AS year_month_combined
+        FROM 
+            your_table
+    );
+
+    -- Use the temporary table in your further logic
+    SELECT * FROM temp_table;
+
+    -- Drop the temporary table when done
+    DROP TEMPORARY TABLE IF EXISTS temp_table;
+END //
+
+DELIMITER ;
+
+
+
 ALTER TABLE your_table
 ADD PARTITION (
     PARTITION p_before_2024 VALUES LESS THAN (TO_DAYS('2024-01-01'))
