@@ -1,4 +1,9 @@
- -- Add the last partition with MAXVALUE
+ DECLARE result_date DATE;
+
+    -- Subtract 1 day from the input date
+    SET result_date = DATE_SUB(input_date, INTERVAL 1 DAY);
+
+-- Add the last partition with MAXVALUE
     SET @sql = CONCAT(@sql, 'PARTITION p', current_year, ' VALUES LESS THAN MAXVALUE);');
 
 DELIMITER //
