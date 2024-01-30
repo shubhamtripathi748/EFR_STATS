@@ -1,5 +1,9 @@
 SELECT *
 FROM your_table
+WHERE your_date_column < CURDATE();
+
+SELECT *
+FROM your_table
 WHERE your_date_column = DATE_SUB(CURDATE(), INTERVAL 1 DAY);
 
 DECLARE result_date DATE;
