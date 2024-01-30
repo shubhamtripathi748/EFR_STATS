@@ -1,5 +1,28 @@
 DELIMITER //
 
+CREATE PROCEDURE FetchDayBeforeRecords()
+BEGIN
+    DECLARE yesterday_start DATETIME;
+    DECLARE yesterday_end DATETIME;
+
+    -- Calculate start of yesterday (00:00:00)
+    SET yesterday_start = DATE_SUB(NOW(), INTERVAL 1 DAY);
+
+    -- Calculate end of yesterday (23:59:59)
+    SET yesterday_end = DATE_SUB(NOW(), INTERVAL 1 SECOND);
+
+    -- Now you can use the yesterday_start and yesterday_end variables in your query
+    SELECT *
+    FROM your_table
+    WHERE your_datetime_column BETWEEN yesterday_start AND yesterday_end;
+
+END //
+
+DELIMITER ;
+
+
+DELIMITER //
+
 CREATE PROCEDURE FetchRecordsForDateRange(IN input_date DATE)
 BEGIN
     DECLARE start_date DATE;
