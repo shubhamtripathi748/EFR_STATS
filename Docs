@@ -1,5 +1,42 @@
 DELIMITER //
 
+CREATE PROCEDURE OuterProcedure()
+BEGIN
+    DECLARE exit_handler BOOLEAN DEFAULT FALSE;
+
+    -- Declare a continue handler to catch any SQL exceptions
+    DECLARE CONTINUE HANDLER FOR SQLEXCEPTION
+    BEGIN
+        -- Set the exit_handler to TRUE to indicate an exception
+        SET exit_handler = TRUE;
+    END;
+
+    -- Your logic for the outer procedure
+    -- ...
+
+    -- Call the inner procedure, and if it fails, the handler will be triggered,
+    -- but the outer procedure will continue executing
+    CALL InnerProcedure();
+
+    -- Check if an exception occurred in the inner procedure
+    IF exit_handler THEN
+        -- Handle the exception if needed
+        -- You can log the error, set a status variable, etc.
+        -- For example:
+        -- SET status_variable = 'Failure';
+    END IF;
+
+    -- Continue with the rest of the outer procedure logic
+    -- ...
+
+END //
+
+DELIMITER ;
+
+
+
+DELIMITER //
+
 CREATE PROCEDURE YourProcedure()
 BEGIN
     -- Declare variables for job details
