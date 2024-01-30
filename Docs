@@ -1,3 +1,41 @@
+DELIMITER //
+
+CREATE PROCEDURE YourProcedure()
+BEGIN
+    -- Declare variables for job details
+    DECLARE job_name VARCHAR(255);
+    DECLARE start_time DATETIME;
+    DECLARE end_time DATETIME;
+    DECLARE job_status ENUM('RUNNING', 'SUCCESS', 'FAILURE');
+    DECLARE job_details TEXT;
+
+    -- Set job details
+    SET job_name = 'YourJobName'; -- Replace with your job name
+    SET start_time = NOW();
+
+    -- Your logic for the stored procedure goes here
+    -- ...
+
+    -- Set end time based on the success or failure of the procedure
+    IF YourProcedureLogicIsSuccessful() THEN
+        SET end_time = NOW();
+        SET job_status = 'SUCCESS';
+        SET job_details = 'Procedure executed successfully.';
+    ELSE
+        SET end_time = NOW();
+        SET job_status = 'FAILURE';
+        SET job_details = 'Procedure execution failed.';
+    END IF;
+
+    -- Insert job details into the job table
+    INSERT INTO job (job_name, start_time, end_time, status, details)
+    VALUES (job_name, start_time, end_time, job_status, job_details);
+END //
+
+DELIMITER ;
+
+
+
 CREATE TABLE job_execution (
     job_id INT AUTO_INCREMENT PRIMARY KEY,
     job_name VARCHAR(255) NOT NULL,
