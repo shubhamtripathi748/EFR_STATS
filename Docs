@@ -1,5 +1,32 @@
 DELIMITER //
 
+CREATE PROCEDURE CheckItemsExistence(
+    IN p_item_list TEXT
+)
+BEGIN
+    -- Declare a variable to store the result
+    DECLARE result VARCHAR(255);
+
+    -- Your logic to check if any item in the list exists in the table column
+    SELECT CASE
+        WHEN EXISTS (
+            SELECT 1
+            FROM your_table
+            WHERE FIND_IN_SET(your_column, p_item_list)
+        ) THEN 'Some items exist in the column'
+        ELSE 'No items found'
+    END INTO result;
+
+    -- You can now use or return the result as needed
+    SELECT result AS Result;
+END //
+
+DELIMITER ;
+CALL CheckItemsExistence('item1,item2,item3');
+
+
+DELIMITER //
+
 CREATE PROCEDURE OuterProcedure()
 BEGIN
     DECLARE exit_handler BOOLEAN DEFAULT FALSE;
