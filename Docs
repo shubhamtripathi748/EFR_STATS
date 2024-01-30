@@ -1,3 +1,17 @@
+CREATE TABLE job_execution (
+    job_id INT AUTO_INCREMENT PRIMARY KEY,
+    job_name VARCHAR(255) NOT NULL,
+    start_time DATETIME NOT NULL,
+    end_time DATETIME,
+    status ENUM('RUNNING', 'SUCCESS', 'FAILURE') DEFAULT 'RUNNING',
+    details TEXT,
+    -- Add any additional columns as needed
+    INDEX idx_start_time (start_time),
+    INDEX idx_end_time (end_time),
+    INDEX idx_status (status)
+);
+
+
 DATE_SUB(CURDATE(), INTERVAL 1 DAY)
 
 DATE_SUB(CURDATE(), INTERVAL 1 SECOND)
