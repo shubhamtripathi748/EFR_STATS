@@ -1,4 +1,8 @@
- DECLARE result_date DATE;
+SELECT *
+FROM your_table
+WHERE your_date_column = DATE_SUB(CURDATE(), INTERVAL 1 DAY);
+
+DECLARE result_date DATE;
 
     -- Subtract 1 day from the input date
     SET result_date = DATE_SUB(input_date, INTERVAL 1 DAY);
