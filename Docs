@@ -1,3 +1,29 @@
+DELIMITER //
+
+CREATE PROCEDURE YourInsertProcedure()
+BEGIN
+    -- Your Common Table Expressions (CTEs)
+    WITH CTE1 AS (
+        SELECT CHANNEL_NAME, appliance_REQUEST_URL, COUNT(appliance_INTERACTION_ID) AS TOTAL_CALL
+        FROM CombinedData
+        GROUP BY CHANNEL_NAME, appliance_REQUEST_URL
+    ),
+    CTE2 AS (
+        -- Another CTE if needed
+        -- ...
+    )
+
+    -- Insert data into the destination table from the CTEs
+    INSERT INTO EFR_STATS (CHANNEL, REQUEST_URL, TOTAL_API_CALL)
+    SELECT CHANNEL_NAME, appliance_REQUEST_URL, TOTAL_CALL
+    FROM CTE1;
+
+    -- Your logic after the insert statement if needed
+END //
+
+DELIMITER ;
+
+
 INSERT INTO EFR_STATS(CHANNEL,REQUEST_URL,TOTAL_API_CALL) SELECT CHANNEL_NAME,appliance_REQUEST_URL,count(appliance_INTERACTION_ID) AS TOTAL_CALL FROM CombinedData group by CHANNEL_NAME,appliance_REQUEST_URL;
 
 DELIMITER //
