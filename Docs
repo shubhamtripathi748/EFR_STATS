@@ -1,3 +1,27 @@
+DELIMITER //
+
+CREATE PROCEDURE FetchRecordsForDateRange(IN input_date DATE)
+BEGIN
+    DECLARE start_date DATE;
+    DECLARE end_date DATE;
+
+    -- Calculate start date (input_date - 1 day)
+    SET start_date = DATE_SUB(input_date, INTERVAL 1 DAY);
+
+    -- Set end date to the input_date
+    SET end_date = input_date;
+
+    -- Now you can use the start_date and end_date variables in your query
+    SELECT *
+    FROM your_table
+    WHERE your_date_column BETWEEN start_date AND end_date;
+
+END //
+
+DELIMITER ;
+
+
+
 SELECT *
 FROM your_table
 WHERE your_date_column < CURDATE();
