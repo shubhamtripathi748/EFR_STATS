@@ -1,0 +1,48 @@
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.ApplicationArguments;
+import org.springframework.boot.ApplicationRunner;
+import org.springframework.stereotype.Component;
+
+@Component
+public class DataFetcher implements ApplicationRunner {
+
+    private final DataService dataService;
+
+    @Autowired
+    public DataFetcher(DataService dataService) {
+        this.dataService = dataService;
+    }
+
+    @Override
+    public void run(ApplicationArguments args) throws Exception {
+        // Access fetched data from the service if needed
+        List<YourEntity> fetchedData = dataService.getFetchedData();
+        // Your processing logic here
+    }
+}
+
+-------------
+
+  import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import java.util.List;
+
+@Service
+public class DataService {
+
+    private List<YourEntity> fetchedData;
+
+    @Autowired
+    public DataService(YourEntityRepository yourEntityRepository) {
+        // Fetch data during application startup
+        this.fetchedData = yourEntityRepository.findAll();
+    }
+
+    public List<YourEntity> getFetchedData() {
+        return fetchedData;
+    }
+
+    // You can add more methods to manipulate or retrieve data as needed
+}
+
