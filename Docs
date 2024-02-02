@@ -1,3 +1,18 @@
+
+Document ID
+Document Name:
+Document Type:
+Upload Timestamp:
+File Path/URL:
+
+EDMS Location/ID:
+Upload Status:
+A status indicator (e.g., pending, completed, failed) to track the success or failure of the upload process.
+Original NAS Location:
+
+Store information about the original location of the document on the NAS before being transferred to the EDMS.
+
+
 INSERT INTO employees (id, name, salary)
 VALUES
   (1, 'John Doe', 50000),
