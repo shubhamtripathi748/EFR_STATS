@@ -1,3 +1,17 @@
+CREATE TABLE documents (
+    document_id INT PRIMARY KEY AUTO_INCREMENT,
+    document_name VARCHAR(255),
+    document_type VARCHAR(50),
+    uploader_user_id INT, -- Assuming this is a foreign key
+    upload_timestamp TIMESTAMP,
+    file_path_url VARCHAR(255),
+    edms_location_id INT,
+    upload_status ENUM('pending', 'completed', 'failed'),
+    file_size INT,
+    file_format_extension VARCHAR(10),
+    -- Other columns...
+);
+
 
 Document ID
 Document Name:
