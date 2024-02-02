@@ -1,4 +1,6 @@
- @Transactional
+java.sql.SQLException: Can not issue data manipulation statements with executeQuery()
+
+@Transactional
     @Modifying
     @Query("UPDATE YourEntity e SET e.column1 = :newColumn1, e.column2 = :newColumn2 WHERE e.id = :id")
     void updateColumns(@Param("id") Long id, @Param("newColumn1") String newColumn1, @Param("newColumn2") String newColumn2);
