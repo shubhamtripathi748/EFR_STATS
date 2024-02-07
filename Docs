@@ -1,3 +1,38 @@
+
+In a Spring Boot application, you can use the `java.nio.file.Files` class to delete particular files. Here's an example of how you can delete specific files based on their names:
+
+```java
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+
+public class FileDeletionExample {
+
+    public static void main(String[] args) {
+        String directoryPath = "path/to/your/directory";
+        String[] filesToDelete = {"file1.txt", "file2.txt", "file3.txt"};
+        deleteSpecificFiles(directoryPath, filesToDelete);
+    }
+
+    public static void deleteSpecificFiles(String directoryPath, String[] filesToDelete) {
+        for (String fileName : filesToDelete) {
+            Path filePath = Paths.get(directoryPath, fileName);
+            try {
+                Files.delete(filePath);
+                System.out.println("Deleted file: " + fileName);
+            } catch (IOException e) {
+                System.err.println("Failed to delete file: " + fileName);
+            }
+        }
+    }
+}
+```
+
+Replace `"path/to/your/directory"` with the actual path of the directory containing the files you want to delete, and `"file1.txt"`, `"file2.txt"`, `"file3.txt"`, etc., with the names of the files you want to delete. This approach deletes only the specified files within the directory.
+
+
+
 CREATE TABLE documents (
     document_id INT PRIMARY KEY AUTO_INCREMENT,
     document_name VARCHAR(255),
