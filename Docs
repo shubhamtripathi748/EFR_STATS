@@ -1,5 +1,40 @@
 DELIMITER //
 
+CREATE PROCEDURE delete_records_in_batches(IN table_name VARCHAR(255), IN timestamp_column VARCHAR(255), IN batch_size INT)
+BEGIN
+    DECLARE done BOOLEAN DEFAULT FALSE;
+    DECLARE total_rows INT;
+    DECLARE rows_deleted INT;
+
+    -- Construct the SQL query dynamically
+    SET @sql = CONCAT('SELECT COUNT(*) INTO @total_rows FROM ', table_name, ' WHERE ', timestamp_column, ' < NOW();');
+    PREPARE stmt FROM @sql;
+    EXECUTE stmt;
+    DEALLOCATE PREPARE stmt;
+
+    -- Loop until all rows are deleted
+    WHILE NOT done DO
+        -- Construct the SQL query dynamically
+        SET @sql = CONCAT('DELETE FROM ', table_name, ' WHERE ', timestamp_column, ' < NOW() LIMIT ', batch_size, ';');
+        PREPARE stmt FROM @sql;
+        EXECUTE stmt;
+        DEALLOCATE PREPARE stmt;
+
+        -- Check how many rows were deleted in the last batch
+        SET rows_deleted = ROW_COUNT();
+
+        -- If fewer rows were deleted than the batch size, we're done
+        IF rows_deleted < batch_size THEN
+            SET done = TRUE;
+        END IF;
+    END WHILE;
+END//
+
+DELIMITER ;
+
+
+DELIMITER //
+
 CREATE PROCEDURE delete_data_in_batches()
 BEGIN
     DECLARE done BOOLEAN DEFAULT FALSE;
