@@ -1,0 +1,10 @@
+  PowerMockito.mockStatic(Path.class);
+
+        // Define the behavior of Path.get
+        when(Path.get("/path/to/file")).thenReturn(null);
+
+        // Now Path.get("/path/to/file") will return null
+        Path result = Path.get("/path/to/file");
+
+        // Verify the result
+        assertEquals(null, result);
