@@ -1,4 +1,38 @@
-  PowerMockito.mockStatic(Path.class);
+import org.junit.Before;
+import org.junit.Test;
+import org.modelmapper.ModelMapper;
+import static org.mockito.Mockito.*;
+
+public class MyServiceTest {
+    private MyService myService;
+    private ModelMapper modelMapper;
+
+    @Before
+    public void setUp() {
+        modelMapper = mock(ModelMapper.class); // Mock ModelMapper
+        myService = new MyService(modelMapper);
+    }
+
+    @Test
+    public void testConvertToDto() {
+        // Prepare mock behavior
+        SomeEntity entity = new SomeEntity();
+        SomeDto dto = new SomeDto();
+        when(modelMapper.map(entity, SomeDto.class)).thenReturn(dto);
+
+        // Call the method to be tested
+        SomeDto result = myService.convertToDto(entity);
+
+        // Verify the result
+        assertEquals(dto, result);
+
+        // Verify that modelMapper.map was called with the correct arguments
+        verify(modelMapper).map(entity, SomeDto.class);
+    }
+}
+
+
+PowerMockito.mockStatic(Path.class);
 
         // Define the behavior of Path.get
         when(Path.get("/path/to/file")).thenReturn(null);
