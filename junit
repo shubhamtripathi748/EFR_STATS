@@ -8,3 +8,38 @@
 
         // Verify the result
         assertEquals(null, result);
+
+
+
+
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.powermock.api.mockito.PowerMockito;
+import org.powermock.core.classloader.annotations.PrepareForTest;
+import org.powermock.modules.junit4.PowerMockRunner;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.doThrow;
+
+@RunWith(PowerMockRunner.class)
+@PrepareForTest(Files.class)
+public class FileDeletionTest {
+
+    @Test(expected = IOException.class)
+    public void testDeleteFile() throws IOException {
+        // Mocking static methods
+        PowerMockito.mockStatic(Files.class);
+
+        // Mocking deletion of file to throw IOException
+        doThrow(new IOException()).when(Files.class);
+        Files.delete(any(Path.class));
+
+        // Now when you call Files.delete(), it will throw IOException
+        Path path = Paths.get("/path/to/file");
+        Files.delete(path); // This will throw IOException
+    }
+}
