@@ -1,5 +1,21 @@
 DELIMITER //
 
+CREATE PROCEDURE delete_old_data()
+BEGIN
+    DECLARE cutoff_date DATE;
+    
+    -- Calculate the cutoff date (6 months ago)
+    SET cutoff_date = DATE_SUB(NOW(), INTERVAL 6 MONTH);
+    
+    -- Delete records older than the cutoff date
+    DELETE FROM your_table_name WHERE timestamp_column < cutoff_date;
+END//
+
+DELIMITER ;
+
+
+DELIMITER //
+
 CREATE PROCEDURE delete_records_in_batches(IN table_name VARCHAR(255), IN timestamp_column VARCHAR(255), IN batch_size INT)
 BEGIN
     DECLARE done BOOLEAN DEFAULT FALSE;
