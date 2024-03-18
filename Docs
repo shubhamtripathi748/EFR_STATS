@@ -1,3 +1,39 @@
+To exclude the controller advice from being invoked for health check actuator endpoints, you can create a custom configuration to selectively disable it. Here's how you can achieve this:
+
+```java
+import org.springframework.boot.autoconfigure.web.servlet.WebMvcRegistrations;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.web.servlet.mvc.method.annotation.ExceptionHandlerExceptionResolver;
+
+@Configuration
+public class CustomWebMvcRegistrations {
+
+    @Bean
+    public WebMvcRegistrations webMvcRegistrations() {
+        return new WebMvcRegistrations() {
+            @Override
+            public ExceptionHandlerExceptionResolver getExceptionHandlerExceptionResolver() {
+                return new ExceptionHandlerExceptionResolver() {
+                    @Override
+                    protected boolean shouldApplyTo(HttpServletRequest request, Object handler) {
+                        // Exclude health check actuator endpoints from invoking controller advice
+                        String requestUri = request.getRequestURI();
+                        return !requestUri.contains("/actuator/health");
+                    }
+                };
+            }
+        };
+    }
+}
+```
+
+In this configuration, a custom `WebMvcRegistrations` bean is created to override the default `ExceptionHandlerExceptionResolver`. The `shouldApplyTo` method is then customized to exclude the health check actuator endpoints from invoking controller advice by checking if the request URI contains `/actuator/health`.
+
+Make sure to adjust the condition according to your actual actuator endpoint URLs if they differ from the standard `/actuator/health`.
+
+
+
 DELIMITER //
 
 CREATE PROCEDURE delete_old_data()
