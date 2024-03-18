@@ -1,4 +1,74 @@
 
+To exclude the controller advice for the health check URL, you can use a custom `HandlerInterceptor`. Here's how you can do it:
+
+```java
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.web.servlet.WebMvcRegistrations;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.web.servlet.HandlerInterceptor;
+import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
+import org.springframework.web.servlet.mvc.method.annotation.ExceptionHandlerExceptionResolver;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+@Configuration
+public class CustomWebMvcRegistrations {
+
+    @Autowired
+    private HealthEndpointProperties healthEndpointProperties;
+
+    @Bean
+    public WebMvcRegistrations webMvcRegistrations() {
+        return new WebMvcRegistrations() {
+            @Override
+            public ExceptionHandlerExceptionResolver getExceptionHandlerExceptionResolver() {
+                return new ExceptionHandlerExceptionResolver() {
+                    @Override
+                    protected boolean shouldApplyTo(HttpServletRequest request, Object handler) {
+                        // Exclude health check actuator endpoints from invoking controller advice
+                        String requestUri = request.getRequestURI();
+                        String healthEndpointPath = healthEndpointProperties.getPath();
+                        return !requestUri.startsWith(healthEndpointPath);
+                    }
+                };
+            }
+        };
+    }
+
+    @Bean
+    public WebMvcConfigurer webMvcConfigurer() {
+        return new WebMvcConfigurer() {
+            @Override
+            public void addInterceptors(InterceptorRegistry registry) {
+                registry.addInterceptor(new HealthCheckInterceptor()).addPathPatterns(healthEndpointProperties.getPath());
+            }
+        };
+    }
+
+    private static class HealthCheckInterceptor implements HandlerInterceptor {
+        @Override
+        public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
+            // Exclude controller advice for health check URL
+            return true;
+        }
+    }
+}
+```
+
+In this configuration:
+
+- The `CustomWebMvcRegistrations` class excludes the controller advice for the health check URL and sets up a custom `HandlerInterceptor`.
+- The `HandlerInterceptor` named `HealthCheckInterceptor` is created to intercept requests to the health check URL. In the `preHandle` method, you can add logic to exclude controller advice for this URL.
+- The `WebMvcConfigurer` is used to register the `HealthCheckInterceptor` with the appropriate URL pattern using `addPathPatterns`.
+- The health endpoint properties are injected using `@Autowired`. Ensure you have `HealthEndpointProperties` properly configured in your project.
+
+Adjust the code according to your specific controller advice and health endpoint configuration.
+
+
+
 To achieve this, you'll want to exclude the controller advice from being applied to the health check actuator endpoints and also set all health check properties. Here's how you can do it:
 
 ```java
