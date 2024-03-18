@@ -1,3 +1,60 @@
+
+To achieve this, you'll want to exclude the controller advice from being applied to the health check actuator endpoints and also set all health check properties. Here's how you can do it:
+
+```java
+import org.springframework.boot.actuate.autoconfigure.endpoint.web.WebEndpointProperties;
+import org.springframework.boot.actuate.autoconfigure.web.server.ManagementServerProperties;
+import org.springframework.boot.actuate.health.HealthEndpointProperties;
+import org.springframework.boot.autoconfigure.web.servlet.WebMvcRegistrations;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.web.servlet.mvc.method.annotation.ExceptionHandlerExceptionResolver;
+
+@Configuration
+public class CustomWebMvcRegistrations {
+
+    private final ManagementServerProperties managementServerProperties;
+    private final WebEndpointProperties webEndpointProperties;
+    private final HealthEndpointProperties healthEndpointProperties;
+
+    public CustomWebMvcRegistrations(ManagementServerProperties managementServerProperties,
+                                      WebEndpointProperties webEndpointProperties,
+                                      HealthEndpointProperties healthEndpointProperties) {
+        this.managementServerProperties = managementServerProperties;
+        this.webEndpointProperties = webEndpointProperties;
+        this.healthEndpointProperties = healthEndpointProperties;
+    }
+
+    @Bean
+    public WebMvcRegistrations webMvcRegistrations() {
+        return new WebMvcRegistrations() {
+            @Override
+            public ExceptionHandlerExceptionResolver getExceptionHandlerExceptionResolver() {
+                return new ExceptionHandlerExceptionResolver() {
+                    @Override
+                    protected boolean shouldApplyTo(HttpServletRequest request, Object handler) {
+                        // Exclude health check actuator endpoints from invoking controller advice
+                        String requestUri = request.getRequestURI();
+                        String healthEndpointPath = managementServerProperties.getBasePath()
+                                + webEndpointProperties.getBasePath() + healthEndpointProperties.getPath();
+                        return !requestUri.startsWith(healthEndpointPath);
+                    }
+                };
+            }
+        };
+    }
+}
+```
+
+In this configuration:
+
+- The `CustomWebMvcRegistrations` class is responsible for excluding controller advice for health check actuator endpoints and setting all health check properties.
+- We inject `ManagementServerProperties`, `WebEndpointProperties`, and `HealthEndpointProperties` to access the properties related to actuator endpoints.
+- The `shouldApplyTo` method checks if the request URI starts with the health endpoint path and excludes applying controller advice if it does. Adjust the condition according to your actuator endpoint structure.
+- Ensure you have the necessary dependencies and proper configuration to enable auto-injection of these properties into the constructor of `CustomWebMvcRegistrations`.
+
+
+
 To exclude the controller advice from being invoked for health check actuator endpoints, you can create a custom configuration to selectively disable it. Here's how you can achieve this:
 
 ```java
