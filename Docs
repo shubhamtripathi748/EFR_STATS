@@ -1,3 +1,5 @@
+We were using the http url before, but you told us to switch to the https one. The certificate we received is in a different format, so we ask that you check with the middleware team. They will provide you with the JKS file and password, and we will check to see if we can connect to the UAT firewall. We need to raise a firewall request because we are unable to connect from any environment.
+
 
 To exclude the controller advice for the health check URL, you can use a custom `HandlerInterceptor`. Here's how you can do it:
 
