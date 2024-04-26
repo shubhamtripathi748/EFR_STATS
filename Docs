@@ -1,3 +1,19 @@
+SELECT COUNT(*)
+FROM 
+  service_api.SERVICE_API_REQ_RES_V2 AS SAL 
+  INNER JOIN service_api.TBL_ESB_SERVICELOG AS ESB ON SAL.INTERACTION_ID = ESB.INTERACTION_ID
+WHERE
+  SAL.SERVICE_NAME = '/apipaymentsV3/v3/corporate/fund-transfer/adhoc' 
+  AND SAL.STATUS = 'FAILURE' 
+  AND SAL.REQTIMESTAMP >= DATE_SUB(NOW(), INTERVAL 60 HOUR) 
+  AND SAL.REQTIMESTAMP <= ESB.REQ_DATETIME;
+
+
+Indexing: Ensure that appropriate indexes are in place on the columns used in the WHERE clause (SERVICE_NAME, STATUS, REQTIMESTAMP, and INTERACTION_ID), as well as on the join column (INTERACTION_ID). Indexes can significantly speed up the lookup process.
+Use INNER JOIN: If the join condition guarantees that there will always be a corresponding record in TBL_ESB_SERVICELOG, consider using INNER JOIN instead of LEFT JOIN. INNER JOIN tends to be faster because it only returns matching records.
+Avoid ORDER BY: Since you're only interested in the count of rows and not the actual data, removing the ORDER BY clause can improve performance. Sorting can be costly, especially for large result sets.
+Avoid Functions in WHERE Clause: Using functions like date_sub() on columns (REQTIMESTAMP) can prevent the query optimizer from utilizing indexes efficiently. Instead, consider rewriting the condition without the function, if possible.
+
 SELECT COUNT(*)  
 FROM 
   service_api.SERVICE_API_REQ_RES_V2 as SAL 
