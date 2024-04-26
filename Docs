@@ -1,3 +1,29 @@
+SELECT * FROM INFORMATION_SCHEMA.PROCESSLIST;
+
+This might involve adding or modifying indexes,
+ rewriting the queries to be more efficient, or restructuring the database schema.
+
+
+Deleting older records reduces the overall volume of data stored in the system. 
+This can lead to faster query execution times since there's less data to scan through-->
+
+we can use timing event to delete record which are older then 1 or 2 month and that will run once in a month.
+
+
+create indexing on the table column in which we are hitting the queries(status)
+
+CREATE TRIGGER dump_on_failure
+AFTER INSERT ON your_table_name
+FOR EACH ROW
+BEGIN
+    -- Check if the status column has been updated to 'failure'
+    IF NEW.status = 'failure' THEN
+        -- Insert the updated row into another table for data dumping
+        INSERT INTO another_table_name (column1, column2, ..., status)
+        VALUES (NEW.column1, NEW.column2, ..., NEW.status);
+    END IF;
+END;
+
 We were using the http url before, but you told us to switch to the https one. The certificate we received is in a different format, so we ask that you check with the middleware team. They will provide you with the JKS file and password, and we will check to see if we can connect to the UAT firewall. We need to raise a firewall request because we are unable to connect from any environment.
 We have already upgraded the log4j version in a few services and made a Confluence page available for production use.
 
