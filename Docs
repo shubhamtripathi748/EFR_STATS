@@ -1,3 +1,5 @@
+Partitioning can enhance query performance by allowing the database engine to limit the scan to specific partitions rather than the entire table. This is especially beneficial for tables with large volumes of data, as it reduces the number of rows that need to be scanned for a particular query.
+
 CREATE TABLE your_table_name (
     id INT,
     status VARCHAR(50),
