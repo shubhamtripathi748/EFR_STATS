@@ -1,3 +1,16 @@
+SELECT COUNT(*)  
+FROM 
+  service_api.SERVICE_API_REQ_RES_V2 as SAL 
+  LEFT JOIN service_api.TBL_ESB_SERVICELOG as ESB on SAL.INTERACTION_ID = ESB.INTERACTION_ID
+WHERE
+  SAL.SERVICE_NAME ='/apipaymentsV3/v3/corporate/fund-transfer/adhoc' 
+  AND SAL.STATUS = 'FAILURE' 
+  AND SAL.REQTIMESTAMP >= date_sub(now(), INTERVAL 60 hour) 
+  AND SAL.REQTIMESTAMP <= ESB.REQ_DATETIME
+  -- AND ESB.RES_DATETIME <= SAL.RESPTIMESTAMP
+ORDER BY 
+  SAL.REQID desc;
+
 Partitioning can enhance query performance by allowing the database engine to limit the scan to specific partitions rather than the entire table. This is especially beneficial for tables with large volumes of data, as it reduces the number of rows that need to be scanned for a particular query.
 
 CREATE TABLE your_table_name (
