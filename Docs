@@ -1,3 +1,15 @@
+CREATE TABLE your_table_name (
+    id INT,
+    status VARCHAR(50),
+    -- other columns
+)
+PARTITION BY RANGE COLUMNS(status) (
+    PARTITION p_success VALUES LESS THAN ('success'),
+    PARTITION p_failure VALUES LESS THAN ('failure'),
+    PARTITION p_pending VALUES LESS THAN ('pending'),
+    PARTITION p_other VALUES LESS THAN (MAXVALUE)
+);
+
 SELECT * FROM INFORMATION_SCHEMA.PROCESSLIST;
 
 This might involve adding or modifying indexes,
