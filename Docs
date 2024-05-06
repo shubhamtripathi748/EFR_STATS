@@ -1,3 +1,47 @@
+
+import org.springframework.http.client.ClientHttpRequestFactory;
+import org.springframework.http.client.HttpComponentsClientHttpRequestFactory;
+import org.apache.http.client.HttpClient;
+import org.apache.http.conn.ssl.NoopHostnameVerifier;
+import org.apache.http.impl.client.HttpClients;
+import org.apache.http.ssl.SSLContextBuilder;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.web.client.RestTemplate;
+
+import javax.net.ssl.SSLContext;
+
+@Configuration
+public class RestTemplateConfig {
+
+    @Value("${your.jks.file.path}")
+    private String jksFilePath;
+
+    @Value("${your.jks.password}")
+    private String jksPassword;
+
+    @Bean
+    public RestTemplate restTemplate() throws Exception {
+        return new RestTemplate(clientHttpRequestFactory());
+    }
+
+    private ClientHttpRequestFactory clientHttpRequestFactory() throws Exception {
+        SSLContext sslContext = SSLContextBuilder
+                .create()
+                .loadKeyMaterial(new File(jksFilePath), jksPassword.toCharArray(), jksPassword.toCharArray())
+                .build();
+
+        HttpClient client = HttpClients.custom()
+                .setSSLContext(sslContext)
+                .setSSLHostnameVerifier(NoopHostnameVerifier.INSTANCE)
+                .build();
+
+        return new HttpComponentsClientHttpRequestFactory(client);
+    }
+}
+
+
 SELECT COUNT(*)
 FROM 
   service_api.SERVICE_API_REQ_RES_V2 AS SAL 
