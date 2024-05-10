@@ -1,4 +1,14 @@
-
+UPDATE your_table t
+SET t.your_column = (
+    SELECT subquery_result_column
+    FROM (
+        -- Your subquery here to fetch the result
+        SELECT your_column, subquery_result_column
+        FROM your_table
+        WHERE your_conditions -- Conditions to filter the rows you want to update
+    ) subq
+    WHERE subq.your_column = t.your_column
+);
 WITH subquery_result AS (
     SELECT id, SUM(value) AS total_value
     FROM your_table
