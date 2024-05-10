@@ -1,3 +1,40 @@
+CREATE OR REPLACE PROCEDURE update_in_batches AS
+    CURSOR cur_data IS
+        -- Your inner query here to fetch the records
+        SELECT your_primary_key, your_column
+        FROM your_table
+        WHERE your_conditions; -- Conditions to filter the rows you want to update
+    TYPE id_list IS TABLE OF your_table.primary_key%TYPE INDEX BY PLS_INTEGER;
+    v_ids id_list;
+BEGIN
+    OPEN cur_data;
+    LOOP
+        FETCH cur_data BULK COLLECT INTO v_ids LIMIT 1000; -- Adjust the batch size as needed
+        EXIT WHEN v_ids.COUNT = 0;
+        
+        FOR i IN 1..v_ids.COUNT LOOP
+            -- Your update statement here
+            UPDATE your_table
+            SET your_column = (
+                -- Your subquery here to fetch the result
+                SELECT subquery_result_column
+                FROM (
+                    SELECT your_column, subquery_result_column
+                    FROM your_table
+                    WHERE your_conditions -- Conditions to filter the rows you want to update
+                ) subq
+                WHERE subq.your_column = v_ids(i)
+            )
+            WHERE your_primary_key = v_ids(i);
+        END LOOP;
+
+        COMMIT;
+    END LOOP;
+    CLOSE cur_data;
+END update_in_batches;
+/
+
+
 DECLARE
     BATCH_SIZE NUMBER := 1000; -- Adjust the batch size as needed
     TOTAL_RECORDS NUMBER;
