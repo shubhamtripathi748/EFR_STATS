@@ -1,3 +1,34 @@
+DECLARE
+    BATCH_SIZE NUMBER := 1000; -- Adjust the batch size as needed
+    TOTAL_RECORDS NUMBER;
+BEGIN
+    SELECT COUNT(*)
+    INTO TOTAL_RECORDS
+    FROM your_table
+    WHERE your_conditions; -- Conditions to filter the rows you want to update
+
+    FOR i IN 1..CEIL(TOTAL_RECORDS / BATCH_SIZE) LOOP
+        UPDATE your_table t
+        SET t.your_column = (
+            SELECT subquery_result_column
+            FROM (
+                -- Your subquery here to fetch the result
+                SELECT your_column, subquery_result_column
+                FROM your_table
+                WHERE your_conditions -- Conditions to filter the rows you want to update
+            ) subq
+            WHERE subq.your_column = t.your_column
+            AND ROWNUM <= BATCH_SIZE * i
+            AND ROWNUM > BATCH_SIZE * (i - 1)
+        );
+
+        COMMIT;
+    END LOOP;
+END;
+/
+
+
+
 UPDATE your_table t
 SET t.your_column = (
     SELECT subquery_result_column
