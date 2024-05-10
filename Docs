@@ -1,3 +1,11 @@
+SELECT *
+FROM (
+    SELECT *
+    FROM your_table
+    WHERE your_conditions
+) subq
+WHERE ROWNUM <= 100;
+
 CREATE OR REPLACE PROCEDURE update_in_batches AS
     CURSOR cur_data IS
         SELECT your_primary_key, your_column
