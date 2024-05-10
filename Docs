@@ -1,4 +1,18 @@
 
+WITH subquery_result AS (
+    SELECT id, SUM(value) AS total_value
+    FROM your_table
+    GROUP BY id
+)
+UPDATE your_table t
+SET t.total_value = (
+    SELECT sr.total_value
+    FROM subquery_result sr
+    WHERE sr.id = t.id
+);
+
+
+
 import org.springframework.http.client.ClientHttpRequestFactory;
 import org.springframework.http.client.HttpComponentsClientHttpRequestFactory;
 import org.apache.http.client.HttpClient;
