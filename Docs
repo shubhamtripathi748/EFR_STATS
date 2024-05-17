@@ -1,3 +1,74 @@
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.annotation.Bean;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpMethod;
+import org.springframework.http.ResponseEntity;
+import org.springframework.util.ResourceUtils;
+import org.springframework.web.client.RestTemplate;
+
+import javax.net.ssl.*;
+import java.io.FileInputStream;
+import java.security.KeyStore;
+
+@SpringBootApplication
+public class Application {
+
+    @Value("${your.jks.password}")
+    private String jksPassword;
+
+    @Value("${your.jks.path}")
+    private String jksPath;
+
+    public static void main(String[] args) {
+        SpringApplication.run(Application.class, args);
+    }
+
+    @Bean
+    public RestTemplate restTemplate() throws Exception {
+        // Load the JKS file
+        KeyStore keyStore = KeyStore.getInstance("JKS");
+        FileInputStream fis = new FileInputStream(ResourceUtils.getFile(jksPath));
+        keyStore.load(fis, jksPassword.toCharArray());
+
+        // Create and configure SSLContext
+        SSLContext sslContext = SSLContext.getInstance("TLS");
+        KeyManagerFactory keyManagerFactory = KeyManagerFactory.getInstance(KeyManagerFactory.getDefaultAlgorithm());
+        keyManagerFactory.init(keyStore, jksPassword.toCharArray());
+        TrustManagerFactory trustManagerFactory = TrustManagerFactory.getInstance(TrustManagerFactory.getDefaultAlgorithm());
+        trustManagerFactory.init(keyStore);
+        sslContext.init(keyManagerFactory.getKeyManagers(), trustManagerFactory.getTrustManagers(), null);
+
+        // Configure RestTemplate to use SSLContext
+        HttpsURLConnection.setDefaultSSLSocketFactory(sslContext.getSocketFactory());
+
+        return new RestTemplate();
+    }
+
+    public void callHttpPost() {
+        // Prepare request payload
+        HttpHeaders headers = new HttpHeaders();
+        // Add headers if needed
+        // headers.add("Content-Type", "application/json");
+
+        // Example payload
+        String requestBody = "{\"key\": \"value\"}";
+
+        // Execute POST request
+        String url = "https://example.com/your_endpoint";
+        HttpEntity<String> requestEntity = new HttpEntity<>(requestBody, headers);
+        ResponseEntity<String> response = restTemplate().exchange(url, HttpMethod.POST, requestEntity, String.class);
+
+        // Handle response
+        System.out.println("Response status: " + response.getStatusCode());
+        System.out.println("Response body: " + response.getBody());
+    }
+}
+
+
+
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
