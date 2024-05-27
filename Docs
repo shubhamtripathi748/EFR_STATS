@@ -1,3 +1,9 @@
+I'd want to highlight a few points: 1. Please check the DATETIME value for the record you've shown, which is 25-MAR-24. 2.And, according to the business logic, we are only picking up records from the last 10 days, which is outside of the condition, which is why the batch job does not choose them.
+
+3.As a result, the batch did not choose records that we had not stamped into the database.
+4.and in all of the records you provided below, the datetime is before May.
+
+
 
 There are few points which I want to highlight 
 1.The record which you have shown in that can you please check what is DATETIME value it is 25-MAR-24 
