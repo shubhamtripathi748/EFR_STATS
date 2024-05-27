@@ -1,3 +1,10 @@
+
+There are few points which I want to highlight 
+1.The record which you have shown in that can you please check what is DATETIME value it is 25-MAR-24 
+2.and as per the business logic we are only picking up past 10 days record so that is beyond the condition that is the reason batch job not select those record.
+3.and hence batch didn’t pick those record we have not stamp into the database.
+4.and whatever record you have given below in all the record I can see datetime is before may.
+
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
