@@ -1,3 +1,206 @@
+
+{
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "type": "object",
+    "properties": {
+        "header": {
+            "type": "object",
+            "properties": {
+                "eventName": { "type": "string" },
+                "senderId": { "type": "string" },
+                "correlationId": { "type": "string" },
+                "externalReferenceNo": { "type": "string" }
+            },
+            "required": ["eventName", "senderId", "correlationId", "externalReferenceNo"]
+        },
+        "payload": {
+            "type": "object",
+            "properties": {
+                "cid": { "type": "string" },
+                "ibanNumber": { "type": "string" },
+                "idNumber": { "type": "string" },
+                "idType": { "type": "string" },
+                "requestorEmailID": { "type": "string" },
+                "customerFullName": { "type": "string" },
+                "airTravelAllowance": { "type": "string" },
+                "bankAplicationNumber": { "type": "string" },
+                "bankStmtUpload": { "type": "string" },
+                "businessIncome": { "type": "string" },
+                "casaAvailable": { "type": "string" },
+                "collectionCheck": { "type": "string" },
+                "comboApplication": { "type": "string" },
+                "comboApplicationType": { "type": "string" },
+                "companyAccomadation": { "type": "string" },
+                "custEMPEmailVerified": { "type": "string" },
+                "customerAcctMemo": { "type": "string" },
+                "customerEmirate": { "type": "string" },
+                "dateOfBirth": { "type": "string" },
+                "dateofJoining": { "type": "string" },
+                "dedupeAppStatus": { "type": "string" },
+                "designation": { "type": "string" },
+                "dividendIncome": { "type": "string" },
+                "dsaCode": { "type": "string" },
+                "educationAllowance": { "type": "string" },
+                "educationalQualification": { "type": "string" },
+                "eidaSponsorNumber": { "type": "string" },
+                "emailCheck": { "type": "string" },
+                "emirates": { "type": "string" },
+                "employeeProfession": { "type": "string" },
+                "employmentType": { "type": "string" },
+                "etbDelinquencyFlag": { "type": "string" },
+                "familyMembersIncome": { "type": "string" },
+                "fixedIncomeSalary": { "type": "string" },
+                "fixedOtherAllowance": { "type": "string" },
+                "fixedTransportAllowance": { "type": "string" },
+                "journeyType": { "type": "string" },
+                "lifeStyleExpense": { "type": "string" },
+                "mobileNumberCheck": { "type": "string" },
+                "variableIncomeMonth1": { "type": "string" },
+                "variableIncomeMonth2": { "type": "string" },
+                "variableIncomeMonth3": { "type": "string" },
+                "variableIncomeMonth4": { "type": "string" },
+                "variableIncomeMonth5": { "type": "string" },
+                "variableIncomeMonth6": { "type": "string" },
+                "flyingncomeMonth1": { "type": "string" },
+                "flyingncomeMonth2": { "type": "string" },
+                "flyingncomeMonth3": { "type": "string" },
+                "monthlyIncomeSelfEmployed": { "type": "string" },
+                "origScanDoc": { "type": "string" },
+                "otherAllowance": { "type": "string" },
+                "otherIncome": { "type": "string" },
+                "passportExpiryDate": { "type": "string" },
+                "pensionIncome": { "type": "string" },
+                "productId": { "type": "string" },
+                "rentalIncome": { "type": "string" },
+                "sourcingStaffType": { "type": "string" },
+                "sponsorName": { "type": "string" },
+                "spouseIncome": { "type": "string" },
+                "staffFlag": { "type": "string" },
+                "stlDocProvided": { "type": "string" },
+                "tradeLicenceIncome": { "type": "string" },
+                "uaePassCheck": { "type": "string" },
+                "variableIncome": { "type": "string" },
+                "visaExpiryDate": { "type": "string" },
+                "annualBonusYear1": { "type": "string" },
+                "annualBonusYear2": { "type": "string" },
+                "leadType": { "type": "string" },
+                "isAccountDeposit": { "type": "string" },
+                "companyCode": { "type": "string" },
+                "isUAEFTSRefreshRequired": { "type": "string" },
+                "employerChanged": { "type": "string" },
+                "internalExposureChanged": { "type": "string" },
+                "externalExposureChanged": { "type": "string" },
+                "externalContractData": {
+                    "type": "object",
+                    "properties": {
+                        "contractData": {
+                            "type": "object",
+                            "properties": {
+                                "contractDatatobeRemoved": {
+                                    "type": "array",
+                                    "items": {
+                                        "type": "object",
+                                        "properties": {
+                                            "contractId": { "type": "string" }
+                                        },
+                                        "required": ["contractId"]
+                                    }
+                                },
+                                "contractTobeAdded": {
+                                    "type": "array",
+                                    "items": {
+                                        "type": "object",
+                                        "properties": {
+                                            "contractId": { "type": "string" },
+                                            "ContractCategory": { "type": "string" },
+                                            "Provider_No": { "type": "string" },
+                                            "Type_of_Contract": { "type": "string" },
+                                            "Phase": { "type": "string" },
+                                            "Role": { "type": "string" },
+                                            "Original_Currency_Code": { "type": "string" },
+                                            "Total_Amount": { "type": "string" },
+                                            "Outstanding_Balance": { "type": "string" },
+                                            "Payments_Amount": { "type": "string" },
+                                            "LAST_REPORTED_DATE": { "type": "string" },
+                                            "MaxOutstanding3months": { "type": "string" },
+                                            "UtilizationRate": { "type": "string" },
+                                            "SecuredContractFlag": { "type": "string" },
+                                            "MaxDPD24Months": { "type": "string" },
+                                            "MaxDPDDate24Months": { "type": "string" },
+                                            "Status": { "type": "string" },
+                                            "ProductCode": { "type": "string" }
+                                        },
+                                        "required": [
+                                            "contractId",
+                                            "ContractCategory",
+                                            "Provider_No",
+                                            "Type_of_Contract",
+                                            "Phase",
+                                            "Role",
+                                            "Original_Currency_Code",
+                                            "Total_Amount",
+                                            "Outstanding_Balance",
+                                            "Payments_Amount",
+                                            "LAST_REPORTED_DATE",
+                                            "MaxOutstanding3months",
+                                            "UtilizationRate",
+                                            "SecuredContractFlag",
+                                            "MaxDPD24Months",
+                                            "MaxDPDDate24Months",
+                                            "Status",
+                                            "ProductCode"
+                                        ]
+                                    }
+                                }
+                            },
+                            "required": ["contractDatatobeRemoved", "contractTobeAdded"]
+                        }
+                    },
+                    "required": ["contractData"]
+                },
+                "internalContractData": {
+                    "type": "object",
+                    "properties": {
+                        "contractData": {
+                            "type": "object",
+                            "properties": {
+                                "contractDatatobeRemoved": {
+                                    "type": "array",
+                                    "items": {
+                                        "type": "object",
+                                        "properties": {
+                                            "contractId": { "type": "string" }
+                                        },
+                                        "required": ["contractId"]
+                                    }
+                                },
+                                "contractTobeAdded": {
+                                    "type": "array",
+                                    "items": {
+                                        "type": "object",
+                                        "properties": {
+                                            "contractId": { "type": "string" },
+                                            "ContractCategory": { "type": "string" },
+                                            "Provider_No": { "type": "string" },
+                                            "Type_of_Contract": { "type": "string" },
+                                            "Phase": { "type": "string" },
+                                            "Role": { "type": "string" },
+                                            "Original_Currency_Code": { "type": "string" },
+                                            "Total_Amount": { "type": "string" },
+                                            "Outstanding_Balance": { "type": "string" },
+                                            "Payments_Amount": { "type": "string" },
+                                            "LAST_REPORTED_DATE": { "type": "string" },
+                                            "MaxOutstanding3months": { "type": "string" },
+                                            "UtilizationRate":
+
+
+
+
+
+
+
+
+
 {
     "header": {
         "eventName": "RefreshEvent",
