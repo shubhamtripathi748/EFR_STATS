@@ -1,4 +1,277 @@
 
+Below is the JSON schema with `$id`, `description`, `minLength`, and `examples` for each field:
+
+```json
+{
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "$id": "http://example.com/sample.schema.json",
+    "title": "SampleSchema",
+    "description": "A sample schema derived from the provided JSON data",
+    "type": "object",
+    "properties": {
+        "header": {
+            "$id": "#/properties/header",
+            "type": "object",
+            "description": "Header information for the event",
+            "properties": {
+                "eventName": {
+                    "$id": "#/properties/header/properties/eventName",
+                    "type": "string",
+                    "description": "Name of the event",
+                    "minLength": 1,
+                    "examples": ["RefreshEvent"]
+                },
+                "senderId": {
+                    "$id": "#/properties/header/properties/senderId",
+                    "type": "string",
+                    "description": "ID of the sender",
+                    "minLength": 1,
+                    "examples": ["WMSBPMENG"]
+                },
+                "correlationId": {
+                    "$id": "#/properties/header/properties/correlationId",
+                    "type": "string",
+                    "description": "Correlation ID for tracking",
+                    "examples": [""]
+                },
+                "externalReferenceNo": {
+                    "$id": "#/properties/header/properties/externalReferenceNo",
+                    "type": "string",
+                    "description": "External reference number",
+                    "examples": [""]
+                }
+            },
+            "required": ["eventName", "senderId", "correlationId", "externalReferenceNo"]
+        },
+        "payload": {
+            "$id": "#/properties/payload",
+            "type": "object",
+            "description": "Payload containing customer and contract data",
+            "properties": {
+                "cid": {
+                    "$id": "#/properties/payload/properties/cid",
+                    "type": "string",
+                    "description": "Customer ID",
+                    "minLength": 1,
+                    "examples": ["1"]
+                },
+                "ibanNumber": {
+                    "$id": "#/properties/payload/properties/ibanNumber",
+                    "type": "string",
+                    "description": "IBAN number",
+                    "minLength": 1,
+                    "examples": ["AE"]
+                },
+                "idNumber": {
+                    "$id": "#/properties/payload/properties/idNumber",
+                    "type": "string",
+                    "description": "Identification number",
+                    "minLength": 1,
+                    "examples": ["784"]
+                },
+                "idType": {
+                    "$id": "#/properties/payload/properties/idType",
+                    "type": "string",
+                    "description": "Type of identification",
+                    "minLength": 1,
+                    "examples": ["EI"]
+                },
+                "requestorEmailID": {
+                    "$id": "#/properties/payload/properties/requestorEmailID",
+                    "type": "string",
+                    "description": "Email ID of the requestor",
+                    "minLength": 1,
+                    "examples": ["y@gmail.com"]
+                },
+                "customerFullName": {
+                    "$id": "#/properties/payload/properties/customerFullName",
+                    "type": "string",
+                    "description": "Full name of the customer",
+                    "minLength": 1,
+                    "examples": ["A"]
+                },
+                "airTravelAllowance": {
+                    "$id": "#/properties/payload/properties/airTravelAllowance",
+                    "type": "string",
+                    "description": "Air travel allowance",
+                    "minLength": 1,
+                    "examples": ["0"]
+                },
+                "bankAplicationNumber": {
+                    "$id": "#/properties/payload/properties/bankAplicationNumber",
+                    "type": "string",
+                    "description": "Bank application number",
+                    "examples": [""]
+                },
+                "bankStmtUpload": {
+                    "$id": "#/properties/payload/properties/bankStmtUpload",
+                    "type": "string",
+                    "description": "Bank statement upload status",
+                    "minLength": 1,
+                    "examples": ["N"]
+                },
+                "businessIncome": {
+                    "$id": "#/properties/payload/properties/businessIncome",
+                    "type": "string",
+                    "description": "Business income",
+                    "minLength": 1,
+                    "examples": ["0"]
+                },
+                "casaAvailable": {
+                    "$id": "#/properties/payload/properties/casaAvailable",
+                    "type": "string",
+                    "description": "CASA availability",
+                    "minLength": 1,
+                    "examples": ["N"]
+                },
+                "collectionCheck": {
+                    "$id": "#/properties/payload/properties/collectionCheck",
+                    "type": "string",
+                    "description": "Collection check status",
+                    "examples": [""]
+                },
+                "comboApplication": {
+                    "$id": "#/properties/payload/properties/comboApplication",
+                    "type": "string",
+                    "description": "Combo application status",
+                    "minLength": 1,
+                    "examples": ["No"]
+                },
+                "comboApplicationType": {
+                    "$id": "#/properties/payload/properties/comboApplicationType",
+                    "type": "string",
+                    "description": "Type of combo application",
+                    "examples": [""]
+                },
+                "companyAccomadation": {
+                    "$id": "#/properties/payload/properties/companyAccomadation",
+                    "type": "string",
+                    "description": "Company accommodation",
+                    "minLength": 1,
+                    "examples": ["0"]
+                },
+                "custEMPEmailVerified": {
+                    "$id": "#/properties/payload/properties/custEMPEmailVerified",
+                    "type": "string",
+                    "description": "Customer EMP email verified status",
+                    "minLength": 1,
+                    "examples": ["Y"]
+                },
+                "customerAcctMemo": {
+                    "$id": "#/properties/payload/properties/customerAcctMemo",
+                    "type": "string",
+                    "description": "Customer account memo",
+                    "examples": ["NA"]
+                },
+                "customerEmirate": {
+                    "$id": "#/properties/payload/properties/customerEmirate",
+                    "type": "string",
+                    "description": "Customer emirate",
+                    "minLength": 1,
+                    "examples": ["AUH"]
+                },
+                "dateOfBirth": {
+                    "$id": "#/properties/payload/properties/dateOfBirth",
+                    "type": "string",
+                    "description": "Customer's date of birth",
+                    "minLength": 1,
+                    "examples": ["14-Apr-1980"]
+                },
+                "dateofJoining": {
+                    "$id": "#/properties/payload/properties/dateofJoining",
+                    "type": "string",
+                    "description": "Date of joining",
+                    "minLength": 1,
+                    "examples": ["01-Oct-2009"]
+                },
+                "dedupeAppStatus": {
+                    "$id": "#/properties/payload/properties/dedupeAppStatus",
+                    "type": "string",
+                    "description": "Dedupe application status",
+                    "examples": [""]
+                },
+                "designation": {
+                    "$id": "#/properties/payload/properties/designation",
+                    "type": "string",
+                    "description": "Designation",
+                    "minLength": 1,
+                    "examples": ["9"]
+                },
+                "dividendIncome": {
+                    "$id": "#/properties/payload/properties/dividendIncome",
+                    "type": "string",
+                    "description": "Dividend income",
+                    "minLength": 1,
+                    "examples": ["0"]
+                },
+                "dsaCode": {
+                    "$id": "#/properties/payload/properties/dsaCode",
+                    "type": "string",
+                    "description": "DSA code",
+                    "examples": [""]
+                },
+                "educationAllowance": {
+                    "$id": "#/properties/payload/properties/educationAllowance",
+                    "type": "string",
+                    "description": "Education allowance",
+                    "minLength": 1,
+                    "examples": ["0"]
+                },
+                "educationalQualification": {
+                    "$id": "#/properties/payload/properties/educationalQualification",
+                    "type": "string",
+                    "description": "Educational qualification",
+                    "minLength": 1,
+                    "examples": ["4"]
+                },
+                "eidaSponsorNumber": {
+                    "$id": "#/properties/payload/properties/eidaSponsorNumber",
+                    "type": "string",
+                    "description": "EIDA sponsor number",
+                    "examples": [""]
+                },
+                "emailCheck": {
+                    "$id": "#/properties/payload/properties/emailCheck",
+                    "type": "string",
+                    "description": "Email check status",
+                    "minLength": 1,
+                    "examples": ["Y"]
+                },
+                "emirates": {
+                    "$id": "#/properties/payload/properties/emirates",
+                    "type": "string",
+                    "description": "Emirates",
+                    "examples": [""]
+                },
+                "employeeProfession": {
+                    "$id": "#/properties/payload/properties/employeeProfession",
+                    "type": "string",
+                    "description": "Employee profession",
+                    "examples": [""]
+                },
+                "employmentType": {
+                    "$id": "#/properties/payload/properties/employmentType",
+                    "type": "string",
+                    "description": "Type of employment",
+                    "minLength": 1,
+                    "examples":
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 {
     "$schema": "http://json-schema.org/draft-07/schema#",
     "type": "object",
