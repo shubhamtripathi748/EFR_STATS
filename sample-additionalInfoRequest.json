@@ -1,0 +1,149 @@
+{
+    "header": {
+        "eventName": "RefreshEvent",
+        "senderId": "WMSBPMENG",
+        "correlationId": "",
+        "externalReferenceNo": ""
+    },
+    "payload": {
+        "cid": "1",
+        "ibanNumber": "AE",
+        "idNumber": "784",
+        "idType": "EI",
+        "requestorEmailID": "y@gmail.com",
+        "customerFullName": "A",
+        "airTravelAllowance": "0",
+        "bankAplicationNumber": "",
+        "bankStmtUpload": "N",
+        "businessIncome": "0",
+        "casaAvailable": "N",
+        "collectionCheck": "",
+        "comboApplication": "No",
+        "comboApplicationType": "",
+        "companyAccomadation": "0",
+        "custEMPEmailVerified": "Y",
+        "customerAcctMemo": "NA",
+        "customerEmirate": "AUH",
+        "dateOfBirth": "14-Apr-1980",
+        "dateofJoining": "01-Oct-2009",
+        "dedupeAppStatus": "",
+        "designation": "9",
+        "dividendIncome": "0",
+        "dsaCode": "",
+        "educationAllowance": "0",
+        "educationalQualification": "4",
+        "eidaSponsorNumber": "",
+        "emailCheck": "Y",
+        "emirates": "",
+        "employeeProfession": "",
+        "employmentType": "SA",
+        "etbDelinquencyFlag": "",
+        "familyMembersIncome": "0",
+        "fixedIncomeSalary": "2",
+        "fixedOtherAllowance": "0",
+        "fixedTransportAllowance": "0",
+        "journeyType": "C",
+        "lifeStyleExpense": "0",
+        "mobileNumberCheck": "Y",
+        "variableIncomeMonth1": "0",
+        "variableIncomeMonth2": "0",
+        "variableIncomeMonth3": "0",
+        "variableIncomeMonth4": "0",
+        "variableIncomeMonth5": "0",
+        "variableIncomeMonth6": "0",
+        "flyingncomeMonth1": "0",
+        "flyingncomeMonth2": "0",
+        "flyingncomeMonth3": "0",
+        "monthlyIncomeSelfEmployed": "0",
+        "origScanDoc": "N",
+        "otherAllowance": "0",
+        "otherIncome": "0",
+        "passportExpiryDate": "08/09/2025",
+        "pensionIncome": "0",
+        "productId": "1",
+        "rentalIncome": "0",
+        "sourcingStaffType": "",
+        "sponsorName": "",
+        "spouseIncome": "0",
+        "staffFlag": "1",
+        "stlDocProvided": "Y",
+        "tradeLicenceIncome": "0",
+        "uaePassCheck": "Y",
+        "variableIncome": "0",
+        "visaExpiryDate": "",
+        "annualBonusYear1": "0",
+        "annualBonusYear2": "0",
+        "leadType": "Default",
+		"isAccountDeposit": "N",
+        "companyCode": "",
+        "isUAEFTSRefreshRequired": "N",
+        "employerChanged": "N",
+        "internalExposureChanged": "N",
+        "externalExposureChanged": "N",
+        "externalContractData": {
+            "contractData": 
+                {
+                    "contractDatatobeRemoved": [
+                        {
+                            "contractId": "1"
+                        }
+                    ],
+                    "contractTobeAdded": [
+                        {
+                            "contractId": "",
+                            "ContractCategory": "Credit Card",
+                            "Provider_No": "B",
+                            "Type_of_Contract": "Credit Card",
+                            "Phase": "A",
+                            "Role": "A",
+                            "Original_Currency_Code": "AED",
+                            "Total_Amount": "1",
+                            "Outstanding_Balance": "0",
+                            "Payments_Amount": "0",
+                            "LAST_REPORTED_DATE": "30",
+                            "MaxOutstanding3months": "0",
+                            "UtilizationRate": "0",
+                            "SecuredContractFlag": "No",
+                            "MaxDPD24Months": "90",
+                            "MaxDPDDate24Months": "0",
+                            "Status": "",
+                            "ProductCode": ""
+                        }
+                        
+                    ]
+                }
+        },
+        "internalContractData": {
+            "contractData": 
+                {
+                    "contractDatatobeRemoved": [
+                        {
+                            "contractId": "1"
+                        }
+                    ],
+                    "contractTobeAdded": [
+                        {
+                            "contractId": "",
+                            "ContractCategory": "Credit Card",
+                            "Provider_No": "B",
+                            "Type_of_Contract": "Credit Card",
+                            "Phase": "A",
+                            "Role": "A",
+                            "Original_Currency_Code": "AED",
+                            "Total_Amount": "1",
+                            "Outstanding_Balance": "0",
+                            "Payments_Amount": "0",
+                            "LAST_REPORTED_DATE": "3",
+                            "MaxOutstanding3months": "0",
+                            "UtilizationRate": "0",
+                            "SecuredContractFlag": "No",
+                            "MaxDPD24Months": "90",
+                            "MaxDPDDate24Months": "0",
+                            "Status": "",
+                            "ProductCode": ""
+                        }
+                    ]
+                }
+        }
+    }
+}
