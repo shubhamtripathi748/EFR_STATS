@@ -1,3 +1,199 @@
+
+{
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "$id": "http://example.com/sample.schema.json",
+    "title": "SampleSchema",
+    "description": "A sample schema derived from the provided JSON data",
+    "type": "object",
+    "properties": {
+        "payload": {
+            "$id": "#/properties/payload",
+            "type": "object",
+            "description": "Payload containing contract data",
+            "properties": {
+                "externalContractData": {
+                    "$id": "#/properties/payload/properties/externalContractData",
+                    "type": "object",
+                    "description": "External contract data",
+                    "properties": {
+                        "contractData": {
+                            "$id": "#/properties/payload/properties/externalContractData/properties/contractData",
+                            "type": "object",
+                            "description": "Contract data details",
+                            "properties": {
+                                "contractDatatobeRemoved": {
+                                    "$id": "#/properties/payload/properties/externalContractData/properties/contractData/properties/contractDatatobeRemoved",
+                                    "type": "array",
+                                    "description": "List of contracts to be removed",
+                                    "items": {
+                                        "type": "object",
+                                        "properties": {
+                                            "contractId": {
+                                                "$id": "#/properties/payload/properties/externalContractData/properties/contractData/properties/contractDatatobeRemoved/items/properties/contractId",
+                                                "type": "string",
+                                                "description": "ID of the contract to be removed",
+                                                "minLength": 1,
+                                                "examples": ["1"]
+                                            }
+                                        },
+                                        "required": ["contractId"]
+                                    }
+                                },
+                                "contractTobeAdded": {
+                                    "$id": "#/properties/payload/properties/externalContractData/properties/contractData/properties/contractTobeAdded",
+                                    "type": "array",
+                                    "description": "List of contracts to be added",
+                                    "items": {
+                                        "type": "object",
+                                        "properties": {
+                                            "contractId": {
+                                                "$id": "#/properties/payload/properties/externalContractData/properties/contractData/properties/contractTobeAdded/items/properties/contractId",
+                                                "type": "string",
+                                                "description": "ID of the contract to be added",
+                                                "examples": [""]
+                                            },
+                                            "ContractCategory": {
+                                                "$id": "#/properties/payload/properties/externalContractData/properties/contractData/properties/contractTobeAdded/items/properties/ContractCategory",
+                                                "type": "string",
+                                                "description": "Category of the contract",
+                                                "minLength": 1,
+                                                "examples": ["Credit Card"]
+                                            },
+                                            "Provider_No": {
+                                                "$id": "#/properties/payload/properties/externalContractData/properties/contractData/properties/contractTobeAdded/items/properties/Provider_No",
+                                                "type": "string",
+                                                "description": "Provider number",
+                                                "minLength": 1,
+                                                "examples": ["B"]
+                                            },
+                                            "Type_of_Contract": {
+                                                "$id": "#/properties/payload/properties/externalContractData/properties/contractData/properties/contractTobeAdded/items/properties/Type_of_Contract",
+                                                "type": "string",
+                                                "description": "Type of contract",
+                                                "minLength": 1,
+                                                "examples": ["Credit Card"]
+                                            },
+                                            "Phase": {
+                                                "$id": "#/properties/payload/properties/externalContractData/properties/contractData/properties/contractTobeAdded/items/properties/Phase",
+                                                "type": "string",
+                                                "description": "Phase of the contract",
+                                                "minLength": 1,
+                                                "examples": ["A"]
+                                            },
+                                            "Role": {
+                                                "$id": "#/properties/payload/properties/externalContractData/properties/contractData/properties/contractTobeAdded/items/properties/Role",
+                                                "type": "string",
+                                                "description": "Role in the contract",
+                                                "minLength": 1,
+                                                "examples": ["A"]
+                                            },
+                                            "Original_Currency_Code": {
+                                                "$id": "#/properties/payload/properties/externalContractData/properties/contractData/properties/contractTobeAdded/items/properties/Original_Currency_Code",
+                                                "type": "string",
+                                                "description": "Original currency code",
+                                                "minLength": 1,
+                                                "examples": ["AED"]
+                                            },
+                                            "Total_Amount": {
+                                                "$id": "#/properties/payload/properties/externalContractData/properties/contractData/properties/contractTobeAdded/items/properties/Total_Amount",
+                                                "type": "string",
+                                                "description": "Total amount of the contract",
+                                                "minLength": 1,
+                                                "examples": ["1"]
+                                            },
+                                            "Outstanding_Balance": {
+                                                "$id": "#/properties/payload/properties/externalContractData/properties/contractData/properties/contractTobeAdded/items/properties/Outstanding_Balance",
+                                                "type": "string",
+                                                "description": "Outstanding balance of the contract",
+                                                "minLength": 1,
+                                                "examples": ["0"]
+                                            },
+                                            "Payments_Amount": {
+                                                "$id": "#/properties/payload/properties/externalContractData/properties/contractData/properties/contractTobeAdded/items/properties/Payments_Amount",
+                                                "type": "string",
+                                                "description": "Payments amount of the contract",
+                                                "minLength": 1,
+                                                "examples": ["0"]
+                                            },
+                                            "LAST_REPORTED_DATE": {
+                                                "$id": "#/properties/payload/properties/externalContractData/properties/contractData/properties/contractTobeAdded/items/properties/LAST_REPORTED_DATE",
+                                                "type": "string",
+                                                "description": "Last reported date",
+                                                "minLength": 1,
+                                                "examples": ["30"]
+                                            },
+                                            "MaxOutstanding3months": {
+                                                "$id": "#/properties/payload/properties/externalContractData/properties/contractData/properties/contractTobeAdded/items/properties/MaxOutstanding3months",
+                                                "type": "string",
+                                                "description": "Max outstanding for the last 3 months",
+                                                "minLength": 1,
+                                                "examples": ["0"]
+                                            },
+                                            "UtilizationRate": {
+                                                "$id": "#/properties/payload/properties/externalContractData/properties/contractData/properties/contractTobeAdded/items/properties/UtilizationRate",
+                                                "type": "string",
+                                                "description": "Utilization rate",
+                                                "minLength": 1,
+                                                "examples": ["0"]
+                                            },
+                                            "SecuredContractFlag": {
+                                                "$id": "#/properties/payload/properties/externalContractData/properties/contractData/properties/contractTobeAdded/items/properties/SecuredContractFlag",
+                                                "type": "string",
+                                                "description": "Secured contract flag",
+                                                "minLength": 1,
+                                                "examples": ["No"]
+                                            },
+                                            "MaxDPD24Months": {
+                                                "$id": "#/properties/payload/properties/externalContractData/properties/contractData/properties/contractTobeAdded/items/properties/MaxDPD24Months",
+                                                "type": "string",
+                                                "description": "Max DPD in the last 24 months",
+                                                "minLength": 1,
+                                                "examples": ["90"]
+                                            },
+                                            "MaxDPDDate24Months": {
+                                                "$id": "#/properties/payload/properties/externalContractData/properties/contractData/properties/contractTobeAdded/items/properties/MaxDPDDate24Months",
+                                                "type": "string",
+                                                "description": "Max DPD date in the last 24 months",
+                                                "minLength": 1,
+                                                "examples": ["0"]
+                                            },
+                                            "Status": {
+                                                "$id": "#/properties/payload/properties/externalContractData/properties/contractData/properties/contractTobeAdded/items/properties/Status",
+                                                "type": "string",
+                                                "description": "Status of the contract",
+                                                "examples": [""]
+                                            },
+                                            "ProductCode": {
+                                                "$id": "#/properties/payload/properties/externalContractData/properties/contractData/properties/contractTobeAdded/items/properties/ProductCode",
+                                                "type": "string",
+                                                "description": "Product code of the contract",
+                                                "examples": [""]
+                                            }
+                                        },
+                                        "required": ["ContractCategory", "Provider_No", "Type_of_Contract", "Phase", "Role", "Original_Currency_Code", "Total_Amount", "Outstanding_Balance", "Payments_Amount", "LAST_REPORTED_DATE", "MaxOutstanding3months", "UtilizationRate", "SecuredContractFlag", "MaxDPD24Months", "MaxDPDDate24Months"]
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "internalContractData": {
+                    "$id": "#/properties/payload/properties/internalContractData",
+                    "type": "object",
+                    "description": "Internal contract data",
+                    "properties": {
+                        "contractData": {
+                            "$id": "#/properties/payload/properties/internalContractData/properties/contractData",
+                            "type": "object",
+                            "description": "Contract data details",
+                            "properties": {
+                                "contractDatatobeRemoved": {
+                                    "$id": "#/properties/payload/properties/internalContractData/properties/contractData/properties/contractDatatobeRemoved",
+
+
+
+
+
 {
     "payload": {
         "externalContractData": {
