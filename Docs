@@ -1,3 +1,11 @@
+Following the adjustment, we are supposed to promote manufacturing.
+1.Log4j version upgrade
+2. Database suppresses request/response
+3. As previously indicated, we need to deploy services in UAT and align the business to do a round of sanity checks.
+
+Please find some notes in the attached spreadsheet.
+
+
 When we attempt to connect from the service, we receive the following exception. 
 Would you kindly see whether there is a problem with UAT DB?
 
