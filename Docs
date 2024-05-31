@@ -1,6 +1,5 @@
-We are getting below exception when tried to connect from service 
-Can you please check if UAT DB is having some issue
-
+When we attempt to connect from the service, we receive the following exception. 
+Would you kindly see whether there is a problem with UAT DB?
 
 I'd want to highlight a few points: 1. Please check the DATETIME value for the record you've shown, which is 25-MAR-24. 2.And, according to the business logic, we are only picking up records from the last 10 days, which is outside of the condition, which is why the batch job does not choose them.
 
