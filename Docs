@@ -1,3 +1,11 @@
+
+The password we received is invalid we are unable to load the password.
+
+The old password is close to 60 char long and old password we are able to decrypt and pass to calling channel
+
+However  the new password is only 28 character long so we are unable to parse it.
+
+
 I would like to know who tested the application previously. Please contact Vikas to find out how they are conducting the testing. Please note that you cannot access this URL directly in a browser. I have not altered the deployed application context route.
 
 Nevertheless, you can test the new modifications after confirming the current flow in an alternative context path, as specified by Vikas in the email below.
