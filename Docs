@@ -1,3 +1,8 @@
+We received an incorrect password. The password is not loading for us.
+
+We can decrypt the previous password, which was about sixty characters long, and send it to the calling channel.
+
+We are unable to understand the new password, though, because it is only 28 characters long.
 
 The password we received is invalid we are unable to load the password.
 
