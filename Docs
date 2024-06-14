@@ -1,3 +1,7 @@
+I would like to know who tested the application previously. Please contact Vikas to find out how they are conducting the testing. Please note that you cannot access this URL directly in a browser. I have not altered the deployed application context route.
+
+Nevertheless, you can test the new modifications after confirming the current flow in an alternative context path, as specified by Vikas in the email below.
+
 <Valve className="org.apache.catalina.valves.RemoteAddrValve"
        allow="127\.\d+\.\d+\.\d+|::1|192\.168\.1\.100"/>
 
