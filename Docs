@@ -1,3 +1,33 @@
+@Service
+public class EmailService {
+
+    @Autowired
+    private JavaMailSender mailSender;
+
+    public void sendEmail(String to, String subject, String text) throws MessagingException {
+        MimeMessage message = mailSender.createMimeMessage();
+        MimeMessageHelper helper = new MimeMessageHelper(message, true);
+
+        helper.setTo(to);
+        helper.setSubject(subject);
+        helper.setText(text, true);
+
+        mailSender.send(message);
+    }
+}
+
+
+spring.mail.host=smtp.example.com
+spring.mail.port=587
+spring.mail.username=your_username
+spring.mail.password=your_password
+spring.mail.properties.mail.smtp.auth=true
+spring.mail.properties.mail.smtp.starttls.enable=true
+
+
+
+
+-------------------------------------------------
 I believe you have configured the incorrect URL, and upon closer inspection, we have noticed that the URL you are referring to is entirely out of date. I kindly ask you to configure the proper URL, as I believe Vikas shared it with you a long time ago. Please refer to the email from Vikas that is attached.
 Then you should see an accurate record if your browser is definitely compatible. I can see my TP ID on the page, but the segam jar component cannot be loaded on my computer. 
 
