@@ -1,0 +1,87 @@
+This application will listen to Two streams of data. One having record from ADCB and one is having record from CB.
+It should be able to identify unmatched records coming both the stream within a timeframe of few minutes.
+
+
+This is an executable jar build using Spring Boot. 
+It is an in-house utility which has the capability to compare live KAFKA streams. 
+Application should be capable of reading and comparing two kafka streams one from Central Bank and one from ADCB on a time based window.
+
+
+2.1.	High level Overview:
+	1.	Two streams are subscribed Central Bank stream, ADCB stream.
+	2.	Record coming from each stream is in array format ie [123,abc, xyz, 456, ijk].
+	3.	Output of stream should be json with key from incoming stream topic. (configuration is provided to identify index in array to be considered as key) ie. Key:1; output json : {123: [123,abc, xyz, 456, ijk]}
+	4.	Output json separator (highlighted above) is also configurable.
+	5.	Output should be divided into two output streams
+	•	 All records
+	•	 Records that didn’t match between input stream topics
+
+
+
+2.2.	Matching criteria
+The streamer matching logic applies below 4 matching criteria in sequence. If any 1 of the 4 criteria matches then it is considered a match. 
+Specifically Pelican transactions get matched with SWIFT code (CTD_13) only 
+
+
+There are 4 matching criteria between MQ message (Topic 2 coming from DES/FTS file) and FCUBS transaction (Topic 1 coming from MDM golden gate). Transaction is considered matched if any of the below criteria matches.
+
+Criteria 1
+FCUBS Column	MQ Message
+RELATED_ACCOUNT	CTD-11
+LCY_AMOUNT	CTD_08
+TRN_REF_NO	CTD_20
+
+Criteria 2
+FCUBS Column	MQ Message
+RELATED_ACCOUNT	CTD-11
+LCY_AMOUNT	CTD_08
+EXTERNAL_REF_NO	CTD_20
+
+Criteria 3
+FCUBS	MQ Message
+LCY_AMOUNT	CTD_08
+EXTERNAL_REF_NO	CTD_20
+SWIFTCODE	CTD_13
+
+Criteria 4
+FCUBS	MQ Message
+LCY_AMOUNT	CTD_08
+TRN_REF_NO	CTD_20
+SWIFTCODE	CTD_13
+
+
+
+System to validate FCUBS against CB Portal transaction details, no email trigger expected
+portal and no related entry in FCUBS for that reference.suspected transaction in configured format.
+Email should trigger to the defined user notifying as suspected transaction in configured format.
+
+To validate email trigger 
+Process the entries in  FCUBS (1006)
+Create payment in CB portal with different debit account but same reference & amount.
+DEDTRONL always starts with 049
+In case of DEDTRONL transaction, system always consider as unmatched and trigger a mail. It is same behavior in production also.
+
+
+3.	Always the FCUBS counterpart of the transaction arrives first then the DES counterpart of the transaction arrives. As soon as DES record arrives it starts to search for a match based on below criteria. It doesn’t wait for more FCUBS messages. If a match is found, it send the message to topic 3. So even if MDM sends 1000 messages but DES sends only 10 it will only match those 10 records as soon as it is received from DES and then exits
+4.	Then if none of the criteria matches then 
+o	Its classified as an Unmatched Trn
+o	Sent to both Topic 3 & 4
+Else if any one criteria matches
+o	Its classified as a Matched Trn
+o	Sent to Topic 3 only
+
+
+1.	There are 6 kafka topics used into matching of records.
+•	Incoming CB
+•	Incoming ADCB
+•	Intermediate topic CB
+•	Intermediate ADCB
+•	Output ALL
+•	Output Not Matched
+
+
+2.	Matching is performed by using left join on KStream that require a key on both the streams to be matched. This is performed in two steps.
+a.	First we convert array into key value based dictionary collection
+b.	Then stream again to Intermediate topic so that we can apply joins on those intermediate topics.
+
+kafka-clients, kafka-streams API (CDP version)
