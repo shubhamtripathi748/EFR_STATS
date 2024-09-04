@@ -1,3 +1,7 @@
+implementation("org.apache.logging.log4j:log4j-core:2.x.x") {
+    exclude group: 'org.slf4j', module: 'slf4j-log4j12'
+}
+
 
 Exception in thread "main" java.lang.ClassCastException: org.apache.logging.slf4j.SLF4JLoggerContext cannot be cast to org.apache.logging.log4j.core.LoggerContext
 We have around 40+ applications available in instance 2 production environment. We discovered a log4j versioning issue and DB calls were being logged for url monitoring. We changed the logging level to Debug to suppress the log in files. We have updated around 40+ repositories and code, and the code is now in sync with the production code. I do not have access to the Jira dash board, so I am unable to create Jira stories.
