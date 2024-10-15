@@ -1,3 +1,21 @@
+Subject: Thank You and Farewell!
+
+Dear [Team/Colleagues],
+
+I hope this email finds you well. As some of you know, today marks my last day at [Company Name]. It’s been an incredible journey, and I wanted to take a moment to express my gratitude.
+
+Over the past [X years/months], I’ve had the pleasure of working with some of the most talented, creative, and kind-hearted individuals. I’ve learned so much from each of you, and I’m incredibly grateful for the collaboration, support, and the many memorable moments we’ve shared.
+
+I want to thank [mention specific teams, mentors, or colleagues] for their guidance and friendship. You’ve made my time here both rewarding and enjoyable.
+
+Though I’m moving on to a new chapter, I’ll always cherish my time at [Company Name]. Please don’t hesitate to keep in touch—my personal email is [Your Email], and I’d love to hear from you.
+
+Wishing you all continued success, and I hope our paths cross again in the future.
+
+Warm regards,
+[Your Full Name]
+[Your LinkedIn Profile or Contact Information]
+
 from pyspark import SparkContext
 from pyspark.streaming import StreamingContext
 from pyspark.streaming.kafka import KafkaUtils
