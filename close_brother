@@ -1,3 +1,67 @@
+When working with a team that uses a WSDL (Web Services Description Language) for retrieving data from a postcode vendor, you should ask questions to clarify the functionality, integration, performance, and constraints. Here’s a structured list of questions:
+
+1. Purpose and Requirements
+
+	•	What specific data are you retrieving from the postcode vendor (e.g., address details, geolocation, validation)?
+	•	Why is the postcode data required, and how is it used within the system?
+	•	Are there any compliance or data quality requirements for the postcode data?
+
+2. Service Details
+
+	•	What operations are provided by the WSDL (e.g., validation, lookup)?
+	•	Is there documentation for the WSDL or the API it represents?
+	•	What version of the WSDL is currently in use? Is it up-to-date?
+
+3. Authentication and Security
+
+	•	Does the WSDL require authentication (e.g., API keys, OAuth)?
+	•	What security protocols are in place for communication (e.g., HTTPS, WS-Security)?
+	•	Is the data from the vendor encrypted or sensitive? If so, how is it secured?
+
+4. Integration and Implementation
+
+	•	How is the WSDL integrated into your application (e.g., using a specific library, manually generating client code)?
+	•	Are you using any frameworks (e.g., Spring-WS, Apache CXF) to consume the WSDL?
+	•	Are there any dependencies or configurations required to connect to the service?
+
+5. Performance and Reliability
+
+	•	What is the expected latency and throughput of the service?
+	•	Have there been any performance or availability issues with the postcode vendor?
+	•	What is the SLA (Service Level Agreement) provided by the vendor?
+
+6. Error Handling and Logging
+
+	•	How are errors from the postcode service handled (e.g., invalid postcodes, network issues)?
+	•	Is there a logging mechanism in place for tracking service calls and responses?
+	•	Are retries implemented for transient errors? If yes, how are they configured?
+
+7. Costs and Usage Limits
+
+	•	Are there any rate limits or quotas for using the postcode service?
+	•	What are the costs associated with using the postcode vendor?
+
+8. Testing and Environment
+
+	•	Is there a sandbox or test environment for the postcode service?
+	•	How do you test the WSDL integration during development and deployment?
+
+9. Vendor and Maintenance
+
+	•	Who is the vendor, and how reliable is their service?
+	•	How often does the vendor update the WSDL, and how are updates communicated to clients?
+	•	What is the support mechanism for issues related to the postcode service?
+
+10. Alternatives and Future Plans
+
+	•	Are there plans to switch vendors or upgrade to a different service?
+	•	Have alternative data sources or vendors been evaluated?
+
+By addressing these areas, you ensure a clear understanding of the integration and
+
+
+
+
 ### Design Document: Handling AWS S3 Downtime and Connectivity Loss
 
 ---
