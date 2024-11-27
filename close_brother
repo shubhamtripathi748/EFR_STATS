@@ -1,3 +1,10 @@
+he Spring Boot application will fetch the image from S3 using the isi_barcode as a key and serve it to I-PROMPT through a dedicated REST API endpoint. This approach eliminates the need for I-PROMPT to include multiple if-else conditions for various scenarios, centralizing the logic within the Spring Boot application. This ensures:
+
+Cleaner Code in I-PROMPT: By abstracting the logic into the Spring Boot application, I-PROMPT is only responsible for invoking the REST API and handling its response.
+Flexibility: Any changes to the image-fetching logic (e.g., updating the S3 bucket structure) can be managed in one place without modifying I-PROMPT.
+Scalability: The Spring Boot application can handle advanced logic like caching, retries, or load balancing, which is not feasible with static if-else conditions in I-PROMPT.
+Better Separation of Concerns: Each system focuses on its core functionality, improving maintainability and reducing dependencies.
+
 The Spring Boot application between I-Prompt and APIC serves as a middleware layer to handle communication, data transformation, validation, and error handling. By exposing a RESTful interface and utilizing services for APIC interaction, you can ensure a decoupled and manageable architecture for your system. Proper logging, security, and monitoring will ensure smooth operations and facilitate debugging during integration.
 
 The delete operation should ideally not be part of the migration job for the following reasons:
