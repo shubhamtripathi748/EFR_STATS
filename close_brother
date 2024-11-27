@@ -1,3 +1,10 @@
+The delete operation should ideally not be part of the migration job for the following reasons:
+
+It mixes responsibilities and can jeopardize data integrity.
+It complicates recovery in case of migration failures.
+It should be a separate task, where you can control access, logging, and retries, all of which are easier to manage through a dedicated REST API.
+By decoupling migration and deletion tasks, you create a more modular, maintainable, and flexible architecture
+
 Batch Size: Use chunk in Spring Batch to control batch processing size.
 Failure Mechanism: Configure error handling with skip and retry strategies.
 Retry Logic: Automatically retry failed items or steps based on exception types.
