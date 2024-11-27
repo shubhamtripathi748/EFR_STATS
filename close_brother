@@ -1,3 +1,10 @@
+A status helps track the progress of an operation. For instance, during the process of uploading files to AWS S3, the status can indicate:
+"PENDING": The operation is queued but not yet started.
+"IN_PROGRESS": The file is being uploaded.
+"SUCCESS": The file has been successfully uploaded.
+"FAILED": The upload encountered an error.
+This tracking is crucial for understanding where in the process a particular file or operation currently stands
+
 For Externalized Cron Expressions: The responsible team (DevOps or IT) can modify the schedule in the configuration file or through environment variables, followed by a restart or refresh of the application.
 
 Dynamic Schedule Updates
