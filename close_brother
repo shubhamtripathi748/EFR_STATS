@@ -1,3 +1,5 @@
+The Spring Boot application between I-Prompt and APIC serves as a middleware layer to handle communication, data transformation, validation, and error handling. By exposing a RESTful interface and utilizing services for APIC interaction, you can ensure a decoupled and manageable architecture for your system. Proper logging, security, and monitoring will ensure smooth operations and facilitate debugging during integration.
+
 The delete operation should ideally not be part of the migration job for the following reasons:
 
 It mixes responsibilities and can jeopardize data integrity.
