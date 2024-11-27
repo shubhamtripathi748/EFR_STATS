@@ -1,3 +1,12 @@
+For Externalized Cron Expressions: The responsible team (DevOps or IT) can modify the schedule in the configuration file or through environment variables, followed by a restart or refresh of the application.
+
+Dynamic Schedule Updates
+For systems requiring frequent schedule changes without restarting, you can implement dynamic scheduling:
+The cron expression can be changed dynamically in a database or external file.
+Changes can be loaded without redeploying the application
+
+
+=======================
 When working with a team that uses a WSDL (Web Services Description Language) for retrieving data from a postcode vendor, you should ask questions to clarify the functionality, integration, performance, and constraints. Here’s a structured list of questions:
 
 1. Purpose and Requirements
