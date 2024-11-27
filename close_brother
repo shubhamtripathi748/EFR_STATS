@@ -1,3 +1,10 @@
+Batch Size: Use chunk in Spring Batch to control batch processing size.
+Failure Mechanism: Configure error handling with skip and retry strategies.
+Retry Logic: Automatically retry failed items or steps based on exception types.
+Scheduling: Use cron expressions in @Scheduled to automate job execution at fixed intervals.
+Monitoring: Track job status and performance via metrics, logs, and monitoring tools.
+By using Spring Batch’s features, you can manage batch processing efficiently, handle failures, and schedule jobs according to business requirements.
+
 Modularity and Decoupling:
 I-Prompt handles only file generation, while Spring Boot takes care of upload and status management.
 Flexibility for Changes:
