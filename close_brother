@@ -3,6 +3,10 @@ I-Prompt handles only file generation, while Spring Boot takes care of upload an
 Flexibility for Changes:
 If the application evolves to include more complex workflows (e.g., retry logic or batch processing), a dedicated DB ensures smooth extensibilit
 
+Ownership:
+If Spring Boot fully owns the upload process, I-Prompt doesn't need to log statuses.
+Separation of Concerns:
+Mentioning I-Prompt Log DB creates unnecessary coupling and complexity if it isn't actively managing the upload workflow
 
 
 A status helps track the progress of an operation. For instance, during the process of uploading files to AWS S3, the status can indicate:
