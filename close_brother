@@ -1,3 +1,16 @@
+Flow of Requests:
+Step 1: The client (user or frontend application) sends an HTTP request to an API endpoint exposed by IBM API Connect.
+Step 2: IBM API Connect acts as a gateway and handles various tasks, such as:
+Authentication and Authorization (e.g., OAuth tokens, API key validation)
+Rate limiting
+Logging
+Request routing
+Step 3: APIC forwards the request to the Spring Boot application if the request is valid.
+Step 4: The Spring Boot application processes the request, potentially communicating with databases or other external services.
+Step 5: The Spring Boot application sends back the response (usually in JSON or XML) to IBM API Connect.
+Step 6: IBM API Connect applies any additional transformations or processing (like response caching or transformation).
+Step 7: Finally, IBM API Connect sends the response back to the client.
+
 Alright Amit, I will begin writing the code and keep you updated as I go along. However, as a Big Data Engineer, I’m not expecting this task to be straightforward, given the complexity and scale of the data involved. But I'll work through it and let you know if I need any assistance or run into any roadblocks
 
 I understand your point about the consuming application primarily being concerned with whether the file transfer was successful and maintaining the URL if the transfer is successful. However, maintaining the status can still provide several benefits, both for operational purposes and future-proofing the system:
