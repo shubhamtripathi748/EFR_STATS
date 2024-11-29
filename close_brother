@@ -1,3 +1,5 @@
+Alright Amit, I will begin writing the code and keep you updated as I go along. However, as a Big Data Engineer, I’m not expecting this task to be straightforward, given the complexity and scale of the data involved. But I'll work through it and let you know if I need any assistance or run into any roadblocks
+
 I understand your point about the consuming application primarily being concerned with whether the file transfer was successful and maintaining the URL if the transfer is successful. However, maintaining the status can still provide several benefits, both for operational purposes and future-proofing the system:
 
 Operational Transparency: The status allows for better monitoring and diagnostics in case there is an issue with the transfer. It provides a clear indication of whether the file was successfully uploaded, failed, or is still in progress, which can be useful for troubleshooting and support.
