@@ -1,3 +1,7 @@
+If there are any changes to how the system handles personal data deletion (such as how exceptions are handled, or how data can be restored in specific cases), we should be prepared to implement those as well.
+
+We can review the current deletion process with the compliance team to ensure it satisfies the updated GDPR requirements.
+
 Switching from one vendor (e.g., ePostcode) to another (e.g., Experian CDP API) for any service, such as address verification or data enrichment, requires a detailed impact analysis to ensure the transition is seamless and minimizes risks. Here’s a breakdown of the impact areas you need to evaluate:
 
 1. Technical Impact
