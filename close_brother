@@ -1,3 +1,13 @@
+Operation	Method	Endpoint
+Create Image	POST	/images
+Read Image	GET	/images/{imageId}
+Update Image	PUT	/images/{imageId}
+Delete Image	DELETE	/images/{imageId}
+Migrate Images	POST	/migrate
+Migration Status	GET	/migrate/status
+Fetch e-Postcode	GET	/epostcode/{postcode}
+Validate e-Postcode	POST	/epostcode/validate
+
 +---------------------+             +--------------------+             +-----------------+
 | Oracle Database     |             | Spring Boot        |             | Amazon S3       |
 |---------------------|             |--------------------|             |-----------------|
