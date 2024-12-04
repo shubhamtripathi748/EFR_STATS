@@ -1,3 +1,28 @@
+ String fileName = entity.getIsibarcode() + "." + entity.getFormat();  // For example: 12345.pdf
+        
+        // Define the full file path on C: drive
+        String filePath = "C:\\path_to_save\\" + fileName;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.nio.file.Paths;
+
+@Service
+public class FileService {
+
+    public void writeBlobToFile(byte[] data, String filePath) throws IOException {
+        try (FileOutputStream fileOutputStream = new FileOutputStream(filePath)) {
+            fileOutputStream.write(data);
+            fileOutputStream.flush();
+            System.out.println("File written successfully to: " + filePath);
+        } catch (IOException e) {
+            e.printStackTrace();
+            throw new IOException("Failed to write file: " + filePath, e);
+        }
+    }
+}
 
 
 
