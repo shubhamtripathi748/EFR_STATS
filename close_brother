@@ -1,3 +1,32 @@
+import javax.imageio.ImageIO;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
+
+public class TiffToPngConverter {
+
+    public static void main(String[] args) {
+        String tiffFilePath = "C:\\path\\to\\input.tif";
+        String pngFilePath = "C:\\path\\to\\output.png";
+
+        try {
+            // Read the TIFF file
+            BufferedImage tiffImage = ImageIO.read(new File(tiffFilePath));
+
+            // Write it as PNG
+            boolean result = ImageIO.write(tiffImage, "png", new File(pngFilePath));
+
+            if (result) {
+                System.out.println("Conversion successful! PNG saved at: " + pngFilePath);
+            } else {
+                System.out.println("Conversion failed.");
+            }
+        } catch (IOException e) {
+            System.err.println("Error during conversion: " + e.getMessage());
+        }
+    }
+}
+
 public void fetchBatchRecords() {
         int pageNumber = 0;
         int pageSize = 1000;
