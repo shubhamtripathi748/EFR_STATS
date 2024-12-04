@@ -1,4 +1,22 @@
- String fileName = entity.getIsibarcode() + "." + entity.getFormat();  // For example: 12345.pdf
+public void fetchBatchRecords() {
+        int pageNumber = 0;
+        int pageSize = 1000;
+        PageRequest pageRequest = PageRequest.of(pageNumber, pageSize);
+        
+        Page<Employee> page;
+        
+        // Fetch records in batches
+        do {
+            page = employeeRepository.findAll(pageRequest);
+            List<Employee> employees = page.getContent();
+            processRecords(employees);  // Process your records here
+            
+            pageNumber++;
+            pageRequest = PageRequest.of(pageNumber, pageSize);
+        } while (page.hasNext());
+    }
+
+String fileName = entity.getIsibarcode() + "." + entity.getFormat();  // For example: 12345.pdf
         
         // Define the full file path on C: drive
         String filePath = "C:\\path_to_save\\" + fileName;
