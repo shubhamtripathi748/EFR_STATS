@@ -1,3 +1,5 @@
+I am developing a Spring Boot application with two primary functionalities. First, it will handle the batch upload of existing images to a designated storage location (e.g., AWS S3) in an efficient and scalable manner. Second, the same application will support real-time operations on documents, enabling actions such as retrieval, updates, and deletions as needed. This dual capability ensures both efficient migration of legacy data and seamless real-time document management.
+
 {
   "isiBarCode": "12345",
   "isiFileType": "PDF",
