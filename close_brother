@@ -1,3 +1,30 @@
+We have chosen cron expressions over external scheduling for the following reasons:
+
+1. Simplicity and Ease of Integration
+Cron expressions are natively supported in Spring Boot and other frameworks, making them easy to configure and manage within the application.
+They eliminate the need to set up and maintain an external scheduling tool or service, reducing overhead.
+
+2. Lightweight Solution
+Using cron expressions avoids the additional resource and infrastructure requirements associated with external schedulers.
+This is especially beneficial for smaller projects or scenarios where scheduling is a relatively simple task.
+
+3. Cost-Effectiveness
+No need to invest in, license, or manage an external scheduler, making it a cost-effective solution for applications with basic or moderate scheduling needs.
+
+4. Granular Control
+Cron expressions allow fine-grained control over scheduling patterns directly in the application configuration, offering flexibility for both simple and complex schedules.
+
+5. Reduced Dependency
+Relying on cron expressions reduces the number of external dependencies, simplifying the overall system architecture and reducing potential points of failure.
+
+When to Consider External Scheduling Instead
+While cron expressions are a great fit for many use cases, external schedulers like Quartz Scheduler, AWS EventBridge, or Apache Airflow might be preferable if:
+
+You need distributed scheduling across multiple applications.
+Scheduling needs to be highly dynamic and modifiable at runtime.
+You require advanced features like job chaining, monitoring, or retry mechanisms.
+Your system must integrate with other workflows or external systems.
+
 I am developing a Spring Boot application with two primary functionalities. First, it will handle the batch upload of existing images to a designated storage location (e.g., AWS S3) in an efficient and scalable manner. Second, the same application will support real-time operations on documents, enabling actions such as retrieval, updates, and deletions as needed. This dual capability ensures both efficient migration of legacy data and seamless real-time document management.
 
 {
