@@ -1,3 +1,93 @@
+{
+  "isiBarCode": "12345",
+  "isiFileType": "PDF",
+  "isiFileCompressed": true,
+  "isiDate": "2024-12-05T12:00:00",
+  "created": "2024-12-05T10:00:00",
+  "isiFile": "base64EncodedFileContent"
+}
+
+------------
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+
+@RestController
+@RequestMapping("/scanned-images")
+public class ScannedImageController {
+
+    @Autowired
+    private ScannedImageService service;
+
+    // Create or Update
+    @PostMapping
+    public ResponseEntity<ScannedImage> saveOrUpdate(@RequestBody ScannedImage scannedImage) {
+        ScannedImage savedImage = service.saveOrUpdate(scannedImage);
+        return ResponseEntity.ok(savedImage);
+    }
+
+    // Read all
+    @GetMapping
+    public ResponseEntity<List<ScannedImage>> getAll() {
+        return ResponseEntity.ok(service.getAll());
+    }
+
+    // Read by ID
+    @GetMapping("/{id}")
+    public ResponseEntity<ScannedImage> getById(@PathVariable String id) {
+        return service.getById(id)
+                .map(ResponseEntity::ok)
+                .orElse(ResponseEntity.notFound().build());
+    }
+
+    // Delete by ID
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deleteById(@PathVariable String id) {
+        service.deleteById(id);
+        return ResponseEntity.noContent().build();
+    }
+}
+
+-------------------------------------------------
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import java.util.List;
+import java.util.Optional;
+
+@Service
+public class ScannedImageService {
+
+    @Autowired
+    private ScannedImageRepository repository;
+
+    // Create or Update
+    public ScannedImage saveOrUpdate(ScannedImage scannedImage) {
+        return repository.save(scannedImage);
+    }
+
+    // Read all
+    public List<ScannedImage> getAll() {
+        return repository.findAll();
+    }
+
+    // Read by ID
+    public Optional<ScannedImage> getById(String isiBarCode) {
+        return repository.findById(isiBarCode);
+    }
+
+    // Delete by ID
+    public void deleteById(String isiBarCode) {
+        repository.deleteById(isiBarCode);
+    }
+}
+
+
+
+------------------------------------------------------------------------
 @Query("SELECT e FROM MyEntity e WHERE e.status = :status")
     Page<MyEntity> findByStatus(@Param("status") String status, Pageable pageable);
 
