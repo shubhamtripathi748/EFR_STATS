@@ -1,3 +1,53 @@
+The circuit breaker pattern is a resilience design pattern commonly used to gracefully handle failures in a distributed system. It prevents cascading failures and provides a fallback mechanism when services or resources are temporarily unavailable.
+
+Use Case: Failed to Load Document in S3
+If your application frequently interacts with Amazon S3 to upload, retrieve, or delete documents, a transient issue or high latency in S3 (or network) can lead to:
+
+Increased response time for your application.
+Overloading of the application by retrying failed requests.
+Cascading failures in dependent systems.
+The circuit breaker pattern can help mitigate these risks by:
+
+Monitoring the success/failure rate of S3 operations.
+Temporarily "breaking" the circuit (blocking requests) when failure thresholds are exceeded.
+Automatically retrying operations after a cool-off period.
+When to Use Circuit Breaker for S3
+High Volume of Requests:
+If your application sends frequent requests to S3 and relies on its availability.
+Transient Failures:
+Network issues or AWS S3 service interruptions causing temporary failures.
+
+
+Flow with Circuit Breaker
+Normal Operation:
+
+All requests to S3 are processed as usual when the circuit is closed.
+Failure Detected:
+
+If failure rates (e.g., failed uploads) exceed 50% (configurable), the circuit opens.
+Open Circuit:
+
+All subsequent S3 requests are immediately blocked, and the fallback method is triggered.
+Recovery:
+
+After 10 seconds (configurable), the circuit transitions to half-open and tests S3 availability.
+Success or Stay Open:
+
+If S3 responds successfully during the test, the circuit closes.
+If failures persist, the circuit remains open.
+Advantages
+Protects Resources: Prevents overloading S3 and the application with retries.
+Prevents Cascading Failures: Isolates the S3 failure from affecting other parts of the system.
+This pattern ensures the application remains resilient and minimizes downtime during failures or disruptions in S3 connectivity.
+
+
+
+
+
+
+
+
+
 Interface Specification for the Image Management Application
 This specification details the APIs to support the upload, view, and delete operations for an application that manages images. The images are stored in an Oracle database and uploaded to AWS S3, with CRUD operations supported on the metadata.
 
