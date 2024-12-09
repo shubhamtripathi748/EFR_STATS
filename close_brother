@@ -1,3 +1,6 @@
+Evaluate S3's capacity to store and manage large datasets with high availability.
+Ensure the API can handle growing usage patterns as the volume of calls increase
+
 When implementing a system to migrate images from Oracle to S3 and expose CRUD operations via APIs, architectural deviations might arise due to constraints, assumptions, or design oversights. Here’s a guide to identify, mitigate, and align the architecture with best practices:
 
 1. Scalability Issues
