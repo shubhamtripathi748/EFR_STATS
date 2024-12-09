@@ -1,3 +1,86 @@
+Size of Data:
+
+Large BLOBs (e.g., >5 GB per object) may require multi-part uploads in S3.
+Oracle limits BLOB sizes based on storage configuration.
+Data Integrity:
+
+2. Migration Constraints
+Migration Tools:
+
+Use efficient tools like AWS Data Migration Service (DMS), AWS Snowball, or custom scripts with the AWS SDK.
+Handle network limitations for large data transfers or use offline migration tools like AWS Snowball.
+Downtime:
+
+Plan migration with minimal downtime to avoid disruption to applications dependent on the Oracle database.
+Performance:
+
+Ensure migration scripts or tools do not overwhelm Oracle or the network.
+Data Transfer Costs:
+
+Account for potential costs of data transfer out of Oracle if hosted in a cloud environment.
+Retry Logic:
+
+Implement robust retry mechanisms for failed uploads to S3.
+3. API Constraints
+API Performance:
+
+Ensure APIs are optimized for retrieving images from S3, especially for large files.
+Use signed URLs for direct access to S3 objects, reducing API load.
+Security:
+
+Implement proper authentication and authorization for APIs (e.g., OAuth2, API keys).
+Encrypt data in transit (HTTPS) and at rest (S3 server-side encryption or client-side encryption).
+Scalability:
+
+Design APIs to handle high concurrency and large volumes of requests.
+Use caching mechanisms like Amazon CloudFront for frequently accessed images.
+Latency:
+
+Minimize latency by choosing the appropriate AWS region for S3.
+Consider using edge caching for better performance in distributed systems.
+Metadata Management:
+
+Expose relevant metadata through APIs (e.g., file type, size, upload date) for easier filtering and searching.
+4. Operational Constraints
+Lifecycle Policies:
+
+Set up S3 lifecycle policies to move data between storage tiers (e.g., Standard to Glacier) based on access patterns.
+Data Retention:
+
+Ensure compliance with legal and business data retention policies, especially for sensitive or regulatory-required data.
+Monitoring and Logging:
+
+Monitor S3 usage with AWS CloudWatch and enable S3 access logs for auditing.
+Error Handling:
+
+Provide meaningful error messages in APIs for scenarios like missing files, permission issues, or file format errors.
+5. Design Constraints
+Naming Conventions:
+
+Use structured S3 bucket and object key naming conventions for efficient organization and access (e.g., bucket_name/year/month/ISIBARCODE).
+Storage Architecture:
+
+Use a separate metadata repository (e.g., DynamoDB, RDS) if advanced querying is required beyond S3’s native capabilities.
+Versioning:
+
+Enable versioning in S3 to track changes or deletions of objects.
+Batch and Real-Time Processing:
+
+Handle batch uploads efficiently while providing real-time API access for new uploads.
+6. Compliance and Security Constraints
+Regulatory Compliance:
+
+Ensure data complies with relevant regulations (e.g., GDPR, HIPAA, CCPA).
+Use Object Lock for retention or legal holds in S3.
+Access Control:
+
+Implement IAM roles and policies to restrict access to S3 buckets and APIs.
+Audit Trails:
+
+Maintain an audit trail for uploads, downloads, and deletions.
+Example: Exposing Image and Metadata as API
+
+
 The circuit breaker pattern is a resilience design pattern commonly used to gracefully handle failures in a distributed system. It prevents cascading failures and provides a fallback mechanism when services or resources are temporarily unavailable.
 
 Use Case: Failed to Load Document in S3
