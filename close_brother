@@ -1,3 +1,41 @@
+
+
+
+
+
+id (Primary Key, BIGINT) : Unique identifier for each record.
+isi_barcode (VARCHAR(50)) : Barcode of the scanned image, used for identification.
+isi_file_type (VARCHAR(20)) : Type of the file (e.g., PDF, JPEG).
+isi_file_size_kb (INTEGER) : Size of the file in kilobytes.
+isi_file_compressed (BOOLEAN) : Indicates whether the file is compressed (true/false).
+isi_date_created (TIMESTAMP) : Timestamp of when the file was created.
+s3_object_key (VARCHAR(255)) : The unique key (path) for the file in the S3 bucket.
+s3_url (TEXT) : The full S3 URL to access the file.
+created_at (TIMESTAMP) : Timestamp for when the record was created in the application.
+updated_at (TIMESTAMP) : Timestamp for when the record was last updated.
+status (VARCHAR(20)) : Status of the record (e.g., ACTIVE, DELETED, ARCHIVED).
+
+
+Given your requirements, you need to update the database design to include metadata and references for the images being migrated to and managed in S3. Below is the proposed data model and its corresponding entity class in a Spring Boot application.
+
+Proposed Data Model
+Column Name		Data Type	Description
+id		BIGINT (Primary Key)	Unique identifier for each record.
+isi_barcode		VARCHAR(50)	Barcode of the scanned image, used for identification.
+isi_file_type		VARCHAR(20)	Type of the file (e.g., PDF, JPEG).
+isi_file_size_kb		INTEGER	Size of the file in kilobytes.
+isi_file_compressed		BOOLEAN	Indicates whether the file is compressed (true/false).
+isi_date_created		TIMESTAMP	Timestamp of when the file was created.
+s3_object_key		VARCHAR(255)	The unique key (path) for the file in the S3 bucket.
+s3_url		TEXT	The full S3 URL to access the file.
+created_at		TIMESTAMP	Timestamp for when the record was created in the application.
+updated_at		TIMESTAMP	Timestamp for when the record was last updated in the application.
+status		VARCHAR(20)	Status of the record (e.g., ACTIVE, DELETED, ARCHIVED).
+
+
+
+=============================
+
 Evaluate S3's capacity to store and manage large datasets with high availability.
 Ensure the API can handle growing usage patterns as the volume of calls increase
 
