@@ -1,3 +1,54 @@
+To migrate existing images from Oracle to S3 and move them to different storage tiers based on the createdDate column in the Oracle table, here's an outline of how you can implement this solution:
+
+Steps for Implementation
+1. Extract Images from Oracle
+Query the Oracle database to fetch the images (isi_file) and metadata (createdDate and other relevant fields like isi_barcode).
+Use a batch process to avoid memory issues for large datasets.
+2. Upload to S3
+Use the AWS SDK to upload images to S3.
+Determine the appropriate S3 storage tier based on the createdDate field:
+S3 Standard: For images created within the last year.
+S3 Standard-IA (Infrequent Access): For images older than 1 year but less than 5 years.
+S3 Glacier Instant Retrieval: For images older than 5 years.
+3. Update Oracle Table
+After successful upload, update the Oracle table with:
+S3 object key.
+S3 storage tier.
+Upload status.
+4. Monitor and Manage
+Implement a lifecycle policy in S3 for ongoing automation of storage tier transitions for future uploads.
+Suggested Table Structure in Oracle
+i_scanned_image Table (Existing)
+
+
+Diagram Overview (Description)
+Data Extraction: Oracle i_scanned_image table is queried in batches to fetch images and metadata.
+S3 Upload:
+Images are uploaded to S3 with the appropriate tier based on isi_date_created:
+Standard for less than 1 year.
+Standard-IA for 1-5 years.
+Glacier Instant Retrieval for older than 5 years.
+Metadata (e.g., s3_object_key, s3_storage_tier) is updated in Oracle.
+Transition Policy: A lifecycle policy manages automatic transitions for new uploads.
+AWS S3 Storage Tiers Overview
+S3 Standard: High availability and low latency for frequently accessed data.
+S3 Standard-IA: Cost-effective for infrequently accessed data.
+S3 Glacier Instant Retrieval: Low-cost storage for rarely accessed data but with instant retrieval.
+
+
+For migrating images from Oracle to S3 and managing their storage class transitions based on age:
+
+1. Policy Requirements
+S3 Standard: Store images created within the last year.
+S3 Standard-IA: Transition images older than 1 year but less than 5 years.
+S3 Glacier Instant Retrieval: Move images older than 5 years.
+Expiration: Optionally delete images after a certain period (e.g., 10 years).
+
+
+
+
+
+
 
 
 
