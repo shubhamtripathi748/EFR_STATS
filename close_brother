@@ -1,3 +1,22 @@
+Architecture Diagram
+Oracle Database: Stores legacy documents with metadata.
+Spring Boot Application:
+Fetches images from Oracle.
+Uploads them to S3.
+Handles CRUD operations for S3-stored documents.
+IBM API Connect:
+Exposes APIs for external systems to interact with documents.
+AWS S3:
+Stores document images in appropriate storage tiers.
+
+Here is the architecture diagram illustrating the integration of the Spring Boot application, Oracle database, AWS S3, and IBM API Connect, as described.
+
+
+
+
+----------------------------
+
+
 To migrate existing images from Oracle to S3 and move them to different storage tiers based on the createdDate column in the Oracle table, here's an outline of how you can implement this solution:
 
 Steps for Implementation
