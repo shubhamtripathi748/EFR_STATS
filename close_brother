@@ -1,3 +1,120 @@
+To send logs from your i-prompt application running on an on-premises Tomcat server to AWS CloudWatch, you can follow a streamlined process involving several key steps. Below, I’ll outline the process and architecture involved, including the setup, components, and a simple architecture diagram.
+
+Steps to Send Logs from i-Prompt to AWS CloudWatch:
+Set Up CloudWatch Logs in AWS:
+
+Create a CloudWatch Log Group:
+In the AWS Management Console, go to CloudWatch > Logs.
+Create a Log Group (e.g., /i-prompt-logs).
+Create a Log Stream: Each application or server can have a different log stream to organize logs within the log group.
+Install the CloudWatch Logs Agent on Your On-Premises Server:
+
+Install AWS CloudWatch Logs Agent:
+The CloudWatch Logs Agent is available for Linux and Windows. You can download and install it on your on-premises server (the one running Tomcat).
+Configure AWS IAM Role:
+If your on-premises server is running on EC2, attach an IAM role that has permission to write logs to CloudWatch (e.g., CloudWatchLogsFullAccess).
+For an on-premises server, configure AWS credentials (Access Key ID and Secret Access Key) for the CloudWatch Logs Agent.
+Configure the CloudWatch Logs Agent:
+
+Edit the Configuration File:
+On Linux, you’ll typically find the CloudWatch Logs configuration file at /etc/awslogs/awslogs.conf.
+Add log file paths from your Tomcat logs (such as catalina.out, localhost.log, etc.) to be monitored by the agent.
+Example of the awslogs.conf configuration:
+ini
+Copy code
+[/var/log/tomcat/catalina.out]
+log_group_name = /i-prompt-logs
+log_stream_name = i-prompt-instance/catalina-out
+file = /var/log/tomcat/catalina.out
+time_zone = UTC
+Start the CloudWatch Logs Agent:
+
+Start or restart the CloudWatch Logs agent to begin monitoring the log files specified in the configuration file.
+The agent will send log entries to the configured CloudWatch Log Group and Log Stream in real-time.
+Verify Log Data in CloudWatch:
+
+Go to the AWS Management Console and navigate to CloudWatch > Logs.
+Check your Log Group (/i-prompt-logs) and Log Stream (i-prompt-instance/catalina-out) to verify that logs from the Tomcat server are being successfully pushed to CloudWatch.
+Optionally Set Up Log Retention Policies:
+
+CloudWatch Logs allow you to configure retention policies for log groups. You can set the logs to be stored indefinitely or define custom retention periods based on your needs (e.g., 30 days, 90 days, etc.).
+Architecture Diagram
+Here is a simple architecture diagram that shows how logs flow from your on-premises Tomcat server running the i-prompt application to AWS CloudWatch:
+
+plaintext
+Copy code
++------------------------+        +----------------------------+        +----------------------------+
+|   i-Prompt Application |        |     CloudWatch Logs Agent   |        |        AWS CloudWatch      |
+| (Running on Tomcat)    |        |  (Installed on On-Premises  |        |       (Logs Storage &      |
+|                        |        |     Server with IAM Role)   |        |        Analysis)           |
+| - Generates logs       |        |  - Monitors Tomcat log files|        |  - Log Groups             |
+|   (catalina.out, etc.) | -----> |  - Sends logs to CloudWatch | -----> |  - Log Streams            |
+|                        |        |    via AWS CloudWatch Agent |        |  - Log Retention          |
++------------------------+        +----------------------------+        +----------------------------+
+                                  |                                             |
+                                  |                                             v
+                                  |                                  +---------------------------+
+                                  |                                  |  CloudWatch Logs Insights   |
+                                  |                                  |  (Log Analysis & Querying) |
+                                  |                                  +---------------------------+
+                                  |
+                                  v
+                        +---------------------+
+                        |  AWS S3 (Optional)  |
+                        |  (Long-Term Storage)|
+                        +---------------------+
+Key Components in the Architecture:
+i-Prompt Application (On-Premises):
+
+Your i-prompt application running on a Tomcat server generates log data (e.g., catalina.out, localhost.log, etc.).
+CloudWatch Logs Agent:
+
+The CloudWatch Logs Agent is installed on the on-premises server where Tomcat is running. This agent monitors the log files and sends the log data to AWS CloudWatch in real-time.
+AWS CloudWatch Logs:
+
+CloudWatch Logs acts as the log storage and management service.
+Logs are organized in Log Groups and Log Streams.
+It can be configured to store logs with a retention policy.
+CloudWatch Logs Insights (Optional):
+
+If you need to analyze the logs or run queries on them, CloudWatch Logs Insights can be used for searching and analyzing the logs stored in CloudWatch.
+Amazon S3 (Optional for Long-Term Storage):
+
+If you want to archive the logs for long-term storage (e.g., 10 years), you can export logs from CloudWatch Logs to S3 Glacier or S3 Glacier Deep Archive for cost-effective storage.
+Additional Notes:
+Security: Ensure that your CloudWatch Logs Agent uses secure methods (IAM roles, AWS credentials) to authenticate and send logs to CloudWatch.
+Network Considerations: Ensure that the on-premises server can communicate with AWS services (CloudWatch) over the internet. This can be done through a direct internet connection or via VPN if the server is behind a firewall.
+Data Transfer: Data transfer to CloudWatch is free within the same AWS region, but if you move logs across AWS regions, there will be additional charges for cross-region data transfer.
+Summary:
+To send logs from your i-prompt application running on an on-premises Tomcat server to AWS CloudWatch, you:
+
+Set up CloudWatch Logs in AWS.
+Install and configure the CloudWatch Logs Agent on the on-premises server.
+Configure the agent to monitor your Tomcat log files and push them to CloudWatch.
+Optionally set up retention policies, perform log analysis using CloudWatch Logs Insights, or export logs to S3 for long-term storage.
+This process allows you to monitor and store logs securely in AWS CloudWatch while leveraging cloud-based analytics and long-term storage solutions.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 Architecture Diagram
 Oracle Database: Stores legacy documents with metadata.
 Spring Boot Application:
