@@ -1,3 +1,6 @@
+Log File Location: The CloudWatch Agent needs to know the exact path where the application writes its logs (e.g., /var/log/my_application.log).
+Permissions: Ensure the IAM role associated with the EC2 instance or on-premises server has the necessary permissions to write to CloudWatch Logs.
+
 2. CloudWatch + S3 + Athena Costs
 CloudWatch Logs Costs (Log Ingestion)
 CloudWatch Logs ingestion rate:
