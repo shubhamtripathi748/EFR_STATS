@@ -1,3 +1,35 @@
+2. CloudWatch + S3 + Athena Costs
+CloudWatch Logs Costs (Log Ingestion)
+CloudWatch Logs ingestion rate:
+First 5 GB per month are free.
+After that: €0.08 per GB (for the London region).
+If you're storing 1 TB (1000 GB) of logs per month:
+1000 GB - 5 GB free = 995 GB charged.
+995 GB x €0.08 per GB = €79.60/month.
+S3 Storage Costs
+Assuming S3 Standard storage for logs:
+Cost per GB/month for S3 Standard: €0.023 per GB.
+For 1 TB of logs:
+1 TB = 1000 GB.
+1000 GB x €0.023 = €23/month.
+Athena Query Costs
+Cost per TB of data scanned by Athena: €5.00 per TB.
+Assuming you query 0.5 TB of data per month:
+0.5 TB x €5 = €2.50/month.
+3. Total Estimated Costs for CloudWatch + S3 + Athena
+CloudWatch Logs (Ingestion): €79.60/month.
+S3 Storage: €23/month.
+Athena Querying: €2.50/month.
+Total Monthly Cost:
+Total = €79.60 + €23 + €2.50 = €105.10/month
+4. Potential Savings
+Current Cost in Oracle Database: €500/month.
+New Cost with CloudWatch + S3 + Athena: €105.10/month.
+Cost Savings:
+Savings = €500 - €105.10 = €394.90/month.
+Conclusion:
+By moving your log storage and querying from Oracle Database to CloudWatch + S3 + Athena, you could save approximately €394.90 per month for 1 TB of logs in the London region.
+
 Cost Optimization Benefits
 Reduced Costs: Move logs to lower-cost storage tiers as they age.
 Automated Management: No manual intervention required after setup.
