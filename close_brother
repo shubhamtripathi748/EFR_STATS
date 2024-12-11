@@ -1,3 +1,25 @@
+To send logs from your on-premises Tomcat server to AWS CloudWatch in the London region, the cost will depend on two primary factors: data storage and data queries. Here's an estimate:
+
+1. Data Storage Costs
+Ingestion: AWS CloudWatch Logs charges €0.49 per GB ingested.
+Storage: Logs stored in CloudWatch cost €0.03 per GB per month​
+AWS DOCUMENTATION
+​
+AWS DOCUMENTATION
+.
+2. Data Query Costs
+Querying logs costs €0.006 per GB scanned, with additional charges for advanced queries based on complexity​
+AWS DOCUMENTATION
+.
+Example Calculation:
+If you generate 50 GB of logs monthly and store them for 1 month:
+
+Ingestion: 50 GB × €0.49 = €24.5
+Storage: 50 GB × €0.03 = €1.5
+Queries (assuming 10 GB queried): 10 GB × €0.006 = €0.06
+Total Cost: €24.5 + €1.5 + €0.06 = €26.06/month
+
+
 To send logs from your i-prompt application running on an on-premises Tomcat server to AWS CloudWatch, you can follow a streamlined process involving several key steps. Below, I’ll outline the process and architecture involved, including the setup, components, and a simple architecture diagram.
 
 Steps to Send Logs from i-Prompt to AWS CloudWatch:
