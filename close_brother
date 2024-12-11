@@ -1,3 +1,7 @@
+The CloudWatch Agent sends logs to CloudWatch Logs.
+A Subscription Filter triggers an AWS Lambda function whenever new logs are added.
+The Lambda function processes the logs and stores them in an Amazon S3 bucket.
+
 You can further optimize costs by setting lifecycle policies to transition older logs to Glacier while keeping recent logs in Standard or Standard-IA
 
 To send logs from your on-premises Tomcat server to AWS CloudWatch in the London region, the cost will depend on two primary factors: data storage and data queries. Here's an estimate:
