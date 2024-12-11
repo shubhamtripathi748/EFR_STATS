@@ -1,3 +1,10 @@
+Summary: AWS Athena and S3 Integration
+Amazon S3 serves as the storage layer for raw data, such as logs, CSVs, JSON, or Parquet files.
+AWS Glue acts as a metadata catalog to map the data structure in S3, allowing Athena to query the data efficiently.
+Amazon Athena allows you to run SQL queries directly on data stored in S3, without the need to move or load the data into a separate database.
+Query results can be stored back in S3 or processed using other AWS services like Lambda.
+Optional integrations for monitoring with CloudWatch and visualization with QuickSight can enhance the data analysis experience.
+
 The CloudWatch Agent sends logs to CloudWatch Logs.
 A Subscription Filter triggers an AWS Lambda function whenever new logs are added.
 The Lambda function processes the logs and stores them in an Amazon S3 bucket.
