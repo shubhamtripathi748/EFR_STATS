@@ -1,3 +1,8 @@
+Cost Optimization Benefits
+Reduced Costs: Move logs to lower-cost storage tiers as they age.
+Automated Management: No manual intervention required after setup.
+Compliance: Retain logs for required durations without incurring high costs.
+
 CloudWatch is ideal for organizations looking for centralized, real-time log management and monitoring with the flexibility of paying only for the storage, ingestion, and analysis resources they consume.
 
 Summary: AWS Athena and S3 Integration
