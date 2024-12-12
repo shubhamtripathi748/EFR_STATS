@@ -1,3 +1,5 @@
+To align cloud resources with your demand, it’s important to continuously monitor, right-size, and leverage cloud-native services that offer automatic scaling, cost optimization, and the ability to adjust resource allocations based on real-time needs. By adopting a mix of elasticity, automation, forecasting, and managed services, you can ensure that your cloud resources are closely aligned with the dynamic demands of your business.
+
 To select the right region for your workload, consider latency, cost, compliance requirements, service availability, disaster recovery, and scalability. AWS offers a wide array of regions globally, each with its strengths, so carefully match the region to your workload’s needs for optimal performance and cost efficiency.
 
 Evaluating the cost of efforts helps determine whether a project is feasible within budget and identifies areas for optimization. It ensures that resources are appropriately allocated, risks are managed, and that the project aligns with business priorities and financial constraints.
