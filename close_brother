@@ -1,3 +1,7 @@
+Mitigating deployment risks in AWS involves using a combination of automation, testing, monitoring, and rollback mechanisms. By implementing safe deployment strategies like canary or blue-green deployments, automating the testing and deployment process, and ensuring a robust monitoring system, 
+you can significantly reduce the risk of downtime or failures during application deployments
+
+
 Monitoring:
 
 Use Amazon CloudWatch to monitor metrics, set alarms, and create dashboards for real-time visibility into application and infrastructure performance.
