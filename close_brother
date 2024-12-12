@@ -1,3 +1,7 @@
+You are ready to support a workload when your architecture and operations meet the following criteria: monitoring and alerting is in place, security is robust, cost is under control, the workload is scalable and resilient, and your team is well-prepared to handle ongoing support and performance management. 
+Ensuring that these practices are integrated into your workload ensures that it can be supported effectively on AWS.
+
+
 Mitigating deployment risks in AWS involves using a combination of automation, testing, monitoring, and rollback mechanisms. By implementing safe deployment strategies like canary or blue-green deployments, automating the testing and deployment process, and ensuring a robust monitoring system, 
 you can significantly reduce the risk of downtime or failures during application deployments
 
