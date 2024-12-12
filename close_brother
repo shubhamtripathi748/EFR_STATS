@@ -1,4 +1,6 @@
- 
+Our priorities are determined by aligning with business-critical objectives like retaining error logs for compliance and optimizing costs for older logs. We collaborate with stakeholders to ensure our CloudWatch log retention policies meet operational needs while transitioning warm logs to S3 Intelligent-Tiering and cold logs to Glacier. Metrics from CloudWatch and Athena query usage guide our continuous optimization efforts.
+
+
 Type	Time range	Solution
 Hot logs	< 20 days	AWS Athena
 Warm logs	> 20 days < 15 months	AWS Athena
