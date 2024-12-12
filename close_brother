@@ -1,3 +1,20 @@
+Architecture Diagram (Workflow Overview):
+On-Premises Spring Boot Application:
+Develops and exposes REST APIs.
+IBM API Connect:
+Imports and secures APIs.
+Enforces policies (security, rate limiting).
+External Consumers:
+Access APIs through APIC Gateway.
+
+
+Challenges & Solutions
+Challenge	Solution
+API Security	Use IBM APIC's security policies (OAuth 2.0, API Key, JWT).
+API Gateway URL Changes	Externalize the Gateway URL in properties/config file.
+Performance Optimization	Monitor and optimize API Gateway response time using IBM Analytics.
+Debugging Issues	Use IBM APIC logging and Spring Boot logging for detailed error tracking.
+
 I have completed the AWS Well-Architected Framework report for [Project/Workload Name], which includes a comprehensive analysis of the key pillars, best practices, and recommendations for optimizing our workloads on AWS. The report covers the following areas:
 
 Operational Excellence: Insights on how we can improve our operational processes and monitoring.
