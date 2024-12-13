@@ -1,3 +1,5 @@
+I am currently focused on a high-priority task, which involves completing the SSD (System Specification Document) for the document-to-S3 migration, as per the request from Nilesh. Due to this, I have not yet been able to start work on the DDA (Data Delivery Architecture) for the Experian CDP project. Once the SSD is finalized and the migration is on track, I will be able to shift focus and begin the DDA task for Experian.
+
 Architecture Diagram (Workflow Overview):
 On-Premises Spring Boot Application:
 Develops and exposes REST APIs.
