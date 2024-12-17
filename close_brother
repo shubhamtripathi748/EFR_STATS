@@ -1,3 +1,5 @@
+I have prepared an options paper for the log solutions, which is included in the attached PowerPoint presentation. In this document, I have outlined various solutions for log storage and management, including the use of Amazon S3 buckets. Additionally, I have provided a detailed breakdown of the associated costs for each solution to help evaluate the most cost-effective approach. Please review the attached presentation for further insights into the options available and their respective implications.
+
 Workflow Diagram
 On-Premises Oracle Logs → Extract → Transform (Parquet/ORC) → Load to S3 → Query with Athena
 
