@@ -1,3 +1,9 @@
+Key Benefits
+CloudWatch for real-time monitoring and log collection.
+S3 for scalable and cost-effective log storage.
+Athena for ad-hoc queries without managing infrastructure.
+Batch Export ensures long-term retention and cost savings.
+
 S3 Standard-IA Transition: €0.0085 per 1,000 requests
 S3 Glacier Flexible Retrieval Transition: €0.0425 per 1,000 requests
 
