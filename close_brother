@@ -1,3 +1,35 @@
+Mitigates against data loss if the AWS solution becomes unavailable.
+Minimizes query costs applied by the AWS solution through cost-efficient query services like Amazon Athena.
+Supports most frequent query requirements with flexible and scalable query capabilities.
+Ensures access to real-time data using Amazon Kinesis or AWS CloudWatch Logs for live log streaming and monitoring.
+Extract process to pull logs over 30 days from Oracle and push them into Amazon S3 (Simple Storage Service) for reliable and durable storage.
+Options to extract data into CSV or Parquet file formats for optimized storage and query performance, and push it into Amazon S3.
+Amazon Athena provides a serverless SQL query engine linked to the S3 bucket, eliminating infrastructure provisioning and offering pay-per-query pricing.
+Application Support Team can use the existing process to support most query requirements on the LIA database.
+The team can leverage the familiar SQL language to query historical log files directly in Amazon S3 using Athena.
+Athena queries can be targeted across a specific date range (partitioned files) to reduce query costs and improve performance.
+Log files older than 13 months / 400 days are purged from Amazon S3 using S3 Lifecycle Management policies, enabling cost optimization.
+
+
+Key AWS Advantages:
+Durable and Reliable Storage: Amazon S3 offers 99.999999999% (11 9s) durability for stored objects.
+Cost Optimization:
+Athena’s pay-per-TB-scanned pricing reduces costs for queries.
+S3 Lifecycle Policies allow automatic transitions to cheaper storage classes like S3 Standard-IA or Glacier.
+Seamless Scalability: Amazon S3 and Athena scale with data growth without performance degradation.
+Serverless Query Execution: Amazon Athena requires no infrastructure management and works directly on data stored in S3.
+Real-Time Data Streaming: AWS services like Kinesis or CloudWatch Logs ensure access to real-time logs.
+Flexible File Formats: Supports optimized file formats (Parquet, ORC, CSV) to improve query performance and cost-efficiency.
+This AWS-based approach enhances performance, reduces costs, and ensures long-term durability and accessibility of historical and real-time log data.
+
+
+
+
+
+
+
+
+
 Key Points:
 Most recent 30 days* of logs retained in LIA Oracle database:
 Mitigates against data loss if Azure solution is unavailable.
