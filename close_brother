@@ -1,3 +1,21 @@
+Key Points:
+Most recent 30 days* of logs retained in LIA Oracle database:
+Mitigates against data loss if Azure solution is unavailable.
+Minimise query costs applied by Azure solution
+Support most frequent query requirements.
+Ensures access to real-time data.
+Extract process to pull logs over 30 days from Oracle and push them into Azure Blob Storage.
+Options to extract to CSV or Parquet file and then push to Azure.
+Azure Synapse ‘Serverless SQL Pool’ workspace provisioned and linked to the Blob Storage. 
+Application Support Team use existing process to support majority of query requirements on LIA database.
+Application Support Team use the familiar SQL language to query historical log files in Azure through Azure Synapse Studio.
+Synapse queries can be targeted across a specific date range (selected files) to reduce query cost.
+Log files older than 13 months / 400 days old purged from Azure Blob storage.
+
+
+
+
+
 Key Benefits
 CloudWatch for real-time monitoring and log collection.
 S3 for scalable and cost-effective log storage.
