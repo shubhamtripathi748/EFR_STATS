@@ -1,3 +1,22 @@
+Workflow Diagram
+On-Premises Oracle Logs → Extract → Transform (Parquet/ORC) → Load to S3 → Query with Athena
+
+Key Benefits
+Scalable Storage: Amazon S3 handles large datasets efficiently.
+Cost-Effective Queries: Athena charges only for scanned data; optimized formats lower costs.
+Real-Time/Batch Options: DMS supports CDC for near real-time replication, while batch jobs handle periodic transfers.
+Automation: Use Glue workflows or Lambda for automated ETL pipelines
+
+
+Phase	Tools/Services
+Extract	AWS DMS, SQL Loader, Sqoop, Airflow
+Transform	AWS Glue, Apache Spark (EMR), Lambda
+Load to S3	AWS CLI, AWS Transfer Family, Direct Connect
+Query	Amazon Athena, AWS Glue Catalog
+
+
+
+
 Mitigates against data loss if the AWS solution becomes unavailable.
 Minimizes query costs applied by the AWS solution through cost-efficient query services like Amazon Athena.
 Supports most frequent query requirements with flexible and scalable query capabilities.
