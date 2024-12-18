@@ -1,3 +1,5 @@
+CloudWatch can serve as a robust option for log insights, offering real-time monitoring and analysis of logs directly within the AWS ecosystem. Alternatively, if CloudWatch does not meet the requirements, we can leverage Amazon S3 for cost-efficient log storage combined with Amazon Athena for scalable and flexible log analysis
+
 
 Amazon CloudWatch can be a robust option for log insights, offering powerful capabilities such as real-time monitoring, log aggregation, and visualization
 
