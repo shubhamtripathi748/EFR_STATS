@@ -1,3 +1,38 @@
+Subject: Minutes of Meeting – Follow-up on E-Post-Code API
+Dear Team,
+
+Thank you for attending the meeting. Below are the key points discussed and action items for follow-up:
+
+Meeting Summary:
+E-Post-Code API-C
+
+Action: Prashant will check if the E-Post-Code API-C has already been developed.
+If it is not developed, he will inform the team.
+Additional Information Needed:
+Any certificate required to call the E-Post-Code API.
+The number of different environments available for the E-Post-Code API.
+Environment and Certificate Details
+
+Action: Arvind will coordinate with Nilesh to confirm the details about the available environments and required certificates for the E-Post-Code API.
+Next Steps:
+Prashant to update the team on the development status of API-C and share details once available.
+Arvind to provide the environment and certificate information after discussion with Nilesh.
+Please let us know if there are any additional updates or concerns.
+
+Best regards,
+[Your Name]
+[Your Designation]
+[Your Contact Information]
+
+Let me know if you'd like to refine this further!
+
+
+
+
+
+
+
+
 wsimport -keep -d /output/directory -p com.example.generated /path/to/wsdl/service.wsdl
 
 Retrieve an image from S3 based on the imageId and return the image or metadata.
