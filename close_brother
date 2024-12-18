@@ -1,3 +1,5 @@
+wsimport -keep -d /output/directory -p com.example.generated /path/to/wsdl/service.wsdl
+
 Retrieve an image from S3 based on the imageId and return the image or metadata.
 
 
