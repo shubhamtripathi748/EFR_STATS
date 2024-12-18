@@ -1,4 +1,6 @@
 
+Amazon CloudWatch can be a robust option for log insights, offering powerful capabilities such as real-time monitoring, log aggregation, and visualization
+
 I am currently unsure if an archiving process is in place or not. If it exists, I would appreciate any insights or documentation regarding its implementation. If not, I’m happy to discuss potential options or collaborate on setting up a suitable archiving solution.
 I have prepared an options paper for the log solutions, which is included in the attached PowerPoint presentation. In this document, I have outlined various solutions for log storage and management, including the use of Amazon S3 buckets. Additionally, I have provided a detailed breakdown of the associated costs for each solution to help evaluate the most cost-effective approach. Please review the attached presentation for further insights into the options available and their respective implications.
 
