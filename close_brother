@@ -1,3 +1,5 @@
+The 2nd and 4th slides in the presentation are identical, presenting the same information. The 3rd slide, however, focuses exclusively on the solution involving S3 and Athena, without incorporating CloudWatch. This slide provides a streamlined perspective, highlighting the use of S3 for storage and Athena for querying, independent of additional monitoring tools like CloudWatch.
+
 CloudWatch can serve as a robust option for log insights, offering real-time monitoring and analysis of logs directly within the AWS ecosystem. Alternatively, if CloudWatch does not meet the requirements, we can leverage Amazon S3 for cost-efficient log storage combined with Amazon Athena for scalable and flexible log analysis
 
 
