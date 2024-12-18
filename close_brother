@@ -1,3 +1,8 @@
+Please find my answers to your queries inline below. Additionally, I have formatted the slides and added appropriate titles to ensure clarity and better organization of the content.
+
+Let me know if you need any further adjustments or have additional questions.
+
+
 Slide 5 closely resembles the content Peter Bolton presented a few days ago. However, in this presentation, I have tailored the slide to focus specifically on AWS-related information
 
 The 2nd and 4th slides in the presentation are identical, presenting the same information. The 3rd slide, however, focuses exclusively on the solution involving S3 and Athena, without incorporating CloudWatch. This slide provides a streamlined perspective, highlighting the use of S3 for storage and Athena for querying, independent of additional monitoring tools like CloudWatch.
