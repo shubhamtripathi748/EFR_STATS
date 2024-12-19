@@ -1,3 +1,709 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ListAllAddressPremises xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns="https://ws.epostcode.com/uk/postcodeservices19.asmx">
+    <List>
+        <AddressPremise>
+            <Unique_Delivery_Point>27668722</Unique_Delivery_Point>
+            <Organisation_Department />
+            <Organisation />
+            <Sub_Building_Name>Flat 1</Sub_Building_Name>
+            <Building_Name>Baron House</Building_Name>
+            <Number>33</Number>
+            <Dependent_Street />
+            <Street>Chapter Way</Street>
+            <Double_Dependent_Locality />
+            <Dependent_Locality />
+            <Post_Town>London</Post_Town>
+            <County_LocalAuthority />
+            <County_Administrative>MERTON</County_Administrative>
+            <County_FormerPostal />
+            <County_Traditional />
+            <Country>England</Country>
+            <Postcode>SW19 2RS</Postcode>
+            <Post_Office_Box />
+            <User_Category />
+            <Mailsort_Sortcode>73164</Mailsort_Sortcode>
+            <Delivery_Point_Suffix>1A</Delivery_Point_Suffix>
+            <Latitude_Degrees />
+            <Longitude_Degrees />
+            <IsError>false</IsError>
+            <ErrorMessage />
+            <FullAddress>\r\nFlat 1\r\nBaron House\r\n33\r\nChapter Way\r\nLondon\r\nEngland\r\nSW19 2RS\r\n</FullAddress>
+            <Return_Code>1</Return_Code>
+        </AddressPremise>
+        <AddressPremise>
+            <Unique_Delivery_Point>27668731</Unique_Delivery_Point>
+            <Organisation_Department />
+            <Organisation />
+            <Sub_Building_Name>Flat 10</Sub_Building_Name>
+            <Building_Name>Baron House</Building_Name>
+            <Number>33</Number>
+            <Dependent_Street />
+            <Street>Chapter Way</Street>
+            <Double_Dependent_Locality />
+            <Dependent_Locality />
+            <Post_Town>London</Post_Town>
+            <County_LocalAuthority />
+            <County_Administrative>MERTON</County_Administrative>
+            <County_FormerPostal />
+            <County_Traditional />
+            <Country>England</Country>
+            <Postcode>SW19 2RS</Postcode>
+            <Post_Office_Box />
+            <User_Category />
+            <Mailsort_Sortcode>73164</Mailsort_Sortcode>
+            <Delivery_Point_Suffix>1N</Delivery_Point_Suffix>
+            <Latitude_Degrees />
+            <Longitude_Degrees />
+            <IsError>false</IsError>
+            <ErrorMessage />
+            <FullAddress>\r\nFlat 10\r\nBaron House\r\n33\r\nChapter Way\r\nLondon\r\nEngland\r\nSW19 2RS\r\n</FullAddress>
+            <Return_Code>1</Return_Code>
+        </AddressPremise>
+        <AddressPremise>
+            <Unique_Delivery_Point>27668732</Unique_Delivery_Point>
+            <Organisation_Department />
+            <Organisation />
+            <Sub_Building_Name>Flat 11</Sub_Building_Name>
+            <Building_Name>Baron House</Building_Name>
+            <Number>33</Number>
+            <Dependent_Street />
+            <Street>Chapter Way</Street>
+            <Double_Dependent_Locality />
+            <Dependent_Locality />
+            <Post_Town>London</Post_Town>
+            <County_LocalAuthority />
+            <County_Administrative>MERTON</County_Administrative>
+            <County_FormerPostal />
+            <County_Traditional />
+            <Country>England</Country>
+            <Postcode>SW19 2RS</Postcode>
+            <Post_Office_Box />
+            <User_Category />
+            <Mailsort_Sortcode>73164</Mailsort_Sortcode>
+            <Delivery_Point_Suffix>1P</Delivery_Point_Suffix>
+            <Latitude_Degrees />
+            <Longitude_Degrees />
+            <IsError>false</IsError>
+            <ErrorMessage />
+            <FullAddress>\r\nFlat 11\r\nBaron House\r\n33\r\nChapter Way\r\nLondon\r\nEngland\r\nSW19 2RS\r\n</FullAddress>
+            <Return_Code>1</Return_Code>
+        </AddressPremise>
+        <AddressPremise>
+            <Unique_Delivery_Point>27668733</Unique_Delivery_Point>
+            <Organisation_Department />
+            <Organisation />
+            <Sub_Building_Name>Flat 12</Sub_Building_Name>
+            <Building_Name>Baron House</Building_Name>
+            <Number>33</Number>
+            <Dependent_Street />
+            <Street>Chapter Way</Street>
+            <Double_Dependent_Locality />
+            <Dependent_Locality />
+            <Post_Town>London</Post_Town>
+            <County_LocalAuthority />
+            <County_Administrative>MERTON</County_Administrative>
+            <County_FormerPostal />
+            <County_Traditional />
+            <Country>England</Country>
+            <Postcode>SW19 2RS</Postcode>
+            <Post_Office_Box />
+            <User_Category />
+            <Mailsort_Sortcode>73164</Mailsort_Sortcode>
+            <Delivery_Point_Suffix>1Q</Delivery_Point_Suffix>
+            <Latitude_Degrees />
+            <Longitude_Degrees />
+            <IsError>false</IsError>
+            <ErrorMessage />
+            <FullAddress>\r\nFlat 12\r\nBaron House\r\n33\r\nChapter Way\r\nLondon\r\nEngland\r\nSW19 2RS\r\n</FullAddress>
+            <Return_Code>1</Return_Code>
+        </AddressPremise>
+        <AddressPremise>
+            <Unique_Delivery_Point>27668734</Unique_Delivery_Point>
+            <Organisation_Department />
+            <Organisation />
+            <Sub_Building_Name>Flat 13</Sub_Building_Name>
+            <Building_Name>Baron House</Building_Name>
+            <Number>33</Number>
+            <Dependent_Street />
+            <Street>Chapter Way</Street>
+            <Double_Dependent_Locality />
+            <Dependent_Locality />
+            <Post_Town>London</Post_Town>
+            <County_LocalAuthority />
+            <County_Administrative>MERTON</County_Administrative>
+            <County_FormerPostal />
+            <County_Traditional />
+            <Country>England</Country>
+            <Postcode>SW19 2RS</Postcode>
+            <Post_Office_Box />
+            <User_Category />
+            <Mailsort_Sortcode>73164</Mailsort_Sortcode>
+            <Delivery_Point_Suffix>1R</Delivery_Point_Suffix>
+            <Latitude_Degrees />
+            <Longitude_Degrees />
+            <IsError>false</IsError>
+            <ErrorMessage />
+            <FullAddress>\r\nFlat 13\r\nBaron House\r\n33\r\nChapter Way\r\nLondon\r\nEngland\r\nSW19 2RS\r\n</FullAddress>
+            <Return_Code>1</Return_Code>
+        </AddressPremise>
+        <AddressPremise>
+            <Unique_Delivery_Point>27668735</Unique_Delivery_Point>
+            <Organisation_Department />
+            <Organisation />
+            <Sub_Building_Name>Flat 14</Sub_Building_Name>
+            <Building_Name>Baron House</Building_Name>
+            <Number>33</Number>
+            <Dependent_Street />
+            <Street>Chapter Way</Street>
+            <Double_Dependent_Locality />
+            <Dependent_Locality />
+            <Post_Town>London</Post_Town>
+            <County_LocalAuthority />
+            <County_Administrative>MERTON</County_Administrative>
+            <County_FormerPostal />
+            <County_Traditional />
+            <Country>England</Country>
+            <Postcode>SW19 2RS</Postcode>
+            <Post_Office_Box />
+            <User_Category />
+            <Mailsort_Sortcode>73164</Mailsort_Sortcode>
+            <Delivery_Point_Suffix>1S</Delivery_Point_Suffix>
+            <Latitude_Degrees />
+            <Longitude_Degrees />
+            <IsError>false</IsError>
+            <ErrorMessage />
+            <FullAddress>\r\nFlat 14\r\nBaron House\r\n33\r\nChapter Way\r\nLondon\r\nEngland\r\nSW19 2RS\r\n</FullAddress>
+            <Return_Code>1</Return_Code>
+        </AddressPremise>
+        <AddressPremise>
+            <Unique_Delivery_Point>27668736</Unique_Delivery_Point>
+            <Organisation_Department />
+            <Organisation />
+            <Sub_Building_Name>Flat 15</Sub_Building_Name>
+            <Building_Name>Baron House</Building_Name>
+            <Number>33</Number>
+            <Dependent_Street />
+            <Street>Chapter Way</Street>
+            <Double_Dependent_Locality />
+            <Dependent_Locality />
+            <Post_Town>London</Post_Town>
+            <County_LocalAuthority />
+            <County_Administrative>MERTON</County_Administrative>
+            <County_FormerPostal />
+            <County_Traditional />
+            <Country>England</Country>
+            <Postcode>SW19 2RS</Postcode>
+            <Post_Office_Box />
+            <User_Category />
+            <Mailsort_Sortcode>73164</Mailsort_Sortcode>
+            <Delivery_Point_Suffix>1T</Delivery_Point_Suffix>
+            <Latitude_Degrees />
+            <Longitude_Degrees />
+            <IsError>false</IsError>
+            <ErrorMessage />
+            <FullAddress>\r\nFlat 15\r\nBaron House\r\n33\r\nChapter Way\r\nLondon\r\nEngland\r\nSW19 2RS\r\n</FullAddress>
+            <Return_Code>1</Return_Code>
+        </AddressPremise>
+        <AddressPremise>
+            <Unique_Delivery_Point>27668737</Unique_Delivery_Point>
+            <Organisation_Department />
+            <Organisation />
+            <Sub_Building_Name>Flat 16</Sub_Building_Name>
+            <Building_Name>Baron House</Building_Name>
+            <Number>33</Number>
+            <Dependent_Street />
+            <Street>Chapter Way</Street>
+            <Double_Dependent_Locality />
+            <Dependent_Locality />
+            <Post_Town>London</Post_Town>
+            <County_LocalAuthority />
+            <County_Administrative>MERTON</County_Administrative>
+            <County_FormerPostal />
+            <County_Traditional />
+            <Country>England</Country>
+            <Postcode>SW19 2RS</Postcode>
+            <Post_Office_Box />
+            <User_Category />
+            <Mailsort_Sortcode>73164</Mailsort_Sortcode>
+            <Delivery_Point_Suffix>1U</Delivery_Point_Suffix>
+            <Latitude_Degrees />
+            <Longitude_Degrees />
+            <IsError>false</IsError>
+            <ErrorMessage />
+            <FullAddress>\r\nFlat 16\r\nBaron House\r\n33\r\nChapter Way\r\nLondon\r\nEngland\r\nSW19 2RS\r\n</FullAddress>
+            <Return_Code>1</Return_Code>
+        </AddressPremise>
+        <AddressPremise>
+            <Unique_Delivery_Point>27668738</Unique_Delivery_Point>
+            <Organisation_Department />
+            <Organisation />
+            <Sub_Building_Name>Flat 17</Sub_Building_Name>
+            <Building_Name>Baron House</Building_Name>
+            <Number>33</Number>
+            <Dependent_Street />
+            <Street>Chapter Way</Street>
+            <Double_Dependent_Locality />
+            <Dependent_Locality />
+            <Post_Town>London</Post_Town>
+            <County_LocalAuthority />
+            <County_Administrative>MERTON</County_Administrative>
+            <County_FormerPostal />
+            <County_Traditional />
+            <Country>England</Country>
+            <Postcode>SW19 2RS</Postcode>
+            <Post_Office_Box />
+            <User_Category />
+            <Mailsort_Sortcode>73164</Mailsort_Sortcode>
+            <Delivery_Point_Suffix>1W</Delivery_Point_Suffix>
+            <Latitude_Degrees />
+            <Longitude_Degrees />
+            <IsError>false</IsError>
+            <ErrorMessage />
+            <FullAddress>\r\nFlat 17\r\nBaron House\r\n33\r\nChapter Way\r\nLondon\r\nEngland\r\nSW19 2RS\r\n</FullAddress>
+            <Return_Code>1</Return_Code>
+        </AddressPremise>
+        <AddressPremise>
+            <Unique_Delivery_Point>27668739</Unique_Delivery_Point>
+            <Organisation_Department />
+            <Organisation />
+            <Sub_Building_Name>Flat 18</Sub_Building_Name>
+            <Building_Name>Baron House</Building_Name>
+            <Number>33</Number>
+            <Dependent_Street />
+            <Street>Chapter Way</Street>
+            <Double_Dependent_Locality />
+            <Dependent_Locality />
+            <Post_Town>London</Post_Town>
+            <County_LocalAuthority />
+            <County_Administrative>MERTON</County_Administrative>
+            <County_FormerPostal />
+            <County_Traditional />
+            <Country>England</Country>
+            <Postcode>SW19 2RS</Postcode>
+            <Post_Office_Box />
+            <User_Category />
+            <Mailsort_Sortcode>73164</Mailsort_Sortcode>
+            <Delivery_Point_Suffix>1X</Delivery_Point_Suffix>
+            <Latitude_Degrees />
+            <Longitude_Degrees />
+            <IsError>false</IsError>
+            <ErrorMessage />
+            <FullAddress>\r\nFlat 18\r\nBaron House\r\n33\r\nChapter Way\r\nLondon\r\nEngland\r\nSW19 2RS\r\n</FullAddress>
+            <Return_Code>1</Return_Code>
+        </AddressPremise>
+        <AddressPremise>
+            <Unique_Delivery_Point>27668740</Unique_Delivery_Point>
+            <Organisation_Department />
+            <Organisation />
+            <Sub_Building_Name>Flat 19</Sub_Building_Name>
+            <Building_Name>Baron House</Building_Name>
+            <Number>33</Number>
+            <Dependent_Street />
+            <Street>Chapter Way</Street>
+            <Double_Dependent_Locality />
+            <Dependent_Locality />
+            <Post_Town>London</Post_Town>
+            <County_LocalAuthority />
+            <County_Administrative>MERTON</County_Administrative>
+            <County_FormerPostal />
+            <County_Traditional />
+            <Country>England</Country>
+            <Postcode>SW19 2RS</Postcode>
+            <Post_Office_Box />
+            <User_Category />
+            <Mailsort_Sortcode>73164</Mailsort_Sortcode>
+            <Delivery_Point_Suffix>1Y</Delivery_Point_Suffix>
+            <Latitude_Degrees />
+            <Longitude_Degrees />
+            <IsError>false</IsError>
+            <ErrorMessage />
+            <FullAddress>\r\nFlat 19\r\nBaron House\r\n33\r\nChapter Way\r\nLondon\r\nEngland\r\nSW19 2RS\r\n</FullAddress>
+            <Return_Code>1</Return_Code>
+        </AddressPremise>
+        <AddressPremise>
+            <Unique_Delivery_Point>27668723</Unique_Delivery_Point>
+            <Organisation_Department />
+            <Organisation />
+            <Sub_Building_Name>Flat 2</Sub_Building_Name>
+            <Building_Name>Baron House</Building_Name>
+            <Number>33</Number>
+            <Dependent_Street />
+            <Street>Chapter Way</Street>
+            <Double_Dependent_Locality />
+            <Dependent_Locality />
+            <Post_Town>London</Post_Town>
+            <County_LocalAuthority />
+            <County_Administrative>MERTON</County_Administrative>
+            <County_FormerPostal />
+            <County_Traditional />
+            <Country>England</Country>
+            <Postcode>SW19 2RS</Postcode>
+            <Post_Office_Box />
+            <User_Category />
+            <Mailsort_Sortcode>73164</Mailsort_Sortcode>
+            <Delivery_Point_Suffix>1B</Delivery_Point_Suffix>
+            <Latitude_Degrees />
+            <Longitude_Degrees />
+            <IsError>false</IsError>
+            <ErrorMessage />
+            <FullAddress>\r\nFlat 2\r\nBaron House\r\n33\r\nChapter Way\r\nLondon\r\nEngland\r\nSW19 2RS\r\n</FullAddress>
+            <Return_Code>1</Return_Code>
+        </AddressPremise>
+        <AddressPremise>
+            <Unique_Delivery_Point>27668741</Unique_Delivery_Point>
+            <Organisation_Department />
+            <Organisation />
+            <Sub_Building_Name>Flat 20</Sub_Building_Name>
+            <Building_Name>Baron House</Building_Name>
+            <Number>33</Number>
+            <Dependent_Street />
+            <Street>Chapter Way</Street>
+            <Double_Dependent_Locality />
+            <Dependent_Locality />
+            <Post_Town>London</Post_Town>
+            <County_LocalAuthority />
+            <County_Administrative>MERTON</County_Administrative>
+            <County_FormerPostal />
+            <County_Traditional />
+            <Country>England</Country>
+            <Postcode>SW19 2RS</Postcode>
+            <Post_Office_Box />
+            <User_Category />
+            <Mailsort_Sortcode>73164</Mailsort_Sortcode>
+            <Delivery_Point_Suffix>1Z</Delivery_Point_Suffix>
+            <Latitude_Degrees />
+            <Longitude_Degrees />
+            <IsError>false</IsError>
+            <ErrorMessage />
+            <FullAddress>\r\nFlat 20\r\nBaron House\r\n33\r\nChapter Way\r\nLondon\r\nEngland\r\nSW19 2RS\r\n</FullAddress>
+            <Return_Code>1</Return_Code>
+        </AddressPremise>
+        <AddressPremise>
+            <Unique_Delivery_Point>27668742</Unique_Delivery_Point>
+            <Organisation_Department />
+            <Organisation />
+            <Sub_Building_Name>Flat 21</Sub_Building_Name>
+            <Building_Name>Baron House</Building_Name>
+            <Number>33</Number>
+            <Dependent_Street />
+            <Street>Chapter Way</Street>
+            <Double_Dependent_Locality />
+            <Dependent_Locality />
+            <Post_Town>London</Post_Town>
+            <County_LocalAuthority />
+            <County_Administrative>MERTON</County_Administrative>
+            <County_FormerPostal />
+            <County_Traditional />
+            <Country>England</Country>
+            <Postcode>SW19 2RS</Postcode>
+            <Post_Office_Box />
+            <User_Category />
+            <Mailsort_Sortcode>73164</Mailsort_Sortcode>
+            <Delivery_Point_Suffix>2A</Delivery_Point_Suffix>
+            <Latitude_Degrees />
+            <Longitude_Degrees />
+            <IsError>false</IsError>
+            <ErrorMessage />
+            <FullAddress>\r\nFlat 21\r\nBaron House\r\n33\r\nChapter Way\r\nLondon\r\nEngland\r\nSW19 2RS\r\n</FullAddress>
+            <Return_Code>1</Return_Code>
+        </AddressPremise>
+        <AddressPremise>
+            <Unique_Delivery_Point>27668743</Unique_Delivery_Point>
+            <Organisation_Department />
+            <Organisation />
+            <Sub_Building_Name>Flat 22</Sub_Building_Name>
+            <Building_Name>Baron House</Building_Name>
+            <Number>33</Number>
+            <Dependent_Street />
+            <Street>Chapter Way</Street>
+            <Double_Dependent_Locality />
+            <Dependent_Locality />
+            <Post_Town>London</Post_Town>
+            <County_LocalAuthority />
+            <County_Administrative>MERTON</County_Administrative>
+            <County_FormerPostal />
+            <County_Traditional />
+            <Country>England</Country>
+            <Postcode>SW19 2RS</Postcode>
+            <Post_Office_Box />
+            <User_Category />
+            <Mailsort_Sortcode>73164</Mailsort_Sortcode>
+            <Delivery_Point_Suffix>2B</Delivery_Point_Suffix>
+            <Latitude_Degrees />
+            <Longitude_Degrees />
+            <IsError>false</IsError>
+            <ErrorMessage />
+            <FullAddress>\r\nFlat 22\r\nBaron House\r\n33\r\nChapter Way\r\nLondon\r\nEngland\r\nSW19 2RS\r\n</FullAddress>
+            <Return_Code>1</Return_Code>
+        </AddressPremise>
+        <AddressPremise>
+            <Unique_Delivery_Point>27668744</Unique_Delivery_Point>
+            <Organisation_Department />
+            <Organisation />
+            <Sub_Building_Name>Flat 23</Sub_Building_Name>
+            <Building_Name>Baron House</Building_Name>
+            <Number>33</Number>
+            <Dependent_Street />
+            <Street>Chapter Way</Street>
+            <Double_Dependent_Locality />
+            <Dependent_Locality />
+            <Post_Town>London</Post_Town>
+            <County_LocalAuthority />
+            <County_Administrative>MERTON</County_Administrative>
+            <County_FormerPostal />
+            <County_Traditional />
+            <Country>England</Country>
+            <Postcode>SW19 2RS</Postcode>
+            <Post_Office_Box />
+            <User_Category />
+            <Mailsort_Sortcode>73164</Mailsort_Sortcode>
+            <Delivery_Point_Suffix>2D</Delivery_Point_Suffix>
+            <Latitude_Degrees />
+            <Longitude_Degrees />
+            <IsError>false</IsError>
+            <ErrorMessage />
+            <FullAddress>\r\nFlat 23\r\nBaron House\r\n33\r\nChapter Way\r\nLondon\r\nEngland\r\nSW19 2RS\r\n</FullAddress>
+            <Return_Code>1</Return_Code>
+        </AddressPremise>
+        <AddressPremise>
+            <Unique_Delivery_Point>27668745</Unique_Delivery_Point>
+            <Organisation_Department />
+            <Organisation />
+            <Sub_Building_Name>Flat 24</Sub_Building_Name>
+            <Building_Name>Baron House</Building_Name>
+            <Number>33</Number>
+            <Dependent_Street />
+            <Street>Chapter Way</Street>
+            <Double_Dependent_Locality />
+            <Dependent_Locality />
+            <Post_Town>London</Post_Town>
+            <County_LocalAuthority />
+            <County_Administrative>MERTON</County_Administrative>
+            <County_FormerPostal />
+            <County_Traditional />
+            <Country>England</Country>
+            <Postcode>SW19 2RS</Postcode>
+            <Post_Office_Box />
+            <User_Category />
+            <Mailsort_Sortcode>73164</Mailsort_Sortcode>
+            <Delivery_Point_Suffix>2E</Delivery_Point_Suffix>
+            <Latitude_Degrees />
+            <Longitude_Degrees />
+            <IsError>false</IsError>
+            <ErrorMessage />
+            <FullAddress>\r\nFlat 24\r\nBaron House\r\n33\r\nChapter Way\r\nLondon\r\nEngland\r\nSW19 2RS\r\n</FullAddress>
+            <Return_Code>1</Return_Code>
+        </AddressPremise>
+        <AddressPremise>
+            <Unique_Delivery_Point>27668724</Unique_Delivery_Point>
+            <Organisation_Department />
+            <Organisation />
+            <Sub_Building_Name>Flat 3</Sub_Building_Name>
+            <Building_Name>Baron House</Building_Name>
+            <Number>33</Number>
+            <Dependent_Street />
+            <Street>Chapter Way</Street>
+            <Double_Dependent_Locality />
+            <Dependent_Locality />
+            <Post_Town>London</Post_Town>
+            <County_LocalAuthority />
+            <County_Administrative>MERTON</County_Administrative>
+            <County_FormerPostal />
+            <County_Traditional />
+            <Country>England</Country>
+            <Postcode>SW19 2RS</Postcode>
+            <Post_Office_Box />
+            <User_Category />
+            <Mailsort_Sortcode>73164</Mailsort_Sortcode>
+            <Delivery_Point_Suffix>1D</Delivery_Point_Suffix>
+            <Latitude_Degrees />
+            <Longitude_Degrees />
+            <IsError>false</IsError>
+            <ErrorMessage />
+            <FullAddress>\r\nFlat 3\r\nBaron House\r\n33\r\nChapter Way\r\nLondon\r\nEngland\r\nSW19 2RS\r\n</FullAddress>
+            <Return_Code>1</Return_Code>
+        </AddressPremise>
+        <AddressPremise>
+            <Unique_Delivery_Point>27668725</Unique_Delivery_Point>
+            <Organisation_Department />
+            <Organisation />
+            <Sub_Building_Name>Flat 4</Sub_Building_Name>
+            <Building_Name>Baron House</Building_Name>
+            <Number>33</Number>
+            <Dependent_Street />
+            <Street>Chapter Way</Street>
+            <Double_Dependent_Locality />
+            <Dependent_Locality />
+            <Post_Town>London</Post_Town>
+            <County_LocalAuthority />
+            <County_Administrative>MERTON</County_Administrative>
+            <County_FormerPostal />
+            <County_Traditional />
+            <Country>England</Country>
+            <Postcode>SW19 2RS</Postcode>
+            <Post_Office_Box />
+            <User_Category />
+            <Mailsort_Sortcode>73164</Mailsort_Sortcode>
+            <Delivery_Point_Suffix>1E</Delivery_Point_Suffix>
+            <Latitude_Degrees />
+            <Longitude_Degrees />
+            <IsError>false</IsError>
+            <ErrorMessage />
+            <FullAddress>\r\nFlat 4\r\nBaron House\r\n33\r\nChapter Way\r\nLondon\r\nEngland\r\nSW19 2RS\r\n</FullAddress>
+            <Return_Code>1</Return_Code>
+        </AddressPremise>
+        <AddressPremise>
+            <Unique_Delivery_Point>27668726</Unique_Delivery_Point>
+            <Organisation_Department />
+            <Organisation />
+            <Sub_Building_Name>Flat 5</Sub_Building_Name>
+            <Building_Name>Baron House</Building_Name>
+            <Number>33</Number>
+            <Dependent_Street />
+            <Street>Chapter Way</Street>
+            <Double_Dependent_Locality />
+            <Dependent_Locality />
+            <Post_Town>London</Post_Town>
+            <County_LocalAuthority />
+            <County_Administrative>MERTON</County_Administrative>
+            <County_FormerPostal />
+            <County_Traditional />
+            <Country>England</Country>
+            <Postcode>SW19 2RS</Postcode>
+            <Post_Office_Box />
+            <User_Category />
+            <Mailsort_Sortcode>73164</Mailsort_Sortcode>
+            <Delivery_Point_Suffix>1F</Delivery_Point_Suffix>
+            <Latitude_Degrees />
+            <Longitude_Degrees />
+            <IsError>false</IsError>
+            <ErrorMessage />
+            <FullAddress>\r\nFlat 5\r\nBaron House\r\n33\r\nChapter Way\r\nLondon\r\nEngland\r\nSW19 2RS\r\n</FullAddress>
+            <Return_Code>1</Return_Code>
+        </AddressPremise>
+        <AddressPremise>
+            <Unique_Delivery_Point>27668727</Unique_Delivery_Point>
+            <Organisation_Department />
+            <Organisation />
+            <Sub_Building_Name>Flat 6</Sub_Building_Name>
+            <Building_Name>Baron House</Building_Name>
+            <Number>33</Number>
+            <Dependent_Street />
+            <Street>Chapter Way</Street>
+            <Double_Dependent_Locality />
+            <Dependent_Locality />
+            <Post_Town>London</Post_Town>
+            <County_LocalAuthority />
+            <County_Administrative>MERTON</County_Administrative>
+            <County_FormerPostal />
+            <County_Traditional />
+            <Country>England</Country>
+            <Postcode>SW19 2RS</Postcode>
+            <Post_Office_Box />
+            <User_Category />
+            <Mailsort_Sortcode>73164</Mailsort_Sortcode>
+            <Delivery_Point_Suffix>1G</Delivery_Point_Suffix>
+            <Latitude_Degrees />
+            <Longitude_Degrees />
+            <IsError>false</IsError>
+            <ErrorMessage />
+            <FullAddress>\r\nFlat 6\r\nBaron House\r\n33\r\nChapter Way\r\nLondon\r\nEngland\r\nSW19 2RS\r\n</FullAddress>
+            <Return_Code>1</Return_Code>
+        </AddressPremise>
+        <AddressPremise>
+            <Unique_Delivery_Point>27668728</Unique_Delivery_Point>
+            <Organisation_Department />
+            <Organisation />
+            <Sub_Building_Name>Flat 7</Sub_Building_Name>
+            <Building_Name>Baron House</Building_Name>
+            <Number>33</Number>
+            <Dependent_Street />
+            <Street>Chapter Way</Street>
+            <Double_Dependent_Locality />
+            <Dependent_Locality />
+            <Post_Town>London</Post_Town>
+            <County_LocalAuthority />
+            <County_Administrative>MERTON</County_Administrative>
+            <County_FormerPostal />
+            <County_Traditional />
+            <Country>England</Country>
+            <Postcode>SW19 2RS</Postcode>
+            <Post_Office_Box />
+            <User_Category />
+            <Mailsort_Sortcode>73164</Mailsort_Sortcode>
+            <Delivery_Point_Suffix>1H</Delivery_Point_Suffix>
+            <Latitude_Degrees />
+            <Longitude_Degrees />
+            <IsError>false</IsError>
+            <ErrorMessage />
+            <FullAddress>\r\nFlat 7\r\nBaron House\r\n33\r\nChapter Way\r\nLondon\r\nEngland\r\nSW19 2RS\r\n</FullAddress>
+            <Return_Code>1</Return_Code>
+        </AddressPremise>
+        <AddressPremise>
+            <Unique_Delivery_Point>27668729</Unique_Delivery_Point>
+            <Organisation_Department />
+            <Organisation />
+            <Sub_Building_Name>Flat 8</Sub_Building_Name>
+            <Building_Name>Baron House</Building_Name>
+            <Number>33</Number>
+            <Dependent_Street />
+            <Street>Chapter Way</Street>
+            <Double_Dependent_Locality />
+            <Dependent_Locality />
+            <Post_Town>London</Post_Town>
+            <County_LocalAuthority />
+            <County_Administrative>MERTON</County_Administrative>
+            <County_FormerPostal />
+            <County_Traditional />
+            <Country>England</Country>
+            <Postcode>SW19 2RS</Postcode>
+            <Post_Office_Box />
+            <User_Category />
+            <Mailsort_Sortcode>73164</Mailsort_Sortcode>
+            <Delivery_Point_Suffix>1J</Delivery_Point_Suffix>
+            <Latitude_Degrees />
+            <Longitude_Degrees />
+            <IsError>false</IsError>
+            <ErrorMessage />
+            <FullAddress>\r\nFlat 8\r\nBaron House\r\n33\r\nChapter Way\r\nLondon\r\nEngland\r\nSW19 2RS\r\n</FullAddress>
+            <Return_Code>1</Return_Code>
+        </AddressPremise>
+        <AddressPremise>
+            <Unique_Delivery_Point>27668730</Unique_Delivery_Point>
+            <Organisation_Department />
+            <Organisation />
+            <Sub_Building_Name>Flat 9</Sub_Building_Name>
+            <Building_Name>Baron House</Building_Name>
+            <Number>33</Number>
+            <Dependent_Street />
+            <Street>Chapter Way</Street>
+            <Double_Dependent_Locality />
+            <Dependent_Locality />
+            <Post_Town>London</Post_Town>
+            <County_LocalAuthority />
+            <County_Administrative>MERTON</County_Administrative>
+            <County_FormerPostal />
+            <County_Traditional />
+            <Country>England</Country>
+            <Postcode>SW19 2RS</Postcode>
+            <Post_Office_Box />
+            <User_Category />
+            <Mailsort_Sortcode>73164</Mailsort_Sortcode>
+            <Delivery_Point_Suffix>1L</Delivery_Point_Suffix>
+            <Latitude_Degrees />
+            <Longitude_Degrees />
+            <IsError>false</IsError>
+            <ErrorMessage />
+            <FullAddress>\r\nFlat 9\r\nBaron House\r\n33\r\nChapter Way\r\nLondon\r\nEngland\r\nSW19 2RS\r\n</FullAddress>
+            <Return_Code>1</Return_Code>
+        </AddressPremise>
+    </List>
+    <IsError>false</IsError>
+    <IsTruncated>false</IsTruncated>
+    <RecCount>24</RecCount>
+    <ErrorMessage />
+</ListAllAddressPremises>
+
 https://json2csharp.com/code-converters/xml-to-java
 
 import org.springframework.context.annotation.Bean;
