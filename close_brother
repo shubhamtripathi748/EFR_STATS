@@ -1,4 +1,21 @@
- <!-- JAXB API for XML binding -->
+@Value("${epcode.api.url}")
+    private String apiUrl;
+
+
+public String getAddressByPostcode(String postcode) {
+        // Build the full URL with the dynamic postcode
+        String url = UriComponentsBuilder.fromHttpUrl(apiUrl)
+                .buildAndExpand(postcode)
+                .toUriString();
+
+        // Send the GET request using RestTemplate
+        return restTemplate.getForObject(url, String.class);
+    }
+
+
+
+
+<!-- JAXB API for XML binding -->
     <dependency>
         <groupId>jakarta.xml.bind</groupId>
         <artifactId>jakarta.xml.bind-api</artifactId>
