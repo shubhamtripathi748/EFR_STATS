@@ -1,3 +1,258 @@
+import jakarta.xml.bind.annotation.XmlElement;
+import jakarta.xml.bind.annotation.XmlRootElement;
+import jakarta.xml.bind.annotation.XmlType;
+
+@XmlRootElement(name = "GetAddressesForPostcodeResponse", namespace = "https://ws.epostcode.com/uk/postcodeservices19.asmx")
+@XmlType(propOrder = {"getAddressesForPostcodeResult"})
+public class GetAddressesForPostcodeResponse {
+    
+    private GetAddressesForPostcodeResult getAddressesForPostcodeResult;
+
+    @XmlElement(name = "GetAddressesForPostcodeResult", required = true)
+    public GetAddressesForPostcodeResult getGetAddressesForPostcodeResult() {
+        return getAddressesForPostcodeResult;
+    }
+
+    public void setGetAddressesForPostcodeResult(GetAddressesForPostcodeResult getAddressesForPostcodeResult) {
+        this.getAddressesForPostcodeResult = getAddressesForPostcodeResult;
+    }
+}
+
+
+import jakarta.xml.bind.annotation.XmlElement;
+import jakarta.xml.bind.annotation.XmlType;
+import java.util.List;
+
+@XmlType(propOrder = {"list", "isError", "isTruncated", "recCount", "errorMessage"})
+public class GetAddressesForPostcodeResult {
+    
+    private List<AddressPremise> list;
+    private boolean isError;
+    private boolean isTruncated;
+    private int recCount;
+    private String errorMessage;
+
+    @XmlElement(name = "List")
+    public List<AddressPremise> getList() {
+        return list;
+    }
+
+    public void setList(List<AddressPremise> list) {
+        this.list = list;
+    }
+
+    @XmlElement(name = "IsError")
+    public boolean isIsError() {
+        return isError;
+    }
+
+    public void setIsError(boolean isError) {
+        this.isError = isError;
+    }
+
+    @XmlElement(name = "IsTruncated")
+    public boolean isIsTruncated() {
+        return isTruncated;
+    }
+
+    public void setIsTruncated(boolean isTruncated) {
+        this.isTruncated = isTruncated;
+    }
+
+    @XmlElement(name = "RecCount")
+    public int getRecCount() {
+        return recCount;
+    }
+
+    public void setRecCount(int recCount) {
+        this.recCount = recCount;
+    }
+
+    @XmlElement(name = "ErrorMessage")
+    public String getErrorMessage() {
+        return errorMessage;
+    }
+
+    public void setErrorMessage(String errorMessage) {
+        this.errorMessage = errorMessage;
+    }
+}
+
+
+import jakarta.xml.bind.annotation.XmlElement;
+import jakarta.xml.bind.annotation.XmlType;
+
+@XmlType(propOrder = {
+    "uniqueDeliveryPoint", "subBuildingName", "buildingName", "number", "street", 
+    "postTown", "countyAdministrative", "country", "postcode", "fullAddress"
+})
+public class AddressPremise {
+
+    private String uniqueDeliveryPoint;
+    private String subBuildingName;
+    private String buildingName;
+    private String number;
+    private String street;
+    private String postTown;
+    private String countyAdministrative;
+    private String country;
+    private String postcode;
+    private String fullAddress;
+
+    @XmlElement(name = "Unique_Delivery_Point")
+    public String getUniqueDeliveryPoint() {
+        return uniqueDeliveryPoint;
+    }
+
+    public void setUniqueDeliveryPoint(String uniqueDeliveryPoint) {
+        this.uniqueDeliveryPoint = uniqueDeliveryPoint;
+    }
+
+    @XmlElement(name = "Sub_Building_Name")
+    public String getSubBuildingName() {
+        return subBuildingName;
+    }
+
+    public void setSubBuildingName(String subBuildingName) {
+        this.subBuildingName = subBuildingName;
+    }
+
+    @XmlElement(name = "Building_Name")
+    public String getBuildingName() {
+        return buildingName;
+    }
+
+    public void setBuildingName(String buildingName) {
+        this.buildingName = buildingName;
+    }
+
+    @XmlElement(name = "Number")
+    public String getNumber() {
+        return number;
+    }
+
+    public void setNumber(String number) {
+        this.number = number;
+    }
+
+    @XmlElement(name = "Street")
+    public String getStreet() {
+        return street;
+    }
+
+    public void setStreet(String street) {
+        this.street = street;
+    }
+
+    @XmlElement(name = "Post_Town")
+    public String getPostTown() {
+        return postTown;
+    }
+
+    public void setPostTown(String postTown) {
+        this.postTown = postTown;
+    }
+
+    @XmlElement(name = "County_Administrative")
+    public String getCountyAdministrative() {
+        return countyAdministrative;
+    }
+
+    public void setCountyAdministrative(String countyAdministrative) {
+        this.countyAdministrative = countyAdministrative;
+    }
+
+    @XmlElement(name = "Country")
+    public String getCountry() {
+        return country;
+    }
+
+    public void setCountry(String country) {
+        this.country = country;
+    }
+
+    @XmlElement(name = "Postcode")
+    public String getPostcode() {
+        return postcode;
+    }
+
+    public void setPostcode(String postcode) {
+        this.postcode = postcode;
+    }
+
+    @XmlElement(name = "FullAddress")
+    public String getFullAddress() {
+        return fullAddress;
+    }
+
+    public void setFullAddress(String fullAddress) {
+        this.fullAddress = fullAddress;
+    }
+}
+
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.client.RestTemplate;
+import jakarta.xml.bind.JAXBContext;
+import jakarta.xml.bind.JAXBException;
+import jakarta.xml.bind.Unmarshaller;
+
+public class SoapClient {
+    public static void main(String[] args) throws Exception {
+        // Initialize the RestTemplate
+        RestTemplate restTemplate = new RestTemplate();
+
+        // SOAP XML Response as a String (you would get this from the SOAP API)
+        String soapResponse = "<soap:Envelope xmlns:soap=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\">\n" +
+                "   <soap:Body>\n" +
+                "      <GetAddressesForPostcodeResponse xmlns=\"https://ws.epostcode.com/uk/postcodeservices19.asmx\">\n" +
+                "         <GetAddressesForPostcodeResult>\n" +
+                "            <List>\n" +
+                "               <AddressPremise>\n" +
+                "                  <Unique_Delivery_Point>27668722</Unique_Delivery_Point>\n" +
+                "                  <Sub_Building_Name>Flat 1</Sub_Building_Name>\n" +
+                "                  <Building_Name>Baron House</Building_Name>\n" +
+                "                  <Number>33</Number>\n" +
+                "                  <Street>Chapter Way</Street>\n" +
+                "                  <Post_Town>London</Post_Town>\n" +
+                "                  <Country>England</Country>\n" +
+                "                  <Postcode>SW19 2RS</Postcode>\n" +
+                "                  <FullAddress>Flat 1, Baron House, 33, Chapter Way, London, England, SW19 2RS</FullAddress>\n" +
+                "               </AddressPremise>\n" +
+                "            </List>\n" +
+                "            <IsError>false</IsError>\n" +
+                "            <IsTruncated>false</IsTruncated>\n" +
+                "            <RecCount>24</RecCount>\n" +
+                "         </GetAddressesForPostcodeResult>\n" +
+                "      </GetAddressesForPostcodeResponse>\n" +
+                "   </soap:Body>\n" +
+                "</soap:Envelope>";
+
+        // Unmarshal the response to Java objects
+        JAXBContext context = JAXBContext.newInstance(GetAddressesForPostcodeResponse.class);
+        Unmarshaller unmarshaller = context.createUnmarshaller();
+
+        // Convert SOAP XML response to Java Object
+        GetAddressesForPostcodeResponse response = (GetAddressesForPostcodeResponse) unmarshaller.unmarshal(new java.io.StringReader(soapResponse));
+
+        // Access the results
+        GetAddressesForPostcodeResult result = response.getGetAddressesForPostcodeResult();
+        for (AddressPremise address : result.getList()) {
+            System.out.println("Address: " + address.getFullAddress());
+        }
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+----------------------------------------------
 public class AddressPremise { 
 	public int Unique_Delivery_Point;
 	public Object Organisation_Department;
