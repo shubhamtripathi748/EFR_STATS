@@ -1,3 +1,71 @@
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.web.client.RestTemplate;
+
+@Configuration
+public class RestTemplateConfig {
+    @Bean
+    public RestTemplate restTemplate() {
+        return new RestTemplate();
+    }
+}
+
+
+--------------------------------------
+import org.springframework.stereotype.Service;
+import org.springframework.web.client.RestTemplate;
+
+@Service
+public class EPostcodeService {
+
+    private final RestTemplate restTemplate;
+
+    public EPostcodeService(RestTemplate restTemplate) {
+        this.restTemplate = restTemplate;
+    }
+
+    public String callEPostcodeApi(String param1, String param2) {
+        // Construct the URL
+        String url = "http://epostcode-service.com/api?param1=" + param1 + "&param2=" + param2;
+
+        // Make the GET request
+        return restTemplate.getForObject(url, String.class);
+    }
+}
+
+
+-----------------------------------------
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
+
+@RestController
+public class MiddlewareController {
+
+    private final EPostcodeService ePostcodeService;
+
+    public MiddlewareController(EPostcodeService ePostcodeService) {
+        this.ePostcodeService = ePostcodeService;
+    }
+
+    @GetMapping("/postcode")
+    public String getPostcodeDetails(@RequestParam String param1, @RequestParam String param2) {
+        // Call the E-Postcode service
+        return ePostcodeService.callEPostcodeApi(param1, param2);
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
 Subject: Minutes of Meeting – Follow-up on E-Post-Code API
 Dear Team,
 
