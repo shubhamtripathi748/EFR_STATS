@@ -1,3 +1,97 @@
+import java.io.StringReader;
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+import org.xml.sax.InputSource;
+
+public class RemoveNamespaceExample {
+
+    public static String removeNamespacePrefix(String xml) {
+        try {
+            // Parse the XML string to a Document object
+            DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
+            factory.setNamespaceAware(true); // Ensure namespaces are handled
+            DocumentBuilder builder = factory.newDocumentBuilder();
+            InputSource is = new InputSource(new StringReader(xml));
+            Document document = builder.parse(is);
+            
+            // Get the root element
+            Element root = document.getDocumentElement();
+            
+            // Recursively remove all namespaces
+            removeNamespaceFromElement(root);
+            
+            // Convert the document back to string
+            return convertDocumentToString(document);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return xml;
+        }
+    }
+
+    // Method to remove namespaces from element and its children
+    private static void removeNamespaceFromElement(Element element) {
+        // Remove namespace prefix (by setting it to empty)
+        element.setPrefix(null);
+
+        // Recursively remove namespace from child elements
+        for (int i = 0; i < element.getChildNodes().getLength(); i++) {
+            if (element.getChildNodes().item(i) instanceof Element) {
+                removeNamespaceFromElement((Element) element.getChildNodes().item(i));
+            }
+        }
+    }
+
+    // Convert Document back to XML string
+    private static String convertDocumentToString(Document document) {
+        try {
+            javax.xml.transform.TransformerFactory transformerFactory = javax.xml.transform.TransformerFactory.newInstance();
+            javax.xml.transform.Transformer transformer = transformerFactory.newTransformer();
+            javax.xml.transform.dom.DOMSource source = new javax.xml.transform.dom.DOMSource(document);
+            java.io.StringWriter writer = new java.io.StringWriter();
+            javax.xml.transform.stream.StreamResult result = new javax.xml.transform.stream.StreamResult(writer);
+            transformer.transform(source, result);
+            return writer.toString();
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    public static void main(String[] args) {
+        String xml = "<soap:Envelope xmlns:soap=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\">" +
+                     "   <soap:Body>" +
+                     "      <GetAddressesForPostcodeResponse xmlns=\"https://ws.epostcode.com/uk/postcodeservices19.asmx\">" +
+                     "         <GetAddressesForPostcodeResult>" +
+                     "            <List>" +
+                     "               <AddressPremise>" +
+                     "                  <Unique_Delivery_Point>27668722</Unique_Delivery_Point>" +
+                     "                  <Sub_Building_Name>Flat 1</Sub_Building_Name>" +
+                     "                  <Building_Name>Baron House</Building_Name>" +
+                     "                  <Number>33</Number>" +
+                     "                  <Street>Chapter Way</Street>" +
+                     "                  <Post_Town>London</Post_Town>" +
+                     "                  <Postcode>SW19 2RS</Postcode>" +
+                     "                  <FullAddress>Flat 1\nBaron House\n33\nChapter Way\nLondon\nEngland\nSW19 2RS\n</FullAddress>" +
+                     "               </AddressPremise>" +
+                     "            </List>" +
+                     "         </GetAddressesForPostcodeResult>" +
+                     "      </GetAddressesForPostcodeResponse>" +
+                     "   </soap:Body>" +
+                     "</soap:Envelope>";
+
+        String cleanedXml = removeNamespacePrefix(xml);
+        System.out.println(cleanedXml);
+    }
+}
+
+
+
+
+
+
+
 public static String removeNamespaces(String xml) {
     return xml.replaceAll("xmlns(:[^=]*)?=\"[^\"]*\"", ""); // Remove xmlns declarations
 }
