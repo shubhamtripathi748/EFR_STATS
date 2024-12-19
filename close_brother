@@ -1,3 +1,222 @@
+import jakarta.xml.bind.JAXBContext;
+import jakarta.xml.bind.Unmarshaller;
+import java.io.StringReader;
+
+public class XmlToJsonExample {
+
+    public static void main(String[] args) throws Exception {
+        String xmlResponse = "<ListAllAddressPremises xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\" xmlns=\"https://ws.epostcode.com/uk/postcodeservices19.asmx\">"
+                + "    <List>"
+                + "        <AddressPremise>"
+                + "            <Unique_Delivery_Point>27668722</Unique_Delivery_Point>"
+                + "            <Sub_Building_Name>Flat 1</Sub_Building_Name>"
+                + "            <Building_Name>Baron House</Building_Name>"
+                + "            <Number>33</Number>"
+                + "            <Street>Chapter Way</Street>"
+                + "            <Post_Town>London</Post_Town>"
+                + "            <County_Administrative>MERTON</County_Administrative>"
+                + "            <Country>England</Country>"
+                + "            <Postcode>SW19 2RS</Postcode>"
+                + "            <FullAddress>Flat 1, Baron House, 33 Chapter Way, London, England, SW19 2RS</FullAddress>"
+                + "            <Delivery_Point_Suffix>1A</Delivery_Point_Suffix>"
+                + "        </AddressPremise>"
+                + "    </List>"
+                + "    <IsError>false</IsError>"
+                + "    <IsTruncated>false</IsTruncated>"
+                + "    <RecCount>1</RecCount>"
+                + "    <ErrorMessage />"
+                + "</ListAllAddressPremises>";
+
+        JAXBContext context = JAXBContext.newInstance(ListAllAddressPremises.class);
+        Unmarshaller unmarshaller = context.createUnmarshaller();
+        ListAllAddressPremises response = (ListAllAddressPremises) unmarshaller.unmarshal(new StringReader(xmlResponse));
+
+        System.out.println(response.getList().get(0).getFullAddress());
+    }
+}
+
+
+--------------------------------
+
+import jakarta.xml.bind.annotation.XmlElement;
+import jakarta.xml.bind.annotation.XmlRootElement;
+
+import java.util.List;
+
+@XmlRootElement(name = "ListAllAddressPremises", namespace = "https://ws.epostcode.com/uk/postcodeservices19.asmx")
+public class ListAllAddressPremises {
+
+    private List<AddressPremise> list;
+    private boolean isError;
+    private boolean isTruncated;
+    private int recCount;
+    private String errorMessage;
+
+    @XmlElement(name = "List", namespace = "https://ws.epostcode.com/uk/postcodeservices19.asmx")
+    public List<AddressPremise> getList() {
+        return list;
+    }
+
+    public void setList(List<AddressPremise> list) {
+        this.list = list;
+    }
+
+    @XmlElement(name = "IsError", namespace = "https://ws.epostcode.com/uk/postcodeservices19.asmx")
+    public boolean isError() {
+        return isError;
+    }
+
+    public void setError(boolean error) {
+        isError = error;
+    }
+
+    @XmlElement(name = "IsTruncated", namespace = "https://ws.epostcode.com/uk/postcodeservices19.asmx")
+    public boolean isTruncated() {
+        return isTruncated;
+    }
+
+    public void setTruncated(boolean truncated) {
+        isTruncated = truncated;
+    }
+
+    @XmlElement(name = "RecCount", namespace = "https://ws.epostcode.com/uk/postcodeservices19.asmx")
+    public int getRecCount() {
+        return recCount;
+    }
+
+    public void setRecCount(int recCount) {
+        this.recCount = recCount;
+    }
+
+    @XmlElement(name = "ErrorMessage", namespace = "https://ws.epostcode.com/uk/postcodeservices19.asmx")
+    public String getErrorMessage() {
+        return errorMessage;
+    }
+
+    public void setErrorMessage(String errorMessage) {
+        this.errorMessage = errorMessage;
+    }
+}
+
+class AddressPremise {
+
+    private String uniqueDeliveryPoint;
+    private String subBuildingName;
+    private String buildingName;
+    private String number;
+    private String street;
+    private String postTown;
+    private String countyAdministrative;
+    private String country;
+    private String postcode;
+    private String fullAddress;
+    private String deliveryPointSuffix;
+
+    @XmlElement(name = "Unique_Delivery_Point", namespace = "https://ws.epostcode.com/uk/postcodeservices19.asmx")
+    public String getUniqueDeliveryPoint() {
+        return uniqueDeliveryPoint;
+    }
+
+    public void setUniqueDeliveryPoint(String uniqueDeliveryPoint) {
+        this.uniqueDeliveryPoint = uniqueDeliveryPoint;
+    }
+
+    @XmlElement(name = "Sub_Building_Name", namespace = "https://ws.epostcode.com/uk/postcodeservices19.asmx")
+    public String getSubBuildingName() {
+        return subBuildingName;
+    }
+
+    public void setSubBuildingName(String subBuildingName) {
+        this.subBuildingName = subBuildingName;
+    }
+
+    @XmlElement(name = "Building_Name", namespace = "https://ws.epostcode.com/uk/postcodeservices19.asmx")
+    public String getBuildingName() {
+        return buildingName;
+    }
+
+    public void setBuildingName(String buildingName) {
+        this.buildingName = buildingName;
+    }
+
+    @XmlElement(name = "Number", namespace = "https://ws.epostcode.com/uk/postcodeservices19.asmx")
+    public String getNumber() {
+        return number;
+    }
+
+    public void setNumber(String number) {
+        this.number = number;
+    }
+
+    @XmlElement(name = "Street", namespace = "https://ws.epostcode.com/uk/postcodeservices19.asmx")
+    public String getStreet() {
+        return street;
+    }
+
+    public void setStreet(String street) {
+        this.street = street;
+    }
+
+    @XmlElement(name = "Post_Town", namespace = "https://ws.epostcode.com/uk/postcodeservices19.asmx")
+    public String getPostTown() {
+        return postTown;
+    }
+
+    public void setPostTown(String postTown) {
+        this.postTown = postTown;
+    }
+
+    @XmlElement(name = "County_Administrative", namespace = "https://ws.epostcode.com/uk/postcodeservices19.asmx")
+    public String getCountyAdministrative() {
+        return countyAdministrative;
+    }
+
+    public void setCountyAdministrative(String countyAdministrative) {
+        this.countyAdministrative = countyAdministrative;
+    }
+
+    @XmlElement(name = "Country", namespace = "https://ws.epostcode.com/uk/postcodeservices19.asmx")
+    public String getCountry() {
+        return country;
+    }
+
+    public void setCountry(String country) {
+        this.country = country;
+    }
+
+    @XmlElement(name = "Postcode", namespace = "https://ws.epostcode.com/uk/postcodeservices19.asmx")
+    public String getPostcode() {
+        return postcode;
+    }
+
+    public void setPostcode(String postcode) {
+        this.postcode = postcode;
+    }
+
+    @XmlElement(name = "FullAddress", namespace = "https://ws.epostcode.com/uk/postcodeservices19.asmx")
+    public String getFullAddress() {
+        return fullAddress;
+    }
+
+    public void setFullAddress(String fullAddress) {
+        this.fullAddress = fullAddress;
+    }
+
+    @XmlElement(name = "Delivery_Point_Suffix", namespace = "https://ws.epostcode.com/uk/postcodeservices19.asmx")
+    public String getDeliveryPointSuffix() {
+        return deliveryPointSuffix;
+    }
+
+    public void setDeliveryPointSuffix(String deliveryPointSuffix) {
+        this.deliveryPointSuffix = deliveryPointSuffix;
+    }
+}
+----------------------
+
+
+
+
+----------------------------
 <?xml version="1.0" encoding="utf-8"?>
 <ListAllAddressPremises xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns="https://ws.epostcode.com/uk/postcodeservices19.asmx">
     <List>
