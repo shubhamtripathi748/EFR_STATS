@@ -1,3 +1,119 @@
+
+import jakarta.xml.bind.JAXBContext;
+import jakarta.xml.bind.Unmarshaller;
+import org.w3c.dom.Element;
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+
+public class SOAPUnmarshaller {
+    public static void main(String[] args) throws Exception {
+        String soapXml = """
+        <soap:Envelope xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/">
+          <soap:Body>
+            <getCustomerResponse xmlns="http://example.com/">
+              <customer>
+                <id>123</id>
+                <name>John Doe</name>
+                <email>john.doe@example.com</email>
+              </customer>
+            </getCustomerResponse>
+          </soap:Body>
+        </soap:Envelope>
+        """;
+
+        // Parse the SOAP XML
+        DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
+        factory.setNamespaceAware(true);
+        DocumentBuilder builder = factory.newDocumentBuilder();
+        org.w3c.dom.Document document = builder.parse(new java.io.ByteArrayInputStream(soapXml.getBytes()));
+
+        // Extract the Body content
+        Element bodyElement = (Element) document.getElementsByTagNameNS(
+            "http://schemas.xmlsoap.org/soap/envelope/", "Body").item(0);
+        Element responseElement = (Element) bodyElement.getFirstChild();
+
+        // Unmarshal the response
+        JAXBContext jaxbContext = JAXBContext.newInstance(GetCustomerResponse.class);
+        Unmarshaller unmarshaller = jaxbContext.createUnmarshaller();
+        GetCustomerResponse response = (GetCustomerResponse) unmarshaller.unmarshal(responseElement);
+
+        // Print the customer details
+        Customer customer = response.getCustomer();
+        System.out.println("ID: " + customer.getId());
+        System.out.println("Name: " + customer.getName());
+        System.out.println("Email: " + customer.getEmail());
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+import jakarta.xml.bind.annotation.XmlElement;
+import jakarta.xml.bind.annotation.XmlRootElement;
+
+@XmlRootElement
+public class Customer {
+    private int id;
+    private String name;
+    private String email;
+
+    @XmlElement
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    @XmlElement
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    @XmlElement
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+}
+
+
+import jakarta.xml.bind.annotation.XmlElement;
+import jakarta.xml.bind.annotation.XmlRootElement;
+
+@XmlRootElement(namespace = "http://example.com/")
+public class GetCustomerResponse {
+    private Customer customer;
+
+    @XmlElement
+    public Customer getCustomer() {
+        return customer;
+    }
+
+    public void setCustomer(Customer customer) {
+        this.customer = customer;
+    }
+}
+
+
+
+
+--------------------------------
 Exception in thread "main" jakarta.xml.bind.JAXBException: ClassCastException: attempting to cast jar:file:/C:/Users/shubham.tripathi/maven/repo/jakarta/xml/bind/jakarta.xml.bind-api/3.0.0/jakarta.xml.bind-api-3.0.0.jar!/jakarta/xml/bind/JAXBContext.class to jar:file:/C:/Users/shubham.tripathi/maven/repo/jakarta/xml/bind/jakarta.xml.bind-api/3.0.0/jakarta.xml.bind-api-3.0.0.jar!/jakarta/xml/bind/JAXBContext.class.  Please make sure that you are specifying the proper ClassLoader.    
 	at jakarta.xml.bind.ContextFinder.handleClassCastException(ContextFinder.java:111)
 	at jakarta.xml.bind.ContextFinder.newInstance(ContextFinder.java:254)
