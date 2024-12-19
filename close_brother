@@ -1,3 +1,69 @@
+import jakarta.xml.bind.JAXBContext;
+import jakarta.xml.bind.Unmarshaller;
+import org.w3c.dom.Element;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
+
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+
+public class SOAPUnmarshaller {
+    public static void main(String[] args) throws Exception {
+        String soapXml = """
+        <soap:Envelope xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/">
+          <soap:Body>
+            <getCustomerResponse xmlns="http://example.com/">
+              <customer>
+                <id>123</id>
+                <name>John Doe</name>
+                <email>john.doe@example.com</email>
+              </customer>
+            </getCustomerResponse>
+          </soap:Body>
+        </soap:Envelope>
+        """;
+
+        // Parse the SOAP XML
+        DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
+        factory.setNamespaceAware(true); // Ensure namespace support
+        DocumentBuilder builder = factory.newDocumentBuilder();
+        org.w3c.dom.Document document = builder.parse(new java.io.ByteArrayInputStream(soapXml.getBytes()));
+
+        // Extract the Body content
+        Element bodyElement = (Element) document.getElementsByTagNameNS(
+            "http://schemas.xmlsoap.org/soap/envelope/", "Body").item(0);
+
+        // Find the first element child inside the Body
+        NodeList children = bodyElement.getChildNodes();
+        Element responseElement = null;
+        for (int i = 0; i < children.getLength(); i++) {
+            Node node = children.item(i);
+            if (node.getNodeType() == Node.ELEMENT_NODE) {
+                responseElement = (Element) node;
+                break;
+            }
+        }
+
+        if (responseElement == null) {
+            throw new IllegalStateException("No element found inside the SOAP Body");
+        }
+
+        // Unmarshal the response
+        JAXBContext jaxbContext = JAXBContext.newInstance(GetCustomerResponse.class);
+        Unmarshaller unmarshaller = jaxbContext.createUnmarshaller();
+        GetCustomerResponse response = (GetCustomerResponse) unmarshaller.unmarshal(responseElement);
+
+        // Print the customer details
+        Customer customer = response.getCustomer();
+        System.out.println("ID: " + customer.getId());
+        System.out.println("Name: " + customer.getName());
+        System.out.println("Email: " + customer.getEmail());
+    }
+}
+
+
+
+
 Exception in thread "main" java.lang.ClassCastException: class com.sun.org.apache.xerces.internal.dom.DeferredTextImpl cannot be cast to class org.w3c.dom.Element (com.sun.org.apache.xerces.internal.dom.DeferredTextImpl and org.w3c.dom.Element are in module java.xml of loader 'bootstrap')
 	at com.cbl.controller.SOAPUnmarshaller.main(SOAPUnmarshaller.java:35)
 
