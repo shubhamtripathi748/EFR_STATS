@@ -1,3 +1,78 @@
+<soap:Envelope xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+   <soap:Body>
+      <GetAddressesForPostcodeResponse xmlns="https://ws.epostcode.com/uk/postcodeservices19.asmx">
+         <GetAddressesForPostcodeResult>
+            <List>
+               <AddressPremise>
+                  <Unique_Delivery_Point>27668722</Unique_Delivery_Point>
+                  <Organisation_Department/>
+                  <Organisation/>
+                  <Sub_Building_Name>Flat 1</Sub_Building_Name>
+                  <Building_Name>Baron House</Building_Name>
+                  <Number>33</Number>
+                  <Dependent_Street/>
+                  <Street>Chapter Way</Street>
+                  <Double_Dependent_Locality/>
+                  <Dependent_Locality/>
+                  <Post_Town>London</Post_Town>
+                  <County_LocalAuthority/>
+                  <County_Administrative>MERTON</County_Administrative>
+                  <County_FormerPostal/>
+                  <County_Traditional/>
+                  <Country>England</Country>
+                  <Postcode>SW19 2RS</Postcode>
+                  <Post_Office_Box/>
+                  <User_Category/>
+                  <Mailsort_Sortcode>73164</Mailsort_Sortcode>
+                  <Delivery_Point_Suffix>1A</Delivery_Point_Suffix>
+                  <Latitude_Degrees/>
+                  <Longitude_Degrees/>
+                  <IsError>false</IsError>
+                  <ErrorMessage/>
+                  <FullAddress>\r\nFlat 1\r\nBaron House\r\n33\r\nChapter Way\r\nLondon\r\nEngland\r\nSW19 2RS\r\n</FullAddress>
+                  <Return_Code>1</Return_Code>
+               </AddressPremise>
+               <AddressPremise>
+                  <Unique_Delivery_Point>27668731</Unique_Delivery_Point>
+                  <Organisation_Department/>
+                  <Organisation/>
+                  <Sub_Building_Name>Flat 10</Sub_Building_Name>
+                  <Building_Name>Baron House</Building_Name>
+                  <Number>33</Number>
+                  <Dependent_Street/>
+                  <Street>Chapter Way</Street>
+                  <Double_Dependent_Locality/>
+                  <Dependent_Locality/>
+                  <Post_Town>London</Post_Town>
+                  <County_LocalAuthority/>
+                  <County_Administrative>MERTON</County_Administrative>
+                  <County_FormerPostal/>
+                  <County_Traditional/>
+                  <Country>England</Country>
+                  <Postcode>SW19 2RS</Postcode>
+                  <Post_Office_Box/>
+                  <User_Category/>
+                  <Mailsort_Sortcode>73164</Mailsort_Sortcode>
+                  <Delivery_Point_Suffix>1N</Delivery_Point_Suffix>
+                  <Latitude_Degrees/>
+                  <Longitude_Degrees/>
+                  <IsError>false</IsError>
+                  <ErrorMessage/>
+                  <FullAddress>\r\nFlat 10\r\nBaron House\r\n33\r\nChapter Way\r\nLondon\r\nEngland\r\nSW19 2RS\r\n</FullAddress>
+                  <Return_Code>1</Return_Code>
+               </AddressPremise>
+
+            </List>
+            <IsError>false</IsError>
+            <IsTruncated>false</IsTruncated>
+            <RecCount>24</RecCount>
+            <ErrorMessage/>
+         </GetAddressesForPostcodeResult>
+      </GetAddressesForPostcodeResponse>
+   </soap:Body>
+</soap:Envelope>
+
+-----------------------------------------------------
 <dependency>
     <groupId>com.sun.activation</groupId>
     <artifactId>jakarta.activation</artifactId>
