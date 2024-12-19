@@ -1,3 +1,7 @@
+Exception in thread "main" java.lang.ClassCastException: class com.sun.org.apache.xerces.internal.dom.DeferredTextImpl cannot be cast to class org.w3c.dom.Element (com.sun.org.apache.xerces.internal.dom.DeferredTextImpl and org.w3c.dom.Element are in module java.xml of loader 'bootstrap')
+	at com.cbl.controller.SOAPUnmarshaller.main(SOAPUnmarshaller.java:35)
+
+
 
 import jakarta.xml.bind.JAXBContext;
 import jakarta.xml.bind.Unmarshaller;
