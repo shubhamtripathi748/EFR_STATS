@@ -1,3 +1,25 @@
+<plugins>
+    <plugin>
+        <groupId>org.codehaus.mojo</groupId>
+        <artifactId>jaxws-maven-plugin</artifactId>
+        <version>2.3</version>
+        <executions>
+            <execution>
+                <goals>
+                    <goal>generate</goal>
+                </goals>
+            </execution>
+        </executions>
+        <configuration>
+            <wsdlFiles>
+                <wsdlFile>src/main/resources/ePostcode.wsdl</wsdlFile>
+            </wsdlFiles>
+            <packageName>com.epostcode</packageName>
+        </configuration>
+    </plugin>
+</plugins>
+
+
 
 server.servlet.context-path=/e-postcode
 
