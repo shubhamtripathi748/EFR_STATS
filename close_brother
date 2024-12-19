@@ -1,3 +1,103 @@
+
+@XmlRootElement(namespace = "http://schemas.xmlsoap.org/soap/envelope/")
+@XmlAccessorType(XmlAccessType.FIELD)
+public class SoapEnvelope {
+
+    @XmlElement(namespace = "http://schemas.xmlsoap.org/soap/envelope/")
+    private SoapBody body;
+
+    public SoapBody getBody() {
+        return body;
+    }
+
+    public void setBody(SoapBody body) {
+        this.body = body;
+    }
+}
+
+@XmlAccessorType(XmlAccessType.FIELD)
+public static class SoapBody {
+
+    @XmlElement(name = "GetAddressesForPostcodeResponse", namespace = "https://ws.epostcode.com/uk/postcodeservices19.asmx")
+    private GetAddressesForPostcodeResponse response;
+
+    public GetAddressesForPostcodeResponse getResponse() {
+        return response;
+    }
+
+    public void setResponse(GetAddressesForPostcodeResponse response) {
+        this.response = response;
+    }
+}
+
+
+import jakarta.xml.bind.JAXBContext;
+import jakarta.xml.bind.JAXBException;
+import jakarta.xml.bind.Unmarshaller;
+import java.io.StringReader;
+
+public class SoapClient {
+
+    public static void main(String[] args) throws JAXBException {
+        String xml = "<soap:Envelope xmlns:soap=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\">\n" +
+                "   <soap:Body>\n" +
+                "      <GetAddressesForPostcodeResponse xmlns=\"https://ws.epostcode.com/uk/postcodeservices19.asmx\">\n" +
+                "         <GetAddressesForPostcodeResult>\n" +
+                "            <List>\n" +
+                "               <AddressPremise>\n" +
+                "                  <Unique_Delivery_Point>27668722</Unique_Delivery_Point>\n" +
+                "                  <Sub_Building_Name>Flat 1</Sub_Building_Name>\n" +
+                "                  <Building_Name>Baron House</Building_Name>\n" +
+                "                  <Number>33</Number>\n" +
+                "                  <Street>Chapter Way</Street>\n" +
+                "                  <Post_Town>London</Post_Town>\n" +
+                "                  <Postcode>SW19 2RS</Postcode>\n" +
+                "                  <FullAddress>Flat 1\nBaron House\n33\nChapter Way\nLondon\nEngland\nSW19 2RS\n</FullAddress>\n" +
+                "               </AddressPremise>\n" +
+                "            </List>\n" +
+                "         </GetAddressesForPostcodeResult>\n" +
+                "      </GetAddressesForPostcodeResponse>\n" +
+                "   </soap:Body>\n" +
+                "</soap:Envelope>";
+
+        JAXBContext context = JAXBContext.newInstance(SoapEnvelope.class);
+        Unmarshaller unmarshaller = context.createUnmarshaller();
+
+        StringReader reader = new StringReader(xml);
+        SoapEnvelope envelope = (SoapEnvelope) unmarshaller.unmarshal(reader);
+
+        // Now access the response object
+        GetAddressesForPostcodeResponse response = envelope.getBody().getResponse();
+        // Do something with the response...
+    }
+}
+
+@XmlRootElement(namespace = "https://ws.epostcode.com/uk/postcodeservices19.asmx")
+@XmlAccessorType(XmlAccessType.FIELD)
+public class GetAddressesForPostcodeResponse {
+
+    @XmlElement(name = "GetAddressesForPostcodeResult")
+    private GetAddressesForPostcodeResult result;
+
+    public GetAddressesForPostcodeResult getResult() {
+        return result;
+    }
+
+    public void setResult(GetAddressesForPostcodeResult result) {
+        this.result = result;
+    }
+}
+
+@XmlAccessorType(XmlAccessType.FIELD)
+public static class GetAddressesForPostcodeResult {
+    // Include all the elements in GetAddressesForPostcodeResult, like List, AddressPremise, etc.
+}
+
+
+
+
+
+
 Exception in thread "main" jakarta.xml.bind.UnmarshalException: unexpected element (uri:"http://schemas.xmlsoap.org/soap/envelope/", local:"Envelope"). Expected elements are <{https://ws.epostcode.com/uk/postcodeservices19.asmx}GetAddressesForPostcodeResponse>
 	at org.glassfish.jaxb.runtime.v2.runtime.unmarshaller.UnmarshallingContext.handleEvent(UnmarshallingContext.java:701)
 	at org.glassfish.jaxb.runtime.v2.runtime.unmarshaller.Loader.reportError(Loader.java:230)
