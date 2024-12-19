@@ -1,3 +1,54 @@
+import com.sun.xml.bind.NamespacePrefixMapper;
+import jakarta.xml.bind.JAXBContext;
+import jakarta.xml.bind.JAXBException;
+import jakarta.xml.bind.Unmarshaller;
+import java.io.StringReader;
+
+public class SoapClient {
+    public static void main(String[] args) throws JAXBException {
+        String xml = "<soap:Envelope xmlns:soap=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\">\n" +
+                "   <soap:Body>\n" +
+                "      <GetAddressesForPostcodeResponse xmlns=\"https://ws.epostcode.com/uk/postcodeservices19.asmx\">\n" +
+                "         <GetAddressesForPostcodeResult>\n" +
+                "            <List>\n" +
+                "               <AddressPremise>\n" +
+                "                  <Unique_Delivery_Point>27668722</Unique_Delivery_Point>\n" +
+                "                  <Sub_Building_Name>Flat 1</Sub_Building_Name>\n" +
+                "                  <Building_Name>Baron House</Building_Name>\n" +
+                "                  <Number>33</Number>\n" +
+                "                  <Street>Chapter Way</Street>\n" +
+                "                  <Post_Town>London</Post_Town>\n" +
+                "                  <Postcode>SW19 2RS</Postcode>\n" +
+                "                  <FullAddress>Flat 1\nBaron House\n33\nChapter Way\nLondon\nEngland\nSW19 2RS\n</FullAddress>\n" +
+                "               </AddressPremise>\n" +
+                "            </List>\n" +
+                "         </GetAddressesForPostcodeResult>\n" +
+                "      </GetAddressesForPostcodeResponse>\n" +
+                "   </soap:Body>\n" +
+                "</soap:Envelope>";
+
+        // Create JAXBContext and Unmarshaller
+        JAXBContext context = JAXBContext.newInstance(SoapEnvelope.class);
+        Unmarshaller unmarshaller = context.createUnmarshaller();
+        
+        // Remove namespaces
+        unmarshaller.setProperty("com.sun.xml.bind.namespacePrefixMapper", new NamespacePrefixMapper() {
+            @Override
+            public String getPreferredPrefix(String namespaceUri, String suggestion, boolean requirePrefix) {
+                return ""; // Return empty string to ignore namespaces
+            }
+        });
+
+        StringReader reader = new StringReader(xml);
+        SoapEnvelope envelope = (SoapEnvelope) unmarshaller.unmarshal(reader);
+
+        // Now access the response object
+        GetAddressesForPostcodeResponse response = envelope.getBody().getResponse();
+        System.out.println(response);
+    }
+}
+
+
 
 @XmlRootElement(namespace = "http://schemas.xmlsoap.org/soap/envelope/")
 @XmlAccessorType(XmlAccessType.FIELD)
