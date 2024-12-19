@@ -1,3 +1,79 @@
+public class AddressPremise { 
+	public int Unique_Delivery_Point;
+	public Object Organisation_Department;
+	public Object Organisation;
+	public String Sub_Building_Name;
+	public String Building_Name;
+	public int Number;
+	public Object Dependent_Street;
+	public String Street;
+	public Object Double_Dependent_Locality;
+	public Object Dependent_Locality;
+	public String Post_Town;
+	public Object County_LocalAuthority;
+	public String County_Administrative;
+	public Object County_FormerPostal;
+	public Object County_Traditional;
+	public String Country;
+	public String Postcode;
+	public Object Post_Office_Box;
+	public Object User_Category;
+	public int Mailsort_Sortcode;
+	public String Delivery_Point_Suffix;
+	public Object Latitude_Degrees;
+	public Object Longitude_Degrees;
+	public boolean IsError;
+	public Object ErrorMessage;
+	public String FullAddress;
+	public int Return_Code;
+}
+
+public class List { 
+	public List<AddressPremise> AddressPremise;
+}
+
+public class GetAddressesForPostcodeResult { 
+	public List List;
+	public boolean IsError;
+	public boolean IsTruncated;
+	public int RecCount;
+	public Object ErrorMessage;
+}
+
+public class GetAddressesForPostcodeResponse { 
+	public GetAddressesForPostcodeResult GetAddressesForPostcodeResult;
+	public String xmlns;
+	public String text;
+}
+
+public class Body { 
+	public GetAddressesForPostcodeResponse GetAddressesForPostcodeResponse;
+}
+
+public class Envelope { 
+	public Body Body;
+	public String soap;
+	public String xsi;
+	public String xsd;
+	public String text;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 import jakarta.xml.bind.JAXBContext;
 import jakarta.xml.bind.Unmarshaller;
 import org.w3c.dom.Element;
