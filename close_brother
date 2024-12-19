@@ -1,3 +1,7 @@
+
+server.servlet.context-path=/e-postcode
+
+
 @Value("${epcode.api.url}")
     private String apiUrl;
 
