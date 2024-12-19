@@ -1,3 +1,32 @@
+Exception in thread "main" jakarta.xml.bind.UnmarshalException: unexpected element (uri:"http://schemas.xmlsoap.org/soap/envelope/", local:"Envelope"). Expected elements are <{https://ws.epostcode.com/uk/postcodeservices19.asmx}GetAddressesForPostcodeResponse>
+	at org.glassfish.jaxb.runtime.v2.runtime.unmarshaller.UnmarshallingContext.handleEvent(UnmarshallingContext.java:701)
+	at org.glassfish.jaxb.runtime.v2.runtime.unmarshaller.Loader.reportError(Loader.java:230)
+	at org.glassfish.jaxb.runtime.v2.runtime.unmarshaller.Loader.reportError(Loader.java:225)
+	at org.glassfish.jaxb.runtime.v2.runtime.unmarshaller.Loader.reportUnexpectedChildElement(Loader.java:92)
+	at org.glassfish.jaxb.runtime.v2.runtime.unmarshaller.UnmarshallingContext$DefaultRootLoader.childElement(UnmarshallingContext.java:1106)
+	at org.glassfish.jaxb.runtime.v2.runtime.unmarshaller.UnmarshallingContext._startElement(UnmarshallingContext.java:531)
+	at org.glassfish.jaxb.runtime.v2.runtime.unmarshaller.UnmarshallingContext.startElement(UnmarshallingContext.java:513)
+	at org.glassfish.jaxb.runtime.v2.runtime.unmarshaller.SAXConnector.startElement(SAXConnector.java:137)
+	at java.xml/com.sun.org.apache.xerces.internal.parsers.AbstractSAXParser.startElement(AbstractSAXParser.java:519)
+	at java.xml/com.sun.org.apache.xerces.internal.impl.XMLNSDocumentScannerImpl.scanStartElement(XMLNSDocumentScannerImpl.java:375)
+	at java.xml/com.sun.org.apache.xerces.internal.impl.XMLNSDocumentScannerImpl$NSContentDriver.scanRootElementHook(XMLNSDocumentScannerImpl.java:614)
+	at java.xml/com.sun.org.apache.xerces.internal.impl.XMLDocumentFragmentScannerImpl$FragmentContentDriver.next(XMLDocumentFragmentScannerImpl.java:3088)
+	at java.xml/com.sun.org.apache.xerces.internal.impl.XMLDocumentScannerImpl$PrologDriver.next(XMLDocumentScannerImpl.java:866)
+	at java.xml/com.sun.org.apache.xerces.internal.impl.XMLDocumentScannerImpl.next(XMLDocumentScannerImpl.java:635)
+	at java.xml/com.sun.org.apache.xerces.internal.impl.XMLNSDocumentScannerImpl.next(XMLNSDocumentScannerImpl.java:113)
+	at java.xml/com.sun.org.apache.xerces.internal.impl.XMLDocumentFragmentScannerImpl.scanDocument(XMLDocumentFragmentScannerImpl.java:551)
+	at java.xml/com.sun.org.apache.xerces.internal.parsers.XML11Configuration.parse(XML11Configuration.java:890)
+	at java.xml/com.sun.org.apache.xerces.internal.parsers.XML11Configuration.parse(XML11Configuration.java:826)
+	at java.xml/com.sun.org.apache.xerces.internal.parsers.XMLParser.parse(XMLParser.java:134)
+	at java.xml/com.sun.org.apache.xerces.internal.parsers.AbstractSAXParser.parse(AbstractSAXParser.java:1225)
+	at java.xml/com.sun.org.apache.xerces.internal.jaxp.SAXParserImpl$JAXPSAXParser.parse(SAXParserImpl.java:643)
+	at org.glassfish.jaxb.runtime.v2.runtime.unmarshaller.UnmarshallerImpl.unmarshal0(UnmarshallerImpl.java:218)
+	at org.glassfish.jaxb.runtime.v2.runtime.unmarshaller.UnmarshallerImpl.unmarshal(UnmarshallerImpl.java:189)
+	at jakarta.xml.bind.helpers.AbstractUnmarshallerImpl.unmarshal(AbstractUnmarshallerImpl.java:152)
+	at jakarta.xml.bind.helpers.AbstractUnmarshallerImpl.unmarshal(AbstractUnmarshallerImpl.java:205)
+	at com.cbl.controller.SoapClient.main(SoapClient.java:46)
+
+
 import jakarta.xml.bind.annotation.XmlElement;
 import jakarta.xml.bind.annotation.XmlRootElement;
 import jakarta.xml.bind.annotation.XmlType;
