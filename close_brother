@@ -1,3 +1,114 @@
+import jakarta.xml.bind.annotation.XmlElement;
+import jakarta.xml.bind.annotation.XmlRootElement;
+
+import java.util.List;
+
+@XmlRootElement(name = "Envelope", namespace = "http://schemas.xmlsoap.org/soap/envelope/")
+public class Envelope {
+    @XmlElement(name = "Body")
+    private Body body;
+
+    // Getters and Setters
+}
+
+class Body {
+    @XmlElement(name = "GetAddressesForPostcodeResponse", namespace = "https://ws.epostcode.com/uk/postcodeservices19.asmx")
+    private GetAddressesForPostcodeResponse getAddressesForPostcodeResponse;
+
+    // Getters and Setters
+}
+
+class GetAddressesForPostcodeResponse {
+    @XmlElement(name = "GetAddressesForPostcodeResult")
+    private GetAddressesForPostcodeResult getAddressesForPostcodeResult;
+
+    // Getters and Setters
+}
+
+class GetAddressesForPostcodeResult {
+    @XmlElement(name = "List")
+    private List<AddressPremise> list;
+
+    @XmlElement(name = "IsError")
+    private boolean isError;
+
+    @XmlElement(name = "IsTruncated")
+    private boolean isTruncated;
+
+    @XmlElement(name = "RecCount")
+    private int recCount;
+
+    @XmlElement(name = "ErrorMessage")
+    private String errorMessage;
+
+    // Getters and Setters
+}
+
+class AddressPremise {
+    @XmlElement(name = "Unique_Delivery_Point")
+    private String uniqueDeliveryPoint;
+
+    @XmlElement(name = "Sub_Building_Name")
+    private String subBuildingName;
+
+    @XmlElement(name = "Building_Name")
+    private String buildingName;
+
+    @XmlElement(name = "Number")
+    private String number;
+
+    @XmlElement(name = "Street")
+    private String street;
+
+    @XmlElement(name = "Post_Town")
+    private String postTown;
+
+    @XmlElement(name = "County_Administrative")
+    private String countyAdministrative;
+
+    @XmlElement(name = "Country")
+    private String country;
+
+    @XmlElement(name = "Postcode")
+    private String postcode;
+
+    @XmlElement(name = "FullAddress")
+    private String fullAddress;
+
+    // Additional fields
+    // Getters and Setters
+}
+
+import jakarta.xml.bind.JAXBContext;
+import jakarta.xml.bind.JAXBException;
+import jakarta.xml.bind.Unmarshaller;
+
+import org.springframework.web.client.RestTemplate;
+import org.springframework.http.ResponseEntity;
+
+import java.io.StringReader;
+
+public class SoapResponseHandler {
+
+    public static void main(String[] args) throws JAXBException {
+        String soapResponse = "<soap:Envelope xmlns:soap=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\">...</soap:Envelope>";
+
+        // Parse SOAP XML
+        JAXBContext jaxbContext = JAXBContext.newInstance(Envelope.class);
+        Unmarshaller unmarshaller = jaxbContext.createUnmarshaller();
+
+        Envelope envelope = (Envelope) unmarshaller.unmarshal(new StringReader(soapResponse));
+
+        // Convert to JSON
+        String jsonResponse = new com.fasterxml.jackson.databind.ObjectMapper().writeValueAsString(envelope);
+
+        System.out.println(jsonResponse);
+    }
+}
+
+
+
+-------------------------------------------
 <soap:Envelope xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
    <soap:Body>
       <GetAddressesForPostcodeResponse xmlns="https://ws.epostcode.com/uk/postcodeservices19.asmx">
