@@ -1,3 +1,13 @@
+We are expecting an API-C endpoint for e-post code
+
+Below  are details
+•	You can find e-postcode soap request and response in the attachment
+•	For development purposes, you can bypass the certificate.
+•	url of e-post code https://ws.epostcode.com/uk/postcodeservices19.asmx
+•	and function we have to call is GetAddressesForPostcode.
+
+
+
 Send the request/response details to Prashant.
 For development purposes, you can bypass the certificate.
 We have completed the basic setup.
