@@ -1,3 +1,15 @@
+We are awaiting the API-C endpoint for the ePostcode service.
+
+Below are the relevant details:
+
+The SOAP request and response for ePostcode are provided in the attachment for reference.
+For development purposes, the certificate can be bypassed.
+The ePostcode service URL is: https://ws.epostcode.com/uk/postcodeservices19.asmx
+The function to invoke is: GetAddressesForPostcode
+Please let us know once the endpoint is available.
+
+
+
 We are expecting an API-C endpoint for e-post code
 
 Below  are details
