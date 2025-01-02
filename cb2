@@ -1,3 +1,76 @@
+
+To migrate BLOB (image) data from an Oracle table to AWS S3, you need to define a clear order of processing. Here's a typical flow for such a task:
+
+1. **Prepare Environment**
+   - Ensure you have connectivity to both the Oracle database and AWS S3.
+   - Install and configure required libraries/tools (e.g., Oracle JDBC driver, AWS SDK for S3, and a language runtime like Java or Python).
+
+2. **Extract Data**
+   - Query the Oracle table to fetch the BLOB data and any associated metadata required for S3 (like object keys or metadata tags).
+   - Use streaming to handle large BLOBs efficiently.
+
+3. **Transform Data (Optional)**
+   - Convert the BLOB to a format suitable for storage in S3, if necessary.
+   - Generate meaningful S3 object keys (e.g., using metadata or primary keys from the database).
+
+4. **Upload to S3**
+   - Use the AWS SDK (e.g., `boto3` for Python or AWS Java SDK) to upload the BLOB data to S3.
+   - Include metadata from the database as S3 object metadata or tags.
+
+5. **Update Oracle Table (Optional)**
+   - Write back the S3 URL or the object key to the Oracle table for future reference.
+   - Update a status column (e.g., `MIGRATION_STATUS`) to indicate successful upload.
+
+---
+
+### Example Code Workflow (Using Python and `boto3`)
+```python
+import boto3
+import cx_Oracle
+
+# S3 Configuration
+s3_client = boto3.client('s3', aws_access_key_id='your-access-key', aws_secret_access_key='your-secret-key')
+bucket_name = 'your-bucket-name'
+
+# Oracle Configuration
+connection = cx_Oracle.connect('user/password@hostname/service_name')
+cursor = connection.cursor()
+
+# Query to Fetch Data
+cursor.execute("SELECT ID, IMAGE_BLOB FROM YOUR_TABLE WHERE MIGRATION_STATUS = 'PENDING'")
+
+for record in cursor:
+    image_id, image_blob = record
+    object_key = f"images/{image_id}.jpg"  # Construct S3 object key
+
+    # Upload to S3
+    try:
+        s3_client.put_object(Bucket=bucket_name, Key=object_key, Body=image_blob.read())
+        print(f"Uploaded {object_key} to S3")
+
+        # Update Database
+        cursor.execute("UPDATE YOUR_TABLE SET S3_URL = :1, MIGRATION_STATUS = 'DONE' WHERE ID = :2",
+                       (f"s3://{bucket_name}/{object_key}", image_id))
+        connection.commit()
+    except Exception as e:
+        print(f"Failed to upload {image_id}: {e}")
+
+# Close Resources
+cursor.close()
+connection.close()
+```
+
+---
+
+### Order of Processing
+1. **Query Oracle for BLOBs**: Retrieve the rows to process (e.g., based on `MIGRATION_STATUS = 'PENDING'`).
+2. **Process Each BLOB**: Fetch, upload to S3, and update the database in a loop.
+3. **Handle Errors**: Log failures and reprocess if necessary.
+4. **Update Oracle Table**: Mark the rows as migrated with the S3 URL or status.
+
+
+
+
 The migration service involves transferring scanned images stored in Oracle tables (like i-scanned-image) to an S3 storage environment. The service will automate the extraction, transformation, and upload of images, while maintaining important metadata (such as descriptions) to ensure that the original information is preserved in the cloud. This migration service reduces the reliance on local databases and leverages scalable, cost-effective cloud storage (S3) for long-term image retention and retrieval.
 
 
