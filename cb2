@@ -1,3 +1,91 @@
+Service Description: Upload Image to AWS S3
+Service Name: Image Upload Service
+
+Version: v1
+
+Purpose:
+The Image Upload Service enables clients to securely upload image files to an AWS S3 bucket via a REST API managed by IBM API Connect. The service ensures robust file handling, secure storage, and metadata association.
+
+Key Features:
+Image Upload:
+
+Accepts image files in standard formats (JPEG, PNG, etc.).
+Allows optional metadata for storage in S3.
+Secure Storage:
+
+Integrates with AWS S3 for reliable, scalable storage.
+Ensures security using IAM roles and policies.
+API Management:
+
+Fully managed through IBM API Connect for authentication, rate limiting, and analytics.
+Endpoints:
+1. Upload Image
+Method: POST
+
+Path: /v1/images/upload
+
+Description: Uploads an image to AWS S3 and returns the URL.
+
+Request Headers:
+
+Authorization: Bearer <token>
+Content-Type: multipart/form-data
+Request Body:
+
+json
+Copy code
+{
+  "file": "<binary-image-file>",
+  "metadata": {
+      "title": "Sample Image",
+      "description": "This is a sample description."
+  }
+}
+Response:
+
+Success (200 OK):
+json
+Copy code
+{
+  "status": "success",
+  "s3Url": "https://your-bucket-name.s3.amazonaws.com/images/image-id.jpg"
+}
+Error (400 Bad Request, 500 Internal Server Error):
+json
+Copy code
+{
+  "status": "error",
+  "message": "Invalid file format or upload failed."
+}
+Implementation Details:
+Authentication:
+Secured using OAuth 2.0 or API Keys, managed via IBM API Connect.
+
+Backend Service:
+A REST API implemented using Spring Boot or Node.js interacts with AWS S3 via the AWS SDK.
+
+AWS S3 Configuration:
+
+Bucket Name: your-bucket-name
+Region: us-east-1
+Object Key: images/<unique-image-id>.jpg
+IBM API Connect Policies:
+
+CORS: Allow cross-origin requests.
+Rate Limiting: Prevent abuse by restricting requests (e.g., 100 requests per minute per client).
+Security: Enforce token validation.
+Service Benefits:
+Simplifies image upload process for clients.
+Scales effortlessly with AWS S3’s storage capacity.
+Ensures compliance and reliability through IBM API Connect’s managed policies.
+Use Cases:
+E-Commerce: Upload product images.
+Social Media: Store user profile pictures.
+Document Management: Archive scanned documents or images.
+
+
+
+
 o upload an image to AWS S3 via IBM API Connect (APIC), follow these steps:
 
 1. Configure AWS S3
