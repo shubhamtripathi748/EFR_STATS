@@ -1,3 +1,57 @@
+When uploading a document to AWS S3, the response returned to the calling application should provide essential information about the success of the operation and details of the uploaded file. Here's a recommended structure:
+
+Response for a Successful Upload
+HTTP Status Code: 200 OK
+
+Response Body:
+
+json
+Copy code
+{
+  "status": "success",
+  "message": "Document uploaded successfully.",
+  "documentId": "unique-document-id",
+  "s3Url": "https://<bucket-name>.s3.<region>.amazonaws.com/<object-key>",
+  "metadata": {
+    "fileName": "example.pdf",
+    "fileSize": 102400,  // In bytes
+    "contentType": "application/pdf",
+    "uploadTimestamp": "2025-01-02T10:30:00Z"
+  }
+}
+Response for an Upload Failure
+HTTP Status Code: 400 Bad Request or 500 Internal Server Error
+
+Response Body:
+
+json
+Copy code
+{
+  "status": "error",
+  "message": "Failed to upload the document. Please try again.",
+  "errorCode": "UPLOAD_ERROR",
+  "details": "Invalid file format or network error."
+}
+Fields Explanation
+status: Indicates whether the operation was successful (success) or not (error).
+message: A human-readable explanation of the result.
+documentId: A unique identifier for the uploaded document (if applicable).
+s3Url: The URL to access the uploaded document in the S3 bucket.
+metadata:
+fileName: Original name of the uploaded file.
+fileSize: Size of the uploaded file in bytes.
+contentType: The MIME type of the file.
+uploadTimestamp: ISO 8601 timestamp of the upload operation.
+errorCode: (In case of failure) A machine-readable error code for debugging.
+details: Additional details about the error for the developer.
+Example HTTP Status Codes
+200 OK: Successful upload.
+400 Bad Request: Issues with the input (e.g., unsupported file type, missing fields).
+401 Unauthorized: Authentication failure.
+403 Forbidden: Insufficient permissions for S3 bucket access.
+500 Internal Server Error: General server error (e.g., S3 unavailability).
+
+
 Service Description: Upload Image to AWS S3
 Service Name: Image Upload Service
 
