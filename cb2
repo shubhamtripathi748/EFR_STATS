@@ -1,3 +1,132 @@
+To design an effective request and response structure for an application that updates an Oracle table and stores an associated document in AWS S3, you should consider the key operations and metadata involved in the process. Here's a recommended structure:
+
+Request Structure
+The application will receive a JSON payload containing the metadata for the Oracle table update and the file/document to be stored in S3 (as a Base64-encoded string or a pre-uploaded URL).
+
+Example Request:
+
+json
+Copy code
+{
+  "tableData": {
+    "recordId": "12345",
+    "updateFields": {
+      "column1": "value1",
+      "column2": "value2",
+      "column3": "value3"
+    }
+  },
+  "document": {
+    "fileName": "example.pdf",
+    "fileContent": "Base64EncodedFileStringHere", // Optional if using pre-uploaded URL
+    "contentType": "application/pdf",
+    "s3Bucket": "my-s3-bucket",
+    "s3FolderPath": "documents/uploads"
+  }
+}
+Request Parameters
+tableData:
+
+recordId: The primary key or unique identifier of the record in the Oracle table.
+updateFields: A map of column names and their new values.
+document:
+
+fileName: The name of the file to be stored in S3.
+fileContent: The file's content in Base64 format (optional if using pre-uploaded URL).
+contentType: The MIME type of the file (e.g., application/pdf).
+s3Bucket: The target S3 bucket name.
+s3FolderPath: The folder path in the S3 bucket.
+Response Structure
+The response should indicate whether the operation succeeded and provide details of the Oracle update and S3 upload.
+
+Example Response (Success):
+
+json
+Copy code
+{
+  "status": "success",
+  "message": "Record updated and document uploaded successfully.",
+  "oracleUpdate": {
+    "recordId": "12345",
+    "updatedFields": {
+      "column1": "value1",
+      "column2": "value2",
+      "column3": "value3"
+    }
+  },
+  "s3Upload": {
+    "fileName": "example.pdf",
+    "s3Url": "https://my-s3-bucket.s3.amazonaws.com/documents/uploads/example.pdf",
+    "fileSize": 204800,
+    "uploadTimestamp": "2025-01-02T15:30:00Z"
+  }
+}
+Example Response (Failure):
+
+json
+Copy code
+{
+  "status": "error",
+  "message": "Failed to update Oracle table or upload document.",
+  "errorDetails": {
+    "oracleUpdate": {
+      "recordId": "12345",
+      "error": "Primary key not found in the database."
+    },
+    "s3Upload": {
+      "fileName": "example.pdf",
+      "error": "Failed to upload document to S3 due to network timeout."
+    }
+  }
+}
+Response Parameters
+status:
+
+success or error.
+message:
+
+A human-readable explanation of the result.
+oracleUpdate:
+
+recordId: The record's unique identifier.
+updatedFields: Details of the fields updated.
+error: Error details if the Oracle update fails.
+s3Upload:
+
+fileName: The uploaded file's name.
+s3Url: The S3 URL for accessing the uploaded file.
+fileSize: The file's size in bytes.
+uploadTimestamp: The timestamp of the upload.
+error: Error details if the S3 upload fails.
+Validation and Error Scenarios
+Request Validation:
+
+Ensure recordId, updateFields, and document are present.
+Validate the Base64-encoded content if provided.
+Error Handling:
+
+Return specific error messages for:
+Invalid recordId.
+Failure to update Oracle table.
+Failure to upload to S3.
+Partial Success:
+
+If one operation (Oracle update or S3 upload) succeeds, indicate partial success in the response.
+Implementation Considerations
+Asynchronous Processing:
+
+Use asynchronous processing to handle large file uploads efficiently.
+Provide a tracking ID for the operation's status.
+Security:
+
+Encrypt the file content in transit and at rest.
+Use IAM roles for secure S3 access.
+Logging and Monitoring:
+
+Log all operations for troubleshooting and audits.
+
+
+
 The ISIBARCODE module is designed to manage barcodes within the I-Prompt application, facilitating efficient tracking, validation, and retrieval of items such as documents, inventory, or certifications. It integrates seamlessly with the application's workflows to streamline operations for Close Brothers.
 
 When uploading a document to AWS S3, the response returned to the calling application should provide essential information about the success of the operation and details of the uploaded file. Here's a recommended structure:
