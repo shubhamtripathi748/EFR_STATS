@@ -1,3 +1,5 @@
+The ISIBARCODE module is designed to manage barcodes within the I-Prompt application, facilitating efficient tracking, validation, and retrieval of items such as documents, inventory, or certifications. It integrates seamlessly with the application's workflows to streamline operations for Close Brothers.
+
 When uploading a document to AWS S3, the response returned to the calling application should provide essential information about the success of the operation and details of the uploaded file. Here's a recommended structure:
 
 Response for a Successful Upload
