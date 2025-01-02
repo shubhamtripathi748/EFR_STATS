@@ -1,3 +1,8 @@
+The migration service involves transferring scanned images stored in Oracle tables (like i-scanned-image) to an S3 storage environment. The service will automate the extraction, transformation, and upload of images, while maintaining important metadata (such as descriptions) to ensure that the original information is preserved in the cloud. This migration service reduces the reliance on local databases and leverages scalable, cost-effective cloud storage (S3) for long-term image retention and retrieval.
+
+
+
+
 We are awaiting the API-C endpoint for the ePostcode service.
 
 Below are the relevant details:
