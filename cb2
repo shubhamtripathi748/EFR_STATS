@@ -1,3 +1,9 @@
+Currently, I am engaged with a high-priority task that requires my immediate attention. However, I would like to reassure you that I had already shared the impact assessment some time ago.
+
+Once I complete my current activity, I will focus on preparing the detailed design. Please let me know if there are any immediate concerns or if you need any interim inputs in the meantime.
+
+Thank you for your patience and understanding.
+
 To design an effective request and response structure for an application that updates an Oracle table and stores an associated document in AWS S3, you should consider the key operations and metadata involved in the process. Here's a recommended structure:
 
 Request Structure
