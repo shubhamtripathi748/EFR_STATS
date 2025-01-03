@@ -1,3 +1,62 @@
+Use Case 1: Migrate Existing i-Scanned-Images from Oracle to AWS S3
+Fetch Images from Oracle
+
+Query Oracle for records where status = 'PENDING'.
+Retrieve ISI Barcode, image BLOB, and metadata (file type, size, creation date, etc.).
+Process and Prepare Image Data
+
+Convert the BLOB to an appropriate image format (JPEG, PNG, etc.).
+Compress the image if isiFileCompressed = true.
+Upload Image to AWS S3 via IBM API Connect
+
+Call the IBM APIC API (acts as a gateway) to upload the image to S3.
+S3 returns a file URL after a successful upload.
+Update Oracle with Migration Status
+
+Update the Oracle table with the S3 file URL and set status = 'COMPLETED'.
+If the upload fails, set status = 'FAILED' and store the error message.
+Scheduled Batch Execution
+
+Implement a Spring Scheduler (@Scheduled) to periodically process pending images.
+Ensure retry mechanisms for failed uploads.
+Use Case 2: Expose Spring Boot Microservice for CRUD Operations on Images
+Spring Boot REST API to handle CRUD operations:
+
+POST /image/upload → Upload image to AWS S3 and store metadata in Oracle.
+GET /image/{isibarcode} → Retrieve image metadata from Oracle and fetch image from S3.
+PUT /image/{isibarcode} → Update existing image in S3 and update metadata in Oracle.
+DELETE /image/{isibarcode} → Delete image from S3 and update status in Oracle.
+Process Incoming JSON Payload
+
+Expect fields: isibarcode, isifileType, isiFileSizeKB, isidatecreated, isifile (Base64).
+Validate input before processing the request.
+Store Image Metadata in Oracle
+
+Save ISI Barcode, file type, size, creation date, and S3 file URL.
+Upload Image to AWS S3
+
+Call IBM APIC to securely upload the file to AWS S3.
+Receive a S3 URL and store it in Oracle.
+Update Status in Oracle
+
+After successful operations, update status = 'COMPLETED'.
+If an error occurs, update status = 'FAILED' with an error log.
+Authentication & Security
+
+Secure API endpoints with OAuth2, JWT, or API keys via IBM API Connect.
+Implement access control to ensure only authorized users can perform CRUD operations.
+Logging & Monitoring
+
+Log every operation for auditing purposes.
+Implement monitoring with AWS CloudWatch and database triggers.
+Outcome
+✅ Efficient migration of existing scanned images from Oracle to AWS S3.
+✅ A scalable Spring Boot microservice for real-time CRUD operations on images.
+✅ Secure image storage and retrieval via IBM APIC.
+
+
+
+
 This flow describes how images stored in an Oracle database as BLOBs are migrated to AWS S3 via IBM API Connect (APIC), and how the status of each record is updated in Oracle.
 
 1. Key Components
