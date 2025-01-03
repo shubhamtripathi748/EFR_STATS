@@ -1,0 +1,121 @@
+
+
+
+
+
+in eclipse--generate a java classess
+
+4. Generate Java Classes
+Right-click on the project and select New > Other.
+Search for Web Services in the wizard and select Web Service Client. Click Next.
+Provide the WSDL file location:
+If it's a URL, paste the URL (e.g., http://example.com/service?wsdl).
+If it's a local file, browse and select the WSDL file.
+
+
+
+Steps to Implement the SOAP Client
+Add Dependencies
+Include the following dependencies in your pom.xml file for Spring Boot and SOAP support:
+
+xml
+Copy code
+<dependencies>
+    <dependency>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-web-services</artifactId>
+    </dependency>
+    <dependency>
+        <groupId>javax.xml.bind</groupId>
+        <artifactId>jaxb-api</artifactId>
+    </dependency>
+    <dependency>
+        <groupId>org.springframework.ws</groupId>
+        <artifactId>spring-ws-core</artifactId>
+    </dependency>
+</dependencies>
+Generate Java Classes from WSDL
+Use the wsimport tool or an IDE plugin to generate Java classes from the e-postCode WSDL file.
+Example command to generate the classes:
+
+bash
+Copy code
+wsimport -keep -p com.example.epostcode -d src/main/java http://example.com/epostcode.wsdl
+Configure SOAP Client
+Create a configuration class to set up the SOAP client.
+
+java
+Copy code
+@Configuration
+public class SoapClientConfig {
+    @Bean
+    public Jaxb2Marshaller marshaller() {
+        Jaxb2Marshaller marshaller = new Jaxb2Marshaller();
+        marshaller.setContextPath("com.example.epostcode"); // Generated package name
+        return marshaller;
+    }
+
+    @Bean
+    public SoapClient soapClient(Jaxb2Marshaller marshaller) {
+        SoapClient client = new SoapClient();
+        client.setMarshaller(marshaller);
+        client.setUnmarshaller(marshaller);
+        client.setDefaultUri("http://example.com/epostcode"); // WSDL URL
+        return client;
+    }
+}
+Create the SOAP Client
+Implement a client to handle SOAP requests and responses.
+
+java
+Copy code
+@Component
+public class SoapClient extends WebServiceGatewaySupport {
+    public AddressSearchResponse callAddressSearch(AddressSearchRequest request) {
+        return (AddressSearchResponse) getWebServiceTemplate()
+                .marshalSendAndReceive(request);
+    }
+}
+Service Layer
+Add a service to handle business logic and invoke the SOAP client.
+
+java
+Copy code
+@Service
+public class AddressSearchService {
+    private final SoapClient soapClient;
+
+    public AddressSearchService(SoapClient soapClient) {
+        this.soapClient = soapClient;
+    }
+
+    public AddressSearchResponse searchAddress(String postcode) {
+        AddressSearchRequest request = new AddressSearchRequest();
+        request.setPostcode(postcode);
+
+        return soapClient.callAddressSearch(request);
+    }
+}
+Controller Layer
+Add a REST controller to expose the AddressSearch operation as an API.
+
+java
+Copy code
+@RestController
+@RequestMapping("/api/address")
+public class AddressSearchController {
+    private final AddressSearchService addressSearchService;
+
+    public AddressSearchController(AddressSearchService addressSearchService) {
+        this.addressSearchService = addressSearchService;
+    }
+
+    @GetMapping("/search")
+    public ResponseEntity<AddressSearchResponse> searchAddress(@RequestParam String postcode) {
+        AddressSearchResponse response = addressSearchService.searchAddress(postcode);
+        return ResponseEntity.ok(response);
+    }
+}
+Key Considerations
+WSDL URL: Replace http://example.com/epostcode with the actual WSDL URL for the e-postCode service.
+Generated Classes: Ensure the wsimport generated classes match the WSDL schema.
