@@ -1,3 +1,65 @@
+This flow describes how images stored in an Oracle database as BLOBs are migrated to AWS S3 via IBM API Connect (APIC), and how the status of each record is updated in Oracle.
+
+1. Key Components
+Spring Boot Microservice
+
+Extracts images from Oracle.
+Uploads images to AWS S3 via IBM APIC.
+Updates the Oracle table with the S3 URL and status.
+Oracle Database
+
+Stores image metadata and BLOB data.
+Updates the migration status and S3 URL.
+AWS S3
+
+Stores the actual images.
+IBM API Connect (APIC)
+
+Acts as an API gateway for authentication, monitoring, and security.
+Exposes an API for uploading images to S3.
+2. Service Flow Steps
+Step 1: Fetch Unprocessed Images from Oracle
+The Spring Boot microservice queries Oracle for records where status = 'PENDING'.
+Retrieves the ISI Barcode, image BLOB, and metadata.
+Step 2: Convert Image (if needed)
+Convert the BLOB into a suitable format (e.g., PNG, JPEG).
+Apply compression if isiFileCompressed = true.
+Step 3: Upload Image to AWS S3 via IBM APIC
+The microservice calls the IBM APIC API endpoint:
+POST /s3/upload
+Request Payload:
+json
+Copy code
+{
+  "isibarcode": "123456789",
+  "isifileType": "png",
+  "isiFileSizeKB": 250,
+  "isidatecreated": "2025-01-03T12:00:00Z",
+  "isifile": "Base64EncodedImageData"
+}
+IBM APIC forwards the request to AWS S3.
+AWS S3 responds with the image URL.
+Step 4: Update Oracle with S3 URL and Status
+After successful upload, the microservice updates the Oracle table:
+sql
+Copy code
+UPDATE image_table
+SET s3_url = 'https://s3.amazonaws.com/bucket/image123.png',
+    status = 'COMPLETED',
+    updated_at = CURRENT_TIMESTAMP
+WHERE isibarcode = '123456789';
+If the upload fails, update status as 'FAILED' with an error message.
+Step 5: Logging & Monitoring
+Store logs for each processed record.
+Notify administrators of failures via alerts or an error log.
+3. Batch Execution Strategy
+Scheduled Job: The service runs periodically using a Spring Scheduler (@Scheduled).
+Parallel Processing: Use multi-threading or Kafka for handling large datasets.
+Retry Mechanism: If an upload fails, retry before marking it as FAILED.
+4. API Flow Diagram
+→ Oracle DB → Spring Boot → IBM APIC → AWS S3 → Oracle DB (Update Status)
+
+
 Business Service Design for Image Management Microservice
 Your Spring Boot microservice will handle two key functionalities:
 
