@@ -1,3 +1,125 @@
+Business Service Design for Image Management Microservice
+Your Spring Boot microservice will handle two key functionalities:
+
+Image Migration: Extract images from Oracle and upload them to AWS S3.
+CRUD Operations: Accept JSON payloads and perform create, read, update, and delete (CRUD) operations on images stored in AWS S3 and metadata stored in Oracle.
+1. High-Level Architecture
+Components
+Spring Boot Microservice: Core application to handle requests.
+Oracle Database: Stores image metadata and ISI barcodes.
+AWS S3: Stores actual image files.
+IBM API Connect (APIC) (If applicable): API gateway for security and monitoring.
+2. Functional Requirements
+A. Image Migration (Batch Process)
+Read images from Oracle BLOB.
+Convert and upload images to AWS S3.
+Update Oracle with the S3 URL and upload status.
+B. CRUD Operations
+Create: Accept image and ISI barcode, store metadata in Oracle, and upload the image to AWS S3.
+Read: Retrieve image metadata from Oracle and fetch the image from S3.
+Update: Replace an existing image in S3 and update metadata in Oracle.
+Delete: Remove the image from S3 and update the Oracle record.
+3. API Design (Spring Boot Endpoints)
+HTTP Method	Endpoint	Description
+POST	/image/upload	Upload an image and metadata to S3 and Oracle
+GET	/image/{isibarcode}	Retrieve image metadata and S3 URL
+PUT	/image/update/{isibarcode}	Update an existing image and metadata
+DELETE	/image/delete/{isibarcode}	Delete an image from S3 and Oracle
+Sample Request & Response
+1. Upload Image (POST /image/upload)
+Request:
+
+json
+Copy code
+{
+  "isibarcode": "123456789",
+  "isifileType": "png",
+  "isiFileSizeKB": 250,
+  "isiFileCompressed": false,
+  "isidatecreated": "2025-01-03T12:00:00Z",
+  "isifile": "Base64EncodedImageData"
+}
+Response:
+
+json
+Copy code
+{
+  "message": "Image uploaded successfully",
+  "s3Url": "https://s3.amazonaws.com/bucket-name/image123.png",
+  "status": "SUCCESS"
+}
+2. Retrieve Image Metadata (GET /image/{isibarcode})
+Response:
+
+json
+Copy code
+{
+  "isibarcode": "123456789",
+  "s3Url": "https://s3.amazonaws.com/bucket-name/image123.png",
+  "isifileType": "png",
+  "isiFileSizeKB": 250,
+  "isidatecreated": "2025-01-03T12:00:00Z"
+}
+4. Service Design
+A. Image Processing Flow
+Extract image data from Oracle.
+Convert image (if required).
+Upload to AWS S3.
+Update Oracle with the S3 URL.
+B. CRUD Flow
+POST (Upload)
+
+Validate JSON payload.
+Upload the image to S3.
+Store metadata in Oracle.
+Return the S3 URL.
+GET (Retrieve Metadata)
+
+Fetch metadata from Oracle using isibarcode.
+Return metadata and the S3 URL.
+PUT (Update Image)
+
+Validate new image data.
+Overwrite the existing image in S3.
+Update metadata in Oracle.
+DELETE (Remove Image)
+
+Delete the image from S3.
+Update Oracle to reflect deletion.
+5. Tech Stack
+Spring Boot (REST API)
+Spring Data JPA (Oracle integration)
+AWS SDK (boto3 or AWS Java SDK) (S3 interaction)
+IBM API Connect (APIC) (API Gateway)
+Spring Scheduler (for batch image migration)
+
+
+
+I will create an architecture diagram in Draw.io for your Spring Boot microservice that:
+
+Picks images from Oracle and uploads them to AWS S3.
+Accepts JSON payloads to perform CRUD operations on AWS S3 and Oracle.
+
+Here is the architecture diagram illustrating the Spring Boot microservice for handling image uploads to AWS S3 while storing metadata in Oracle
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 Currently, I am engaged with a high-priority task that requires my immediate attention. However, I would like to reassure you that I had already shared the impact assessment some time ago.
 
 Once I complete my current activity, I will focus on preparing the detailed design. Please let me know if there are any immediate concerns or if you need any interim inputs in the meantime.
