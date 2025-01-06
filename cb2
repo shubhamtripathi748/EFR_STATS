@@ -1,3 +1,8 @@
+ou will create a Spring Boot microservice with two core functionalities:
+
+Image Migration: Migrate images stored in Oracle to AWS S3.
+Image Upload & Metadata Storage: Provide RESTful APIs for uploading images to S3 and storing metadata in Oracle.
+
 Use Case 1: Migrate Existing i-Scanned-Images from Oracle to AWS S3
 Fetch Images from Oracle
 
