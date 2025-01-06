@@ -1,3 +1,6 @@
+Image Migration (6 TB): Batch migration of existing image data from Oracle to AWS S3.
+REST API for Upload (0.9 TB/year): Exposing secure RESTful APIs for image uploads, with metadata stored in Oracle.
+
 ou will create a Spring Boot microservice with two core functionalities:
 
 Image Migration: Migrate images stored in Oracle to AWS S3.
