@@ -1,3 +1,50 @@
+This document outlines the architecture, functionality, and design of the Spring Boot Microservice that facilitates the migration of existing scanned images (i-scanned images) from an Oracle Database to AWS S3, as well as exposing a set of RESTful APIs to perform CRUD (Create, Read, Update, Delete) operations on images stored in AWS S3. The service is designed to handle large-scale image storage and retrieval, enabling efficient management of scanned image data with secure and scalable cloud storage.
+
+Key Functionalities:
+Image Migration to AWS S3:
+
+This functionality involves migrating i-scanned images currently stored in an Oracle Database to AWS S3 for long-term storage and scalability. The service will read the image data from the Oracle table and upload it to S3, ensuring that the metadata (such as image ID, name, and other relevant information) is also updated accordingly in the database.
+The migration process will be optimized for large volumes of data, and the images will be uploaded in a way that minimizes downtime and ensures data integrity.
+CRUD Operations for Image Management:
+
+Create: Upload new images to S3 via RESTful endpoints, with metadata (such as image details, file type, and creation date) being saved in the Oracle database.
+Read: Retrieve images stored in AWS S3 based on metadata queries from the Oracle database, providing a seamless way to access and manage images.
+Update: Allow modification of metadata and potentially replace or update images in S3 based on provided image identifiers.
+Delete: Provide a mechanism to delete images from AWS S3 and remove associated metadata from the Oracle database when images are no longer required.
+Architecture Overview:
+The service will be developed using Spring Boot, utilizing the AWS SDK for S3 integration and JPA for database interaction. The architecture will include:
+
+Oracle Database to store image metadata.
+AWS S3 as the cloud storage service for scanned images.
+Spring Boot Application that orchestrates image migration and provides a set of RESTful APIs for CRUD operations.
+Use Cases:
+Image Migration:
+As part of the initial setup, existing scanned images from the Oracle database will be transferred to AWS S3 to take advantage of scalable cloud storage.
+Image CRUD Operations:
+Allow administrators or applications to upload, retrieve, update, or delete images using simple REST API calls, while ensuring that all operations are logged and properly handled in both S3 and Oracle database.
+Benefits:
+Scalability: Storing images on AWS S3 provides scalable storage for both current and future image data, ensuring the system can handle increasing volumes of scanned images over time.
+Efficiency: The migration process is designed to minimize downtime and ensure efficient upload and retrieval operations.
+Security: Authentication and access control mechanisms (e.g., IAM roles, policies, or STS) will be implemented to secure both the image data stored in AWS and the metadata stored in Oracle.
+Cost Efficiency: AWS S3 offers flexible storage classes, such as S3 Standard and S3 Infrequent Access, allowing for optimized costs based on usage patterns.
+Technologies Used:
+Spring Boot: For building the microservice and exposing RESTful APIs.
+AWS S3: For storing scanned images securely and efficiently.
+AWS SDK: For interacting with AWS S3 to upload, retrieve, and delete images.
+Oracle Database: To store image metadata, enabling tracking and management of images.
+JPA (Java Persistence API): For ORM (Object-Relational Mapping) to interact with the Oracle database.
+CloudWatch Logs: For monitoring and logging the image upload process.
+Expected Outcomes:
+Successful migration of existing image data from Oracle Database to AWS S3.
+A set of efficient and secure APIs for performing CRUD operations on images, allowing for smooth image management.
+A cloud-based, highly available, and cost-effective solution for storing and managing large volumes of image data.
+By using this service, businesses can centralize their image data on AWS, ensure better data availability, and leverage AWS's scalable and cost-effective infrastructure while maintaining control over metadata through the Oracle database.
+
+This document provides further details on the design, architecture, and operational flow of the Spring Boot service for image migration and management.
+
+
+
+------------------------------------------------------------------------------------------------------------
 To authenticate your on-premises application for AWS S3 access, you can use IAM Access Keys for simple use cases
 ensuring that your credentials are stored securely and granting the least privilege required for your use case is critical.
 
