@@ -1,3 +1,28 @@
+Category	Details
+Description	i-Prompt is an existing application that will consume the new i-scanned-image migration and CRUD service. It interacts with scanned images for various operations such as retrieval, manipulation, and storage.
+System	i-Prompt runs as a Spring Boot microservice and integrates with the new i-scanned-image service via REST APIs. It is deployed in a cloud environment and interacts with AWS S3 and Oracle DB.
+Dependencies	- i-scanned-image microservice (new service for image operations)
+- AWS S3 (for image storage)
+- Oracle Database (metadata storage)
+- IAM roles & authentication (API security)
+Risks	- Service Downtime: If i-scanned-image is unavailable, i-Prompt cannot access images.
+- API Integration Issues: Changes in API contracts may break i-Prompt functionality.
+- Performance Bottlenecks: High concurrent image processing may cause delays.
+- Data Loss: Migration errors could lead to missing or corrupted images.
+Remediation	- Implement API Circuit Breakers (e.g., Resilience4j) to handle service failures gracefully.
+- Maintain backward compatibility while integrating APIs.
+- Optimize image processing with asynchronous handling and caching.
+- Ensure robust logging, monitoring, and alerting mechanisms.
+Rollback Steps	- Revert API integration changes in i-Prompt to use the previous data source (Oracle instead of AWS S3).
+- Restore images from backup if migration fails.
+- Disable i-scanned-image integration in i-Prompt and roll back to an older release.
+- Monitor logs and database states to ensure data integrity after rollback.
+
+
+
+
+
+
 When using AWS S3 to store i-scanned images, there are several key points to consider to ensure security, efficiency, and scalability. Below are the important key points for leveraging AWS S3 to store i-scanned images effectively:
 
 1. S3 Bucket Configuration
