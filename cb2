@@ -1,3 +1,7 @@
+o protect the Spring Boot service against spoofing, strong authentication, authorization, and identity verification controls are essential. By using techniques such as multi-factor authentication (MFA), secure API access, IAM roles with least-privilege policies, and encrypted communications, you can ensure that only legitimate users and services interact with your AWS S3 resources. Regular monitoring, logging, and security audits are also key to detecting and preventing spoofing attempts. These controls should be implemented throughout the system to secure sensitive image data and prevent unauthorized access or manipulation of resources.
+
+
+
 This document outlines the architecture, functionality, and design of the Spring Boot Microservice that facilitates the migration of existing scanned images (i-scanned images) from an Oracle Database to AWS S3, as well as exposing a set of RESTful APIs to perform CRUD (Create, Read, Update, Delete) operations on images stored in AWS S3. The service is designed to handle large-scale image storage and retrieval, enabling efficient management of scanned image data with secure and scalable cloud storage.
 
 Key Functionalities:
