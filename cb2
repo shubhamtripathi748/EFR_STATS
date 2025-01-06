@@ -1,3 +1,36 @@
+To authenticate your on-premises application for AWS S3 access, you can use IAM Access Keys for simple use cases
+ensuring that your credentials are stored securely and granting the least privilege required for your use case is critical.
+
+Role Policies: Ensure that the IAM role has the appropriate policies attached for accessing S3.
+Security: This approach avoids long-term access keys and is a more secure method, as credentials are ephemeral
+
+Key Considerations:
+Access Key Security: Store the Access Key ID and Secret Access Key securely, either in environment variables or a secure credentials store.
+Policy Scope: Only grant the minimum required permissions (e.g., s3:PutObject for upload access).
+Rotation of Access Keys: Periodically rotate IAM user credentials for added security.
+
+
+
+
+To authenticate and securely upload images to AWS S3 from your on-premises application, you need to set up authentication between your on-premises application and AWS S3. There are several ways to authenticate and securely upload files to S3. Below are the recommended methods:
+
+
+
+
+However, since your application is on-premises (not hosted in AWS), you will need to use AWS IAM Access Keys (Access Key ID and Secret Access Key) as a secure way to authenticate.
+
+Here’s how you can authenticate from your on-premises application using IAM Access Keys:
+
+Steps:
+Create an IAM User:
+
+In the AWS Management Console, create an IAM user with permissions to interact with S3.
+Go to IAM > Users > Add User.
+Select Programmatic Access to allow API calls (for example, via the AWS SDK).
+Attach the necessary policy, such as AmazonS3FullAccess or a custom policy with limited S3 access.
+
+
+----------------------------------------------------------------------------------
 Image Migration (6 TB): Batch migration of existing image data from Oracle to AWS S3.
 REST API for Upload (0.9 TB/year): Exposing secure RESTful APIs for image uploads, with metadata stored in Oracle.
 
