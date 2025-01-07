@@ -1,3 +1,18 @@
+Steps in Migration Process
+Spring Scheduler triggers the batch process (@Scheduled method).
+Fetch pending records from i_scanned_image where MIGRATION_STATUS = 'PENDING'.
+Loop over each record:
+Fetch BLOB data (image).
+Call IBM API-C to upload the image to AWS S3.
+Receive S3 URL and upload status.
+Update the tracking table (s3_image_status).
+Update i_scanned_image.MIGRATION_STATUS to 'SUCCESS' or 'FAILED'.
+Handle Errors:
+If API call fails, update UPLOAD_STATUS = 'FAILED' and log ERROR_MESSAGE.
+
+
+
+------------------------------------
 <?xml version="1.0" encoding="UTF-8"?>
 <mxGraphModel dx="1014" dy="615" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
   <root>
