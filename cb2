@@ -1,3 +1,18 @@
+Status	Description
+PENDING	Document identified for migration but not yet processed.
+IN_PROGRESS	Migration process has started but is not completed yet.
+SUCCESS	Document successfully uploaded to AWS S3 and metadata updated in Oracle.
+FAILED	Migration failed due to an error (e.g., network, permission issues).
+RETRYING	Migration failed but is being retried automatically.
+PARTIAL	Some metadata or files were uploaded, but not all components.
+DELETED	Document successfully removed from AWS S3, and Oracle table updated.
+SKIPPED	Document was not migrated due to business rules or duplication.
+
+
+
+
+
+
 Library	Version	Purpose
 Spring Boot	3.2.0	Core framework for building the application
 Spring Web	3.2.0	To create RESTful APIs
