@@ -1,3 +1,18 @@
+To maintain data integrity in your i-scanned-image and s3-image-status tables, you should enforce the following rules:
+
+1. Entity Integrity (Ensuring Uniqueness of Records)
+Rule	Enforcement	Implementation
+Primary Key Constraint	Ensures each record is uniquely identifiable.	- ISI_BARCODE is the Primary Key in i-scanned-image.
+- ID is the Primary Key in s3-image-status.
+Unique Constraint on ISI_BARCODE	Prevents duplicate barcode records.	- ISI_BARCODE in i-scanned-image should be UNIQUE.
+2. Referential Integrity (Maintaining Relationships Between Tables)
+Rule	Enforcement	Implementation
+Foreign Key Constraint	Ensures s3-image-status only contains valid ISI_BARCODE values from i-scanned-image.	- ISI_BARCODE in s3-image-status is a FOREIGN KEY referencing i-scanned-image.ISI_BARCODE.
+- ON DELETE RESTRICT prevents deleting records from i-scanned-image if they exist in s3-image-status.
+
+
+
+--------------------------------------------------------------------------------------------
 Here’s a tabular description for each field in the s3-image-status and i-scanned-image tables:
 
 1. s3-image-status Table:
