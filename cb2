@@ -1,3 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mxGraphModel dx="1014" dy="615" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+  <root>
+    <mxCell id="0" />
+    <mxCell id="1" parent="0" />
+    
+    <!-- Participants -->
+    <mxCell id="2" value="Spring Boot Scheduler" style="shape=umlLifeline" vertex="1" parent="1">
+      <mxGeometry x="50" y="50" width="120" height="600" as="geometry" />
+    </mxCell>
+    
+    <mxCell id="3" value="Oracle Database" style="shape=umlLifeline" vertex="1" parent="1">
+      <mxGeometry x="200" y="50" width="120" height="600" as="geometry" />
+    </mxCell>
+    
+    <mxCell id="4" value="Spring Boot Service" style="shape=umlLifeline" vertex="1" parent="1">
+      <mxGeometry x="350" y="50" width="120" height="600" as="geometry" />
+    </mxCell>
+    
+    <mxCell id="5" value="IBM API Connect (API-C)" style="shape=umlLifeline" vertex="1" parent="1">
+      <mxGeometry x="500" y="50" width="120" height="600" as="geometry" />
+    </mxCell>
+    
+    <mxCell id="6" value="AWS S3" style="shape=umlLifeline" vertex="1" parent="1">
+      <mxGeometry x="650" y="50" width="120" height="600" as="geometry" />
+    </mxCell>
+    
+    <!-- Interactions -->
+    <mxCell id="7" value="triggerMigrationJob()" edge="1" parent="1" source="2" target="4">
+      <mxGeometry relative="1" as="geometry" />
+    </mxCell>
+    
+    <mxCell id="8" value="fetchPendingRecords()" edge="1" parent="1" source="4" target="3">
+      <mxGeometry relative="1" as="geometry" />
+    </mxCell>
+    
+    <mxCell id="9" value="fetchImageData(ISI_BARCODE)" edge="1" parent="1" source="4" target="3">
+      <mxGeometry relative="1" as="geometry" />
+    </mxCell>
+    
+    <mxCell id="10" value="uploadImageToS3(image)" edge="1" parent="1" source="4" target="5">
+      <mxGeometry relative="1" as="geometry" />
+    </mxCell>
+    
+    <mxCell id="11" value="storeImage(image)" edge="1" parent="1" source="5" target="6">
+      <mxGeometry relative="1" as="geometry" />
+    </mxCell>
+    
+    <mxCell id="12" value="returnS3Url()" edge="1" parent="1" source="6" target="5">
+      <mxGeometry relative="1" as="geometry" />
+    </mxCell>
+    
+    <mxCell id="13" value="returnS3Url(s3_url, status)" edge="1" parent="1" source="5" target="4">
+      <mxGeometry relative="1" as="geometry" />
+    </mxCell>
+    
+    <mxCell id="14" value="updateMigrationStatus(STATUS, S3_URL)" edge="1" parent="1" source="4" target="3">
+      <mxGeometry relative="1" as="geometry" />
+    </mxCell>
+    
+  </root>
+</mxGraphModel>
+
+
+
+------------------
+
+
+
 To maintain data integrity in your i-scanned-image and s3-image-status tables, you should enforce the following rules:
 
 1. Entity Integrity (Ensuring Uniqueness of Records)
