@@ -1,3 +1,41 @@
++----------------------+
+  |   i-scanned-image    |  
+  +----------------------+
+  | ISI_BARCODE (PK)     |  
+  | ISI_FILE_TYPE        |  
+  | ISI_FILE_SIZE_KB     |  
+  | ISI_FILE_COMPRESSED  |  
+  | ISI_DATE_CREATED     |  
+  | ISI_FILE (BLOB)      |  
+  +----------------------+
+          | 
+          | 1
+          |
+  +----------------------+
+  |    s3-image-status   |  
+  +----------------------+
+  | ISI_BARCODE (FK)     |  -> References ISI_BARCODE
+  | S3_URL               |  
+  | UPLOAD_STATUS        |  
+  | S3_UPLOAD_DATE       |  
+  | ERROR_MESSAGE        |  
+  +----------------------+
+          |
+          | 1
+Explanation:
+i-scanned-image table holds the original image metadata.
+s3-image-status tracks the S3 URL and upload status for each image (referenced by ISI_BARCODE).
+S3_URL stores the S3 URL where the image is uploaded.
+UPLOAD_STATUS tracks whether the upload was successful or failed.
+S3_UPLOAD_DATE records the date and time when the image was uploaded to S3.
+ERROR_MESSAGE stores any error details in case of failure.
+Key Points:
+This relationship is one-to-one based on ISI_BARCODE, which serves as the primary key in i-scanned-image and as a foreign key in s3-image-status.
+The i-scanned-image table holds the image data, while the s3-image-status table tracks the upload status and the S3 URL.
+This ERD provides a structure to track image uploads to S3 and monitor the success or failure of each upload.
+
+
+------------------------------------
 Flowchart Steps:
 Start
 
