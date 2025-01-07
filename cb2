@@ -1,3 +1,111 @@
+Spring Boot Scheduler for i-Scanned-Image Migration
+Spring Boot provides an easy way to schedule tasks using the @Scheduled annotation. This allows you to automate periodic tasks, such as migrating images from Oracle to AWS S3 and updating the status in the Oracle table.
+
+1. Spring Boot Scheduler Details:
+Configuring the Scheduler:
+Add the @EnableScheduling annotation in your main Spring Boot application class to enable scheduling:
+
+java
+Copy code
+@SpringBootApplication
+@EnableScheduling
+public class Application {
+    public static void main(String[] args) {
+        SpringApplication.run(Application.class, args);
+    }
+}
+Create a service class to handle the image migration logic. Use the @Scheduled annotation to define the task.
+
+java
+Copy code
+import org.springframework.scheduling.annotation.Scheduled;
+import org.springframework.stereotype.Service;
+
+@Service
+public class ImageMigrationService {
+
+    @Scheduled(cron = "0 0 2 * * ?") // This cron expression schedules the task at 2 AM daily
+    public void migrateImages() {
+        // Logic to extract images from Oracle
+        // Logic to upload images to S3
+        // Logic to update Oracle with the S3 URL and status
+        System.out.println("Starting image migration from Oracle to S3...");
+    }
+}
+The @Scheduled(cron = "0 0 2 * * ?") cron expression schedules the migration to run every day at 2:00 AM. You can adjust the cron expression based on your specific requirements.
+
+Cron Expression Explanation:
+0 0 2 * * ? - This cron expression means:
+0 Seconds: Start the job at the 0th second.
+0 Minutes: Start the job at the 0th minute.
+2 Hours: Start the job at 2 AM.
+* Day of the month: Every day.
+* Month: Every month.
+? Day of the week: It doesn’t matter what day of the week.
+2. Best Time to Migrate i-Scanned-Image from Oracle to AWS S3:
+The best time to perform the migration depends on several factors including system load, network capacity, and usage patterns of the Oracle database and AWS S3.
+
+Factors to Consider:
+Low Traffic Period: Perform the migration during off-peak hours when database usage and server load are low. This will minimize the impact on the application and ensure the migration process does not interfere with critical business operations.
+
+Database Load: Choose times when the Oracle database has low query load to reduce the chances of slowing down other database activities.
+
+Network Utilization: Ensure the network bandwidth to AWS S3 is not congested during migration. If possible, schedule the migration when fewer other operations are using the network.
+
+AWS S3 Costs: If there is any consideration of AWS cost, consider the time of day or specific days in the month when network traffic may be lower and the cost is reduced (e.g., nighttime or weekends in some cases).
+
+Recommended Migration Time:
+Late Night or Early Morning (12 AM - 4 AM): Typically, organizations experience the lowest load during this period, especially if the target region is expected to have minimal user activity.
+
+Weekends: If your application is less used on weekends, scheduling the migration during these times might ensure smoother operations.
+
+3. Example Migration Scheduler for i-Scanned-Image:
+java
+Copy code
+import org.springframework.scheduling.annotation.Scheduled;
+import org.springframework.stereotype.Service;
+
+@Service
+public class ImageMigrationService {
+
+    // Schedule to run at 2 AM every day
+    @Scheduled(cron = "0 0 2 * * ?")
+    public void migrateImages() {
+        // Extract image from Oracle
+        // Upload to AWS S3
+        // Update Oracle with S3 URL and status
+        try {
+            System.out.println("Migration process started...");
+
+            // Extract image BLOB from Oracle
+            // Upload image to S3
+            // Update Oracle with S3 URL and status
+            
+            System.out.println("Migration process completed successfully.");
+        } catch (Exception e) {
+            System.out.println("Error during migration: " + e.getMessage());
+        }
+    }
+}
+Cron Expression Variants:
+Every 6 hours: 0 0 0/6 * * ? (every 6 hours).
+Every day at midnight: 0 0 0 * * ?.
+Every Sunday at 2 AM: 0 0 2 ? * SUN.
+4. Additional Considerations:
+Error Handling:
+
+Ensure proper error handling to log any migration failures or retries. For example, if the image upload to S3 fails, you should retry the operation or log the error and notify the administrator.
+Retry Mechanism:
+
+If an image upload or Oracle update fails, implement a retry mechanism with exponential backoff to handle transient failures.
+Monitoring:
+
+Use monitoring tools like Spring Boot Actuator, AWS CloudWatch, and Oracle Database logs to track the performance and success of each migration task.
+Batch Processing:
+
+If you have a large number of images to migrate, consider migrating in smaller batches (e.g., 100 images at a time) to prevent overwhelming your resources.
+
+-----------------
 For the i-scanned-image migration from Oracle to AWS S3 via IBM API Connect (APIC), with status updates back to Oracle, here is a documentation structure for the job details and requirements:
 
 1. Objective:
