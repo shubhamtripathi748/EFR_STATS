@@ -1,3 +1,46 @@
+Flowchart Steps:
+Start
+
+Process begins.
+Fetch Image from Oracle Table
+
+Query Oracle for images from the i-Scanned-Image table.
+Image Available?
+
+Yes: Proceed to step 4.
+No: End process.
+Initiate Image Upload to AWS S3 via IBM API Connect
+
+Send image data to IBM API Connect for processing and uploading to S3.
+Branch to success or failure.
+Upload Successful?
+
+Yes: Proceed to step 6.
+No: Go to failure handling (Step 7).
+Update Status in Oracle Table (Success)
+
+Update the upload_status field in the Oracle table to "Success" for the processed image.
+Record the S3 URL in the Oracle table.
+Branch to success condition (Step 8).
+Upload Failed?
+
+Yes: Log failure and update Oracle with failure status.
+No: Go to retry logic.
+Log Success and Continue Processing
+
+Log success and continue to the next image (Step 2).
+Log Failure and Retry
+
+Retry the image upload a defined number of times (e.g., 3 retries).
+If retries exceed the limit, mark as failed in Oracle.
+End
+
+Key Branching Logic:
+Image Available? — If no image is available, end the process.
+Upload Successful? — If upload fails, handle error (log, notify, retry) and update the Oracle table with a failure status.
+Log Success and Continue Processing — If the upload is successful, log success and continue to process the next image.
+Retry Logic — If the upload fails, retry up to a defined limit before marking it as failed in the Oracle table.
+
 i-Scanned-Image Common Processing Flow with Status Updates (Success/Failure)
 To effectively process the migration of scanned images from Oracle to AWS S3 and update the status in the Oracle table, you need to follow a common processing flow. This includes handling success and failure scenarios, and updating the Oracle table accordingly.
 
