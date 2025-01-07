@@ -1,3 +1,62 @@
+Certainly! To clarify and adjust the DDL with ISI_BARCODE as an index in both tables, I'll provide the corrected version:
+
+1. s3-image-status Table:
+We'll ensure that ISI_BARCODE is indexed for fast lookups (in addition to the primary key ID).
+
+sql
+Copy code
+CREATE TABLE s3_image_status (
+    ID SERIAL PRIMARY KEY,               -- Auto-incrementing ID
+    ISI_BARCODE VARCHAR(255) NOT NULL,    -- Foreign key referencing i-scanned-image
+    S3_URL VARCHAR(512) NOT NULL,         -- URL of the image stored on AWS S3
+    UPLOAD_STATUS VARCHAR(20) NOT NULL,   -- Status of the upload ('SUCCESS', 'FAILURE')
+    S3_UPLOAD_DATE TIMESTAMP NOT NULL,    -- Timestamp of the upload
+    ERROR_MESSAGE TEXT,                  -- Optional error message
+    PROCESS_STATUS VARCHAR(20) DEFAULT 'PENDING',  -- Status of the process ('PENDING', 'IN_PROGRESS', 'PROCESSED')
+    CONSTRAINT fk_isi_barcode FOREIGN KEY (ISI_BARCODE) REFERENCES i_scanned_image (ISI_BARCODE)
+);
+
+-- Adding an index on ISI_BARCODE for faster lookup
+CREATE INDEX idx_isi_barcode_s3 ON s3_image_status (ISI_BARCODE);
+2. i-scanned-image Table:
+In the i-scanned-image table, ISI_BARCODE will also be indexed for fast access during migration.
+
+sql
+Copy code
+ALTER TABLE i_scanned_image
+ADD COLUMN MIGRATION_STATUS VARCHAR(20) DEFAULT 'PENDING';  -- New column to track migration status
+
+-- Adding an index on ISI_BARCODE for better query performance
+CREATE INDEX idx_isi_barcode_i_scanned_image ON i_scanned_image (ISI_BARCODE);
+Explanation of Changes:
+s3-image-status Table:
+ISI_BARCODE is indexed as idx_isi_barcode_s3 for quick lookups in case you need to find migration status by barcode.
+i-scanned-image Table:
+ISI_BARCODE is indexed as idx_isi_barcode_i_scanned_image for faster queries related to the migration process (e.g., selecting unprocessed records).
+Resulting Schema:
+i-scanned-image:
+
+Columns: ISI_BARCODE, ISI_FILE_TYPE, ISI_FILE_SIZE_KB, ISI_FILE_COMPRESSED, ISI_DATE_CREATED, ISI_FILE, MIGRATION_STATUS
+Index: idx_isi_barcode_i_scanned_image on ISI_BARCODE
+s3-image-status:
+
+Columns: ID, ISI_BARCODE, S3_URL, UPLOAD_STATUS, S3_UPLOAD_DATE, ERROR_MESSAGE, PROCESS_STATUS
+Index: idx_isi_barcode_s3 on ISI_BARCODE
+This configuration ensures that both tables are optimized for queries related to ISI_BARCODE while still maintaining efficient access to each image's migration status.
+
+
+
+
+
+
+
+
+
+
+
+
+---------------------------------------------
+
 +----------------------+
   |   i-scanned-image    |  
   +----------------------+
