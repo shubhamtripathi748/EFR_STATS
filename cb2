@@ -1,3 +1,32 @@
+Library	Version	Purpose
+Spring Boot	3.2.0	Core framework for building the application
+Spring Web	3.2.0	To create RESTful APIs
+Spring Data JPA	3.2.0	For ORM and interacting with Oracle DB via JPA
+Spring Boot Starter JDBC	3.2.0	Direct JDBC support for Oracle queries
+Oracle JDBC Driver	23.3.0.22.09	To connect with Oracle Database
+Hibernate Core	6.3.1.Final	ORM framework for handling entity relationships
+AWS SDK for Java v2	2.23.10	To interact with AWS S3
+Boto3 (Python AWS SDK)	1.34.21	(Optional) If any Python-based migration is needed
+Spring Boot Actuator	3.2.0	Health checks and monitoring
+Jackson Databind	2.16.0	JSON Serialization/Deserialization
+Spring Security	3.2.0	Security for APIs (if required)
+Lombok	1.18.30	Reduce boilerplate code
+Slf4j + Logback	2.0.9	Logging support
+JUnit 5	5.10.1	Unit Testing
+Mockito	5.5.0	Mocking dependencies for testing
+Additional Notes:
+Ensure Oracle JDBC driver is added manually if it’s not available in Maven Central.
+Use AWS SDK v2 for better performance and non-blocking API support.
+Enable Spring Boot Actuator for monitoring migrations and API health.
+
+
+
+
+
+
+
+----------------------------------------------------------
+06/01/2025
 Category	Details
 Description	i-Prompt is an existing application that will consume the new i-scanned-image migration and CRUD service. It interacts with scanned images for various operations such as retrieval, manipulation, and storage.
 System	i-Prompt runs as a Spring Boot microservice and integrates with the new i-scanned-image service via REST APIs. It is deployed in a cloud environment and interacts with AWS S3 and Oracle DB.
