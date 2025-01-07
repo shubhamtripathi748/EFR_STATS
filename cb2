@@ -1,3 +1,81 @@
+For the i-scanned-image migration from Oracle to AWS S3 via IBM API Connect (APIC), with status updates back to Oracle, here is a documentation structure for the job details and requirements:
+
+1. Objective:
+Migrate scanned images stored in an Oracle database to AWS S3.
+Perform CRUD operations on the images via IBM API Connect.
+Update the Oracle table with the S3 URL and upload status of the images.
+2. Components Involved:
+Oracle Database: Source of the scanned images, where images are stored as BLOBs.
+AWS S3: Destination for storing scanned images in the cloud.
+IBM API Connect (APIC): Integration layer for managing and executing API calls.
+Spring Boot Application: For migration and CRUD operations.
+3. Flow Overview:
+Data Extraction from Oracle:
+
+Query Oracle database to fetch BLOB data representing the scanned images.
+Retrieve metadata (e.g., image identifier, status, etc.).
+Upload to AWS S3:
+
+Images are uploaded to a designated S3 bucket.
+A unique S3 URL for each image will be generated upon successful upload.
+Image metadata, including status and S3 URL, will be stored back in Oracle.
+CRUD Operations via IBM API Connect:
+
+Create: Upload new images to S3 and update Oracle with the URL.
+Read: Retrieve image details and S3 URLs.
+Update: Modify image metadata or status.
+Delete: Remove images from S3 and update Oracle.
+Status Update in Oracle:
+
+The S3 URL and upload status (Success/Failure) will be updated in the Oracle table after each upload.
+4. Architecture Diagram (Optional for documentation):
+Include a high-level flow diagram showing the interaction between Oracle, AWS S3, and APIC.
+5. Job Details/Requirements:
+Input:
+
+Oracle table with image_id, image_data (BLOB), status, metadata.
+Output:
+
+Successful migration status to Oracle with the S3 URL.
+Error handling mechanism (e.g., logging failure details in Oracle).
+APIs:
+
+GET: Fetch image metadata from Oracle.
+POST: Upload image to S3 and update Oracle.
+PUT: Update image metadata in Oracle.
+DELETE: Delete image from S3 and Oracle.
+Tools & Technologies:
+
+AWS SDK: To interact with S3 for uploading and retrieving images.
+Spring Boot: For the API implementation.
+IBM API Connect: For managing the API lifecycle and integrations.
+Error Handling:
+
+Track upload success or failure.
+Handle timeouts, failures, or invalid image data.
+6. Detailed Steps:
+Oracle to S3 Migration Process:
+Set up a Spring Boot job or API to extract images from Oracle (BLOB data).
+Use AWS SDK to upload images to S3.
+Generate a unique URL for each uploaded image in S3.
+Oracle Update:
+Update the Oracle table with the generated S3 URL and status of the upload.
+CRUD Operations:
+The CRUD operations (Create, Read, Update, Delete) will be exposed through IBM API Connect for managing the scanned images.
+Integration with IBM API Connect:
+Expose the necessary APIs for image operations (via APIC).
+Ensure proper authentication and security mechanisms are in place for access control.
+7. Security & Access Control:
+IAM Roles: For controlling access to AWS S3.
+API Security: Use OAuth or other authentication methods for secure API access through IBM API Connect.
+8. Performance Considerations:
+Batch upload for large datasets.
+Implement retries for S3 upload failures.
+9. Monitoring & Logging:
+Implement logging for each step of the migration process (e.g., image upload status, Oracle updates).
+Monitor API performance and upload progress.
+
+
 Status	Description
 PENDING	Document identified for migration but not yet processed.
 IN_PROGRESS	Migration process has started but is not completed yet.
