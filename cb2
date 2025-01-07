@@ -1,3 +1,136 @@
+i-Scanned-Image Common Processing Flow with Status Updates (Success/Failure)
+To effectively process the migration of scanned images from Oracle to AWS S3 and update the status in the Oracle table, you need to follow a common processing flow. This includes handling success and failure scenarios, and updating the Oracle table accordingly.
+
+Here's a step-by-step breakdown of the process with handling for both success and failure:
+
+1. Common Processing Flow
+Step 1: Extract Image from Oracle
+Query Oracle: Fetch the BLOB (image data) from the Oracle database based on a specific condition (e.g., image that needs to be processed or not yet uploaded to S3).
+Check for Missing Data: Ensure that the image and its metadata (e.g., image ID) are available for processing.
+Step 2: Upload Image to AWS S3
+Upload to S3: Use the AWS SDK to upload the image to S3.
+Generate a unique URL for the uploaded image.
+Handle any potential errors during the upload, such as timeouts or AWS S3 access issues.
+Step 3: Update Oracle Table with S3 URL and Status
+On Success:
+Update the Oracle table with the following information:
+S3 URL: The URL of the uploaded image on S3.
+Status: The status indicating success (e.g., Uploaded Successfully).
+On Failure:
+Update the Oracle table with the following information:
+Status: The status indicating failure (e.g., Upload Failed or Processing Error).
+Optionally, log the error details for debugging or further analysis.
+Step 4: Error Handling and Logging
+If any step fails (e.g., image extraction, upload to S3, Oracle update), log the error with details, including the image ID, and ensure proper status update in Oracle.
+2. Processing Flow with Success and Failure Handling
+Success Scenario:
+If the image is successfully extracted from Oracle and uploaded to S3:
+Extract the image from Oracle.
+Upload the image to S3.
+Update the Oracle table with the S3 URL and Status as Uploaded Successfully.
+java
+Copy code
+public void migrateImageToS3(Image image) {
+    try {
+        // Step 1: Extract Image from Oracle (Assuming image is already fetched from Oracle)
+        
+        // Step 2: Upload Image to AWS S3
+        String s3Url = uploadImageToS3(image);
+        
+        // Step 3: Update Oracle Table with S3 URL and Status
+        updateOracleWithStatus(image.getId(), s3Url, "Uploaded Successfully");
+        
+        System.out.println("Image uploaded successfully: " + image.getId());
+    } catch (Exception e) {
+        // Step 4: Failure Scenario
+        updateOracleWithStatus(image.getId(), null, "Upload Failed: " + e.getMessage());
+        System.out.println("Error uploading image: " + e.getMessage());
+    }
+}
+Failure Scenario:
+If any step fails (e.g., failure in S3 upload or Oracle update):
+Log the failure and ensure proper status update in Oracle.
+Update the Oracle table with the Status as Upload Failed and include any relevant error details (e.g., AWS S3 upload error).
+java
+Copy code
+public void migrateImageToS3(Image image) {
+    try {
+        // Step 1: Extract Image from Oracle (Assuming image is already fetched from Oracle)
+        
+        // Step 2: Upload Image to AWS S3 (Simulating failure here)
+        String s3Url = uploadImageToS3(image);
+        
+        // Step 3: Update Oracle Table with S3 URL and Status
+        updateOracleWithStatus(image.getId(), s3Url, "Uploaded Successfully");
+        
+        System.out.println("Image uploaded successfully: " + image.getId());
+    } catch (AmazonServiceException e) {
+        // Step 4: Failure Scenario - AWS Specific Failure (e.g., S3 upload error)
+        updateOracleWithStatus(image.getId(), null, "S3 Upload Failed: " + e.getMessage());
+        System.out.println("Error during S3 upload: " + e.getMessage());
+    } catch (Exception e) {
+        // General Failure - Any other failure
+        updateOracleWithStatus(image.getId(), null, "Processing Error: " + e.getMessage());
+        System.out.println("Unexpected error: " + e.getMessage());
+    }
+}
+3. Oracle Table Update Logic
+You need to update the Oracle table with the S3 URL and status after each migration attempt.
+
+SQL Table Structure Example:
+sql
+Copy code
+CREATE TABLE scanned_images (
+    image_id NUMBER PRIMARY KEY,
+    image_data BLOB,
+    s3_url VARCHAR2(1024),
+    upload_status VARCHAR2(50),
+    error_message VARCHAR2(4000)
+);
+Update Logic (on Success or Failure):
+java
+Copy code
+public void updateOracleWithStatus(int imageId, String s3Url, String status) {
+    String query = "UPDATE scanned_images SET s3_url = ?, upload_status = ? WHERE image_id = ?";
+    
+    if (status.contains("Failed")) {
+        // If failed, optionally log the error message
+        query = "UPDATE scanned_images SET upload_status = ?, error_message = ? WHERE image_id = ?";
+    }
+    
+    try (Connection conn = dataSource.getConnection(); 
+         PreparedStatement stmt = conn.prepareStatement(query)) {
+        
+        if (status.contains("Failed")) {
+            stmt.setString(1, status);
+            stmt.setString(2, "Error details here"); // Replace with actual error message if needed
+        } else {
+            stmt.setString(1, s3Url);
+            stmt.setString(2, status);
+        }
+        
+        stmt.setInt(3, imageId);
+        stmt.executeUpdate();
+    } catch (SQLException e) {
+        System.out.println("Error updating Oracle table: " + e.getMessage());
+    }
+}
+4. Possible Status Updates:
+Status	Description
+Uploaded Successfully	The image was successfully uploaded to S3, and Oracle was updated.
+S3 Upload Failed	The image upload to S3 failed due to issues like network failure.
+Processing Error	A general error occurred during image extraction or processing.
+Upload Failed	A failure occurred during the upload process or S3 interaction.
+Oracle Update Failed	The status update in Oracle failed (due to DB connection issues, etc.)
+Image Not Found	The image was not found in Oracle for processing.
+5. Conclusion:
+Success Handling: Upon successful image extraction and upload to S3, the Oracle table is updated with the S3 URL and the status Uploaded Successfully.
+
+Failure Handling: If any error occurs, the Oracle table is updated with the status Upload Failed and optionally the error details. You can also implement retry mechanisms depending on the failure type (e.g., transient AWS errors).
+
+
+
+---------------------------------------------------
 Spring Boot Scheduler for i-Scanned-Image Migration
 Spring Boot provides an easy way to schedule tasks using the @Scheduled annotation. This allows you to automate periodic tasks, such as migrating images from Oracle to AWS S3 and updating the status in the Oracle table.
 
