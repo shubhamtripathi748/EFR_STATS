@@ -1,3 +1,36 @@
+Here’s a tabular description for each field in the s3-image-status and i-scanned-image tables:
+
+1. s3-image-status Table:
+Field Name	Description	Data Type	Additional Information
+ID	Unique identifier for each record.	SERIAL (auto-increment)	Primary key, auto-incrementing integer.
+ISI_BARCODE	Barcode identifier associated with the image from the i-scanned-image table.	VARCHAR(255)	Foreign key to i-scanned-image.ISI_BARCODE.
+S3_URL	URL of the uploaded image stored in AWS S3.	VARCHAR(512)	Stores the URL of the image in S3.
+UPLOAD_STATUS	Status of the image upload process (e.g., SUCCESS, FAILURE).	VARCHAR(20)	Describes whether the upload was successful or not.
+S3_UPLOAD_DATE	Date and time when the image was uploaded to S3.	TIMESTAMP	Timestamp for when the image was uploaded to S3.
+ERROR_MESSAGE	Optional error message in case the upload fails or there’s an issue with the process.	TEXT	Stores detailed error information if the upload fails.
+PROCESS_STATUS	Status of the image processing (e.g., PENDING, IN_PROGRESS, PROCESSED).	VARCHAR(20)	Indicates the processing stage of the image migration.
+2. i-scanned-image Table:
+Field Name	Description	Data Type	Additional Information
+ISI_BARCODE	Barcode identifier for the scanned image.	VARCHAR(255)	Primary key, unique barcode for each image.
+ISI_FILE_TYPE	Type of the file (e.g., .jpg, .png, .pdf).	VARCHAR(50)	Specifies the file type or format of the scanned image.
+ISI_FILE_SIZE_KB	Size of the image file in kilobytes (KB).	INT	Stores the size of the file in kilobytes.
+ISI_FILE_COMPRESSED	Indicates whether the image is compressed.	BOOLEAN	TRUE if compressed, FALSE if uncompressed.
+ISI_DATE_CREATED	Date and time when the image was created or scanned.	TIMESTAMP	Timestamp indicating when the image was created.
+ISI_FILE	The actual image file or binary data (if applicable).	BLOB	Stores the binary data of the image (if stored in the database).
+MIGRATION_STATUS	Status of the migration process (e.g., PENDING, SUCCESS, FAILURE).	VARCHAR(20)	Tracks the migration status of the image.
+Key Points:
+Foreign Key Relationship: The ISI_BARCODE in s3-image-status references the ISI_BARCODE in i-scanned-image.
+Auto-Incrementing ID: The ID column in s3-image-status is used for unique identification and is auto-incremented.
+Image URL: The S3_URL stores the public URL of the image uploaded to AWS S3.
+This tabular format clarifies the structure and purpose of each field in both tables.
+
+
+
+
+
+
+
+------------------------------------
 Certainly! To clarify and adjust the DDL with ISI_BARCODE as an index in both tables, I'll provide the corrected version:
 
 1. s3-image-status Table:
