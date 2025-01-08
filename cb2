@@ -1,3 +1,72 @@
++-------------------------------------+
+|         MigrationController         |  <<Controller>>
++-------------------------------------+
+| + createMigration(): ResponseEntity |
+| + getMigrationById(id): ResponseEntity |
+| + updateMigration(id): ResponseEntity |
+| + deleteMigration(id): ResponseEntity |
++-------------------------------------+
+                |
+                | calls
+                ↓
++-------------------------------------+
+|         MigrationService           |  <<Service>>
++-------------------------------------+
+| + processMigration(migrationDto)   |
+| + findMigrationById(id): Optional  |
+| + updateMigrationStatus(id, status) |
+| + deleteMigration(id)               |
++-------------------------------------+
+                |
+                | interacts with
+                ↓
++-------------------------------------+
+|         MigrationRepository        |  <<Repository>>
++-------------------------------------+
+| + save(migrationEntity): MigrationEntity |
+| + findById(id): Optional            |
+| + updateStatus(id, status)          |
+| + delete(id)                        |
++-------------------------------------+
+
+                 |
+                 | persists data in
+                 ↓
++-------------------------------------+
+|         ScannedImage               |  <<Entity>>
++-------------------------------------+
+| - isiBarcode: String               |
+| - isiFileType: String              |
+| - isiFileSize: Integer             |
+| - isiCompressed: Boolean           |
+| - isiDateCreated: Timestamp        |
+| - isiFile: Blob                    |
++-------------------------------------+
+
+                 |
+                 | references
+                 ↓
++-------------------------------------+
+|         S3ImageStatus              |  <<Entity>>
++-------------------------------------+
+| - id: Long                         |
+| - isiBarcode: String               |
+| - s3Url: String                    |
+| - migrationStatus: String          |
+| - dateUpdated: Timestamp           |
++-------------------------------------+
+
++-------------------------------------+
+|         GlobalExceptionHandler     |  <<Exception Handler>>
++-------------------------------------+
+| + handleMigrationException(ex)     |
++-------------------------------------+
+
+
+
+
+
+-----------------------------------------
 com.closebrother.qwmigration
 |
 +--- controller
