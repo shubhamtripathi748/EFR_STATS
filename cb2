@@ -1,3 +1,77 @@
+com.closebrother.qwmigration
+|
++--- controller
+|    |
+|    +--- MigrationController
+|         |
+|         | + migrateImage(isiBarcode: String): ResponseEntity
+|         | + getMigrationStatus(isiBarcode: String): ResponseEntity
+|
++--- service
+|    |
+|    +--- MigrationService
+|         |
+|         | + processMigration(isiBarcode: String): Response
+|         | + uploadToS3(image: Byte[]): String
+|         | + updateDatabaseStatus(isiBarcode: String)
+|
++--- repository
+|    |
+|    +--- IscannedImageRepository
+|    |     |
+|    |     | + findByIsiBarcode(isiBarcode: String): Optional<IscannedImage>
+|    |     | + findByMigrationStatus(status: String): List<IscannedImage>
+|    |
+|    +--- S3ImageStatusRepository
+|          |
+|          | + findByUploadStatus(status: String): List<S3ImageStatus>
+|          | + findByIsiBarcode(isiBarcode: String): Optional<S3ImageStatus>
+|
++--- entity
+|    |
+|    +--- IscannedImage
+|    |     |
+|    |     | - id: Long
+|    |     | - isiBarcode: String
+|    |     | - isiFileType: String
+|    |     | - migrationStatus: String
+|    |
+|    +--- S3ImageStatus
+|          |
+|          | - id: Long
+|          | - isiBarcode: String (FK)
+|          | - s3Url: String
+|          | - uploadStatus: String
+|
++--- exception
+|    |
+|    +--- MigrationException
+|    |     |
+|    |     | + message: String
+|    |     | + errorCode: String
+|    |
+|    +--- GlobalExceptionHandler
+|          |
+|          | + handleMigrationException(MigrationException): ResponseEntity
+|          | + handleDatabaseException(DatabaseException): ResponseEntity
+|
++--- config
+|    |
+|    +--- S3Config
+|    |     |
+|    |     | + amazonS3(): AmazonS3
+|    |
+|    +--- SchedulerConfig
+|          |
+|          | + startScheduler()
+|          | + stopScheduler()
+
+
+
+
+
+
+----------------------------------------------------
 <?xml version="1.0" encoding="UTF-8"?>
 <mxfile host="app.diagrams.net">
   <diagram id="qwmigration-uml" name="Page-1">
