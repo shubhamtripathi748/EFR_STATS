@@ -1,3 +1,54 @@
++------------------------------------------------------+
+|                MigrationException                   |
+|------------------------------------------------------|
+| + message: String                                   |
+| + errorCode: String                                 |
+| + timestamp: LocalDateTime                          |
+|------------------------------------------------------|
+| + MigrationException(String message, String errorCode) |
++------------------------------------------------------+
+        ▲
+        |  (Base Exception - Inheritance)
+        |        
++---------------------+       +--------------------+
+| DatabaseException  |       | S3UploadException  |
+|---------------------|       |--------------------|
+| + message: String  |       | + message: String |
+| + errorCode: String|       | + errorCode: String|
++---------------------+       +--------------------+
+
+        |
+        |  (Thrown from Services)
+        v
+
++------------------------------------------------------+
+|                IscannedImageService                  |
+|------------------------------------------------------|
+| + processMigration(isiBarcode: String): Response   |
+| + uploadToS3(image: Byte[]): String                |
+| + updateDatabaseStatus(isiBarcode: String)         |
+|------------------------------------------------------|
+| (Handles Migration & Throws Exceptions)            |
++------------------------------------------------------+
+
+        |
+        | (Handled by @ControllerAdvice)
+        v
+
++------------------------------------------------------+
+|              GlobalExceptionHandler                 |
+|------------------------------------------------------|
+| + handleMigrationException(MigrationException): ResponseEntity |
+| + handleDatabaseException(DatabaseException): ResponseEntity |
+| + handleS3UploadException(S3UploadException): ResponseEntity |
++------------------------------------------------------+
+
+
+
+
+
+
+
 
 
 The datastore package consists of two core entities:
