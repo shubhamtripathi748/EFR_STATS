@@ -1,3 +1,69 @@
+
+
+The datastore package consists of two core entities:
+
+IscannedImage → Represents images stored in Oracle (Main Table).
+S3ImageStatus → Tracks migration status and S3 URL (New Table).
+
+UML Class Diagram
+
++------------------------------------+
+|          IscannedImage            |
+|------------------------------------|
+| + id: Long                         |
+| + isiBarcode: String (Unique)      |
+| + isiFileType: String              |
+| + isiFileSizeKb: Double            |
+| + isiFileCompressed: Boolean       |
+| + isiDateCreated: Timestamp        |
+| + isiFile: Blob                    |
+| + migrationStatus: String          |
+|------------------------------------|
+| + getters & setters                |
++------------------------------------+
+
+         |
+         |  (One-to-One Relationship)
+         v
+
++------------------------------------+
+|          S3ImageStatus            |
+|------------------------------------|
+| + id: Long                         |
+| + isiBarcode: String (FK)          |
+| + s3Url: String                    |
+| + uploadStatus: String (PENDING/COMPLETE/FAILED) |
+| + errorMessage: String (Nullable)  |
+| + lastUpdated: Timestamp           |
+|------------------------------------|
+| + getters & setters                |
++------------------------------------+
+
+         |
+         |  (Data Access Layer)
+         v
+
++----------------------------------------------+
+|          IscannedImageRepository            |
+|----------------------------------------------|
+| + findByIsiBarcode(String barcode)          |
+| + findByMigrationStatus(String status)      |
++----------------------------------------------+
+
++----------------------------------------------+
+|          S3ImageStatusRepository            |
+|----------------------------------------------|
+| + findByUploadStatus(String status)         |
+| + findByIsiBarcode(String barcode)          |
++----------------------------------------------+
+
+
+
+
+
+
+--------------------------------------
+07/01/2025
 Steps in Migration Process
 Spring Scheduler triggers the batch process (@Scheduled method).
 Fetch pending records from i_scanned_image where MIGRATION_STATUS = 'PENDING'.
