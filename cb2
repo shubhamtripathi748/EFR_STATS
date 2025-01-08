@@ -1,3 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mxfile host="app.diagrams.net">
+  <diagram id="qwmigration-uml" name="Page-1">
+    <mxGraphModel dx="1022" dy="561" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+
+        <!-- Controller Layer -->
+        <mxCell id="MigrationController" value="&lt;b&gt;MigrationController&lt;/b&gt;&#xa;+ migrateImage(isiBarcode: String): ResponseEntity&#xa;+ getMigrationStatus(isiBarcode: String): ResponseEntity" style="rounded=1;strokeColor=#000000;fillColor=#D9EAD3;fontSize=12;" vertex="1" parent="1">
+          <mxGeometry x="100" y="50" width="250" height="100" as="geometry" />
+        </mxCell>
+
+        <!-- Service Layer -->
+        <mxCell id="MigrationService" value="&lt;b&gt;MigrationService&lt;/b&gt;&#xa;+ processMigration(isiBarcode: String): Response&#xa;+ uploadToS3(image: Byte[]): String&#xa;+ updateDatabaseStatus(isiBarcode: String)" style="rounded=1;strokeColor=#000000;fillColor=#FCE5CD;fontSize=12;" vertex="1" parent="1">
+          <mxGeometry x="100" y="180" width="250" height="100" as="geometry" />
+        </mxCell>
+
+        <!-- Repository Layer -->
+        <mxCell id="IscannedImageRepository" value="&lt;b&gt;IscannedImageRepository&lt;/b&gt;&#xa;+ findByIsiBarcode(isiBarcode: String): Optional&lt;IscannedImage&gt;&#xa;+ findByMigrationStatus(status: String): List&lt;IscannedImage&gt;" style="rounded=1;strokeColor=#000000;fillColor=#C9DAF8;fontSize=12;" vertex="1" parent="1">
+          <mxGeometry x="400" y="50" width="250" height="100" as="geometry" />
+        </mxCell>
+
+        <mxCell id="S3ImageStatusRepository" value="&lt;b&gt;S3ImageStatusRepository&lt;/b&gt;&#xa;+ findByUploadStatus(status: String): List&lt;S3ImageStatus&gt;&#xa;+ findByIsiBarcode(isiBarcode: String): Optional&lt;S3ImageStatus&gt;" style="rounded=1;strokeColor=#000000;fillColor=#C9DAF8;fontSize=12;" vertex="1" parent="1">
+          <mxGeometry x="400" y="180" width="250" height="100" as="geometry" />
+        </mxCell>
+
+        <!-- Entity Layer -->
+        <mxCell id="IscannedImage" value="&lt;b&gt;IscannedImage&lt;/b&gt;&#xa;- id: Long&#xa;- isiBarcode: String&#xa;- isiFileType: String&#xa;- migrationStatus: String" style="rounded=1;strokeColor=#000000;fillColor=#EAD1DC;fontSize=12;" vertex="1" parent="1">
+          <mxGeometry x="100" y="320" width="250" height="100" as="geometry" />
+        </mxCell>
+
+        <mxCell id="S3ImageStatus" value="&lt;b&gt;S3ImageStatus&lt;/b&gt;&#xa;- id: Long&#xa;- isiBarcode: String (FK)&#xa;- s3Url: String&#xa;- uploadStatus: String" style="rounded=1;strokeColor=#000000;fillColor=#EAD1DC;fontSize=12;" vertex="1" parent="1">
+          <mxGeometry x="400" y="320" width="250" height="100" as="geometry" />
+        </mxCell>
+
+        <!-- Exception Layer -->
+        <mxCell id="MigrationException" value="&lt;b&gt;MigrationException&lt;/b&gt;&#xa;+ message: String&#xa;+ errorCode: String" style="rounded=1;strokeColor=#000000;fillColor=#F4CCCC;fontSize=12;" vertex="1" parent="1">
+          <mxGeometry x="100" y="450" width="250" height="80" as="geometry" />
+        </mxCell>
+
+        <mxCell id="GlobalExceptionHandler" value="&lt;b&gt;GlobalExceptionHandler&lt;/b&gt;&#xa;+ handleMigrationException(MigrationException): ResponseEntity&#xa;+ handleDatabaseException(DatabaseException): ResponseEntity" style="rounded=1;strokeColor=#000000;fillColor=#F4CCCC;fontSize=12;" vertex="1" parent="1">
+          <mxGeometry x="400" y="450" width="250" height="80" as="geometry" />
+        </mxCell>
+
+        <!-- Config Layer -->
+        <mxCell id="S3Config" value="&lt;b&gt;S3Config&lt;/b&gt;&#xa;+ amazonS3(): AmazonS3" style="rounded=1;strokeColor=#000000;fillColor=#D9D2E9;fontSize=12;" vertex="1" parent="1">
+          <mxGeometry x="100" y="550" width="250" height="60" as="geometry" />
+        </mxCell>
+
+        <mxCell id="SchedulerConfig" value="&lt;b&gt;SchedulerConfig&lt;/b&gt;&#xa;+ startScheduler()&#xa;+ stopScheduler()" style="rounded=1;strokeColor=#000000;fillColor=#D9D2E9;fontSize=12;" vertex="1" parent="1">
+          <mxGeometry x="400" y="550" width="250" height="60" as="geometry" />
+        </mxCell>
+
+        <!-- Relationships -->
+        <mxCell id="relationship1" edge="1" parent="1" source="MigrationController" target="MigrationService">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <mxCell id="relationship2" edge="1" parent="1" source="MigrationService" target="IscannedImageRepository">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <mxCell id="relationship3" edge="1" parent="1" source="MigrationService" target="S3ImageStatusRepository">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <mxCell id="relationship4" edge="1" parent="1" source="IscannedImageRepository" target="IscannedImage">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <mxCell id="relationship5" edge="1" parent="1" source="S3ImageStatusRepository" target="S3ImageStatus">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <mxCell id="relationship6" edge="1" parent="1" source="MigrationService" target="MigrationException">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <mxCell id="relationship7" edge="1" parent="1" source="MigrationException" target="GlobalExceptionHandler">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
+
+
+
+
+
+
+----------------------------------------------------------------------
+
 +------------------------------------------------------+
 |                MigrationException                   |
 |------------------------------------------------------|
