@@ -1,3 +1,28 @@
+odern API Architecture: REST-based APIs with JSON payloads are more efficient and widely adopted.
+Better Performance: Reduced overhead compared to SOAP/XML, leading to faster response times.
+Enhanced Data Quality: Experian CDP provides richer metadata and improved address validation.
+Stronger Security: Uses OAuth 2.0 or API Key-based authentication, ensuring better compliance with security standards.
+Scalability & Maintainability: REST APIs are easier to scale, monitor, and integrate into microservices.
+However, some challenges and mitigations must be addressed:
+
+2. Key Considerations & Mitigation Plan:
+Challenge	Recommendation
+Authentication Change (Basic Auth → OAuth 2.0 / API Key)	Implement OAuth-based authentication in IBM API Connect. Update API client logic in Spring Boot.
+Data Format Change (XML → JSON)	Implement data transformation logic (e.g., Object Mapping with Jackson).
+API Request & Response Structure Differences	Validate field mappings, ensure no data loss, and test transformations.
+Rate Limits Imposed by Experian CDP	Implement caching and retry mechanisms to optimize API calls.
+Error Handling & Logging Differences	Implement enhanced logging and exception handling for JSON error messages.
+Testing & Validation of Migration	Perform unit, integration, and load testing before full deployment.
+3. Final Recommendation:
+✅ Proceed with the transition to Experian CDP due to its superior performance, security, and data quality.
+🚧 Phased migration approach is recommended:
+Step 1: Implement Experian CDP integration in parallel with e-Postcode.
+Step 2: Test all existing consumers to ensure smooth transition.
+Step 3: Fully switch to Experian CDP and decommission e-Postcode.
+
+
+
+-------------------------
 i Swathi,
 
 As we discussed earlier, you are responsible for creating an Impact Assessment Confluence page to document the detailed impact assessment for transitioning from e-Postcode to Experian CDP.
