@@ -1,3 +1,13 @@
+Hi Arvind and Swathi,
+
+As per the suggested template, I have created the design document for our project. I have filled in the details based on my experience, but there are a few sections where I either lack complete information or require further clarification. In such cases, I have marked them as blank or TBD (To Be Determined).
+
+I would appreciate it if you could review the document and provide your inputs. Please let me know if there are any gaps that need to be addressed or any additional details that should be included. Your feedback will help refine and finalize the document.
+
+Looking forward to your suggestions.
+
+
+
 This table tracks the migration of images from Oracle to AWS S3, ensuring data consistency and providing status updates.
 
 SELECT COLUMN_ID, COLUMN_NAME, DATA_TYPE, DATA_LENGTH 
