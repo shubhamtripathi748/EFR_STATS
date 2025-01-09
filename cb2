@@ -1,3 +1,5 @@
+This table tracks the migration of images from Oracle to AWS S3, ensuring data consistency and providing status updates.
+
 SELECT COLUMN_ID, COLUMN_NAME, DATA_TYPE, DATA_LENGTH 
 FROM USER_TAB_COLUMNS 
 WHERE TABLE_NAME = 'YOUR_TABLE_NAME'
