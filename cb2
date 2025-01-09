@@ -1,3 +1,15 @@
+SELECT COLUMN_ID, COLUMN_NAME, DATA_TYPE, DATA_LENGTH 
+FROM USER_TAB_COLUMNS 
+WHERE TABLE_NAME = 'YOUR_TABLE_NAME'
+ORDER BY COLUMN_ID;
+
+
+
+
+
+-----------------------------
+09/01/2024
+
 +-------------------------------------+
 |         MigrationController         |  <<Controller>>
 +-------------------------------------+
