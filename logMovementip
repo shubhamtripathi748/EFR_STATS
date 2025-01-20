@@ -1,3 +1,48 @@
+Start
+  |
+  v
+Check if log is older than 30 days (from Oracle)
+  |
+  |-- No --> Keep log in Oracle (Hot logs for 30 days)
+  |
+  |-- Yes
+       |
+       v
+Move log to S3 (Standard-IA) and retain for 3 months
+       |
+       v
+After 3 months
+       |
+       v
+Move log from S3 Standard-IA to Glacier
+       |
+       v
+After 1-3 years
+       |
+       v
+Delete log from Glacier
+       |
+       v
+Update Oracle table row to indicate log has been migrated
+       |
+       v
+Store log as Parquet file in S3
+       |
+       v
+Query log data using AWS Athena (only from Standard storage class)
+       |
+       v
+Delete migrated log record from Oracle table (via batch job or SQL)
+       |
+       v
+End
+
+----------------------------------------------------------
+
+
+
+
+
 If you have the IGI_LOG_REFERENCE number available in each row of the Oracle table, it can be used as part of the Parquet file name for better traceability.
 
 Proposed File Naming Convention
