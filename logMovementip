@@ -1,4 +1,37 @@
 The i-Prompt system generates extensive logs that are stored in an on-premises Oracle database. These logs provide critical insights into system performance, user activities, and error diagnostics. However, as the volume of logs increases over time, maintaining these logs in the Oracle database becomes cost-intensive and impacts system performance.
 
-To address this, there is a need to migrate logs older than 30 days to a cost-effective and scalable storage solution on AWS while ensuring that the logs remain queryable for analytical and compliance purposes. AWS S3, coupled with Athena, is selected as the target platform due to its efficient storage and query capabilities.
+To address this, there is a need to migrate logs older than 30 days to a cost-effective and scalable storage solution on AWS while ensuring
 
+that the logs remain queryable for analytical and compliance purposes. AWS S3, coupled with Athena, is selected as the target platform due to its efficient storage and query capabilities.
+
+Key Requirements
+Data Movement
+
+Move i-Prompt system logs from Oracle to AWS S3.
+Logs must be converted into a format (e.g., Parquet) suitable for querying in AWS Athena.
+Storage Management
+
+Retain logs in S3 Standard-IA for 3 months for quick access.
+Transition logs to S3 Glacier after 3 months for long-term archival.
+Implement lifecycle policies to delete logs from Glacier after 1 or 3 years based on compliance requirements.
+Oracle Database Updates
+
+After successfully moving a log entry to S3, update the corresponding Oracle table row to mark the log as "migrated" or set a migration timestamp.
+Log Deletion from Oracle
+
+Implement a batch process or SQL-based job to periodically delete logs marked as "migrated" from the Oracle database to free up storage space.
+Query Capability
+
+Enable query access to the logs stored in S3 using AWS Athena by creating an appropriate schema for Parquet files.
+Automation
+
+Automate the data extraction, transformation, and loading (ETL) process using a tool or custom scripts (e.g., Python with boto3, AWS Glue).
+Ensure the lifecycle management and Oracle updates are also automated.
+Error Handling and Monitoring
+
+Implement retry mechanisms and log failures during migration.
+Monitor the migration process, storage usage in S3, and query performance in Athena.
+Compliance and Security
+
+Secure sensitive log data during migration and storage using encryption.
+Control access to S3 buckets, Athena, and Oracle through IAM roles and policies.
