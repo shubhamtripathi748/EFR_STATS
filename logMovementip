@@ -1,3 +1,53 @@
+Automating with AWS Lifecycle Policy
+Instead of manually moving files, you can configure S3 Lifecycle Rules:
+
+Transition logs from log to standard-ia after 30 days
+Transition logs from standard-ia to glacier after 6 months
+(Optional) Delete logs from Glacier after 1-3 years
+S3 Lifecycle Policy JSON
+Create a lifecycle policy in your-bucket:
+
+json
+Copy
+Edit
+{
+    "Rules": [
+        {
+            "ID": "Move to Standard-IA",
+            "Status": "Enabled",
+            "Prefix": "log/",
+            "Transitions": [
+                {
+                    "Days": 30,
+                    "StorageClass": "STANDARD_IA"
+                }
+            ]
+        },
+        {
+            "ID": "Move to Glacier",
+            "Status": "Enabled",
+            "Prefix": "standard-ia/",
+            "Transitions": [
+                {
+                    "Days": 180,
+                    "StorageClass": "GLACIER"
+                }
+            ]
+        },
+        {
+            "ID": "Delete from Glacier",
+            "Status": "Enabled",
+            "Prefix": "glacier/",
+            "Expiration": {
+                "Days": 1095
+            }
+        }
+    ]
+}
+
+
+
+
 Start
   |
   v
