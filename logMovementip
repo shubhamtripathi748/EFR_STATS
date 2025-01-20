@@ -1,3 +1,28 @@
+3. Delete Migrated Records from Oracle
+Once records are successfully uploaded to S3, you can delete the migrated records from the Oracle table. The query to delete records with migration_status = 'MIGRATED' is:
+
+sql
+Copy
+Edit
+DELETE FROM log_records
+WHERE migration_status = 'MIGRATED'
+AND igi_log_time < SYSDATE - INTERVAL '30' DAY;
+This query deletes records that have been marked as 'MIGRATED' and are older than 30 days.
+Full Process Using Oracle Queries
+Fetch Records Older Than 30 Days (in your Java code):
+
+Fetch records using the above query.
+Upload records to S3.
+Update Migration Status After Upload (in your Java code):
+
+Once the records are uploaded to S3, execute the following SQL in your application to mark the records as 'MIGRATED':
+java
+Copy
+Edit
+
+
+
+
 To implement a Spring Boot application that pulls records from an Oracle database (older than 30 days) and dumps them to AWS S3 with different storage layers (Standard, Standard-IA, and Glacier), we will break down the solution into several key steps. Here's a general approach:
 
 1. Prerequisites
