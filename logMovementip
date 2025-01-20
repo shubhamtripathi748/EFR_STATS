@@ -1,6 +1,26 @@
 Title: Sequence Diagram - i-Prompt Log Migration (Spring Boot with Java)
 
 participant Oracle_DB as "Oracle Database"
+participant iPromptLogMigrationService as "iPrompt Log Migration Service"
+participant S3 as "AWS S3 Bucket"
+participant Athena as "AWS Athena"
+
+Oracle_DB->SpringBootApp: Query logs older than 30 days
+SpringBootApp->SpringBootApp: Convert logs to Parquet format
+SpringBootApp->S3: Upload Parquet files to S3 (structured by YYYY/MM/DD)
+S3->Athena: Partition files and update schema for querying
+SpringBootApp->Oracle_DB: Update logs as migrated (set flag or timestamp)
+Note over Oracle_DB: Migrated records marked in database
+SpringBootApp->Oracle_DB: Periodically delete migrated records (batch job/SQL)
+Note over S3, Athena: Logs are available for query via Athena
+Note over S3: Apply lifecycle policies for cost optimization
+----------------------------------------------------------------------
+
+
+
+Title: Sequence Diagram - i-Prompt Log Migration (Spring Boot with Java)
+
+participant Oracle_DB as "Oracle Database"
 participant SpringBootApp as "Spring Boot Application"
 participant S3 as "AWS S3 Bucket"
 participant Athena as "AWS Athena"
