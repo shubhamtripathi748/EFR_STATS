@@ -1,3 +1,23 @@
+If you have the IGI_LOG_REFERENCE number available in each row of the Oracle table, it can be used as part of the Parquet file name for better traceability.
+
+Proposed File Naming Convention
+The Parquet file name can include:
+
+IGI_LOG_REFERENCE for unique identification.
+Optionally, a timestamp or UUID to avoid conflicts in case of multiple files for the same reference.
+Example File Name Formats
+Basic Format:
+
+php
+Copy
+Edit
+igi_<IGI_LOG_REFERENCE>.parquet
+Example:
+
+Copy
+Edit
+igi_1011691246791.parquet
+
 To efficiently move this data to AWS S3, you should define a partitioning strategy and a storage lifecycle policy to optimize query performance and cost.
 
 1. Partition Key Strategy
