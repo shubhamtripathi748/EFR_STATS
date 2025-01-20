@@ -1,3 +1,16 @@
+Query for a Date Range and Reference Number:
+If you're looking for logs over a specific date range, you can use a range condition like this:
+
+sql
+Copy
+Edit
+SELECT * 
+FROM logs
+WHERE year = '2025' 
+  AND month = '01' 
+  AND day BETWEEN '15' AND '20'
+  AND IGI_LOG_REFERENCE_NUMBER = 'your_reference_number';
+
 If you have Parquet files stored in S3, you can easily query them using AWS Athena. Parquet is a columnar storage format that allows for more efficient querying, especially when dealing with large datasets. Here's how you can set up Athena to query your Parquet files based on the columns you have and use the date and IGI_LOG_REFERENCE for filtering.
 
 1. Athena Table for Parquet Files
