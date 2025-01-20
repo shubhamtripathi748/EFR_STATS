@@ -1,0 +1,4 @@
+The i-Prompt system generates extensive logs that are stored in an on-premises Oracle database. These logs provide critical insights into system performance, user activities, and error diagnostics. However, as the volume of logs increases over time, maintaining these logs in the Oracle database becomes cost-intensive and impacts system performance.
+
+To address this, there is a need to migrate logs older than 30 days to a cost-effective and scalable storage solution on AWS while ensuring that the logs remain queryable for analytical and compliance purposes. AWS S3, coupled with Athena, is selected as the target platform due to its efficient storage and query capabilities.
+
