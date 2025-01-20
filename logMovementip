@@ -1,3 +1,8 @@
+The goal is to migrate i-Prompt system logs from an on-premises Oracle database to AWS S3 in a queryable format using AWS Athena. The solution ensures scalability, cost optimization, and adherence to data retention policies. Logs will be stored in S3 with lifecycle management and updated in Oracle to mark them as migrated. Additionally, migrated records will be deleted periodically to free up space in Oracle.
+
+
+
+
 The i-Prompt system generates extensive logs that are stored in an on-premises Oracle database. These logs provide critical insights into system performance, user activities, and error diagnostics. However, as the volume of logs increases over time, maintaining these logs in the Oracle database becomes cost-intensive and impacts system performance.
 
 To address this, there is a need to migrate logs older than 30 days to a cost-effective and scalable storage solution on AWS while ensuring
