@@ -1,3 +1,928 @@
+To efficiently move this data to AWS S3, you should define a partitioning strategy and a storage lifecycle policy to optimize query performance and cost.
+
+1. Partition Key Strategy
+You can partition the data in S3 using the following keys:
+
+Primary Partition: IGI_LOG_TIME (Date-based partitioning)
+Example: year=2024/month=03/day=25/
+Secondary Partition: IGI_MACHINE_NAME (Machine-based partitioning)
+Example: machine=ddc2pipa002.test.closebrothers.com/
+Tertiary Partition: IGI_MACHINE_IP_ADDRESS (Optional)
+Example: ip=10.164.33.149/
+Final S3 Path Structure
+bash
+Copy
+Edit
+s3://your-bucket/logs/year=2024/month=03/day=25/machine=ddc2pipa002.test.closebrothers.com/ip=10.164.33.149/
+This structure will make it efficient to query logs based on date and machine details.
+
+2. Storage Lifecycle Strategy
+To optimize costs, move logs through different S3 storage classes:
+
+S3 Standard (0-30 days) → Hot logs available for quick access
+S3 Standard-IA (Infrequent Access) (30-90 days) → Less frequently accessed logs
+S3 Glacier (90 days - 1 year) → Archived logs for compliance
+S3 Glacier Deep Archive (1-3 years) → Long-term retention
+Permanently Delete (after 3 years) → Clean up old logs
+Lifecycle Policy Example
+
+json
+Copy
+Edit
+[
+  {
+    "ID": "MoveToIA",
+    "Prefix": "logs/",
+    "Status": "Enabled",
+    "Transitions": [
+      { "Days": 30, "StorageClass": "STANDARD_IA" },
+      { "Days": 90, "StorageClass": "GLACIER" },
+      { "Days": 365, "StorageClass": "DEEP_ARCHIVE" }
+    ],
+    "Expiration": { "Days": 1095 }
+  }
+]
+3. Storing in Parquet Format
+For efficient querying with AWS Athena, store data in Parquet format instead of CSV or JSON.
+
+Convert logs to Parquet using AWS Glue, Spark, or Pandas.
+Store Parquet files in the structured partition paths.
+Use AWS Athena to query logs directly.
+Next Steps
+Extract logs from the database using AWS DMS, Python, or Spark.
+Transform logs into Parquet format.
+Upload to S3 following the partitioned path.
+Enable lifecycle policies for cost optimization.
+Use AWS Athena for querying logs efficiently.
+Would you like a sample Python script for log extraction and S3 upload?
+
+
+
+
+
+
+
+
+You said:
+Yes java code
+ChatGPT said:
+ChatGPT
+Here’s a Java-based solution to extract data from your database and upload it to AWS S3 in Parquet format using Apache Parquet and AWS SDK.
+
+1. Dependencies
+Add the following dependencies in your pom.xml (Maven project):
+
+xml
+Copy
+Edit
+<dependencies>
+    <!-- JDBC Driver for Oracle (or your database) -->
+    <dependency>
+        <groupId>com.oracle.database.jdbc</groupId>
+        <artifactId>ojdbc8</artifactId>
+        <version>19.8.0.0</version>
+    </dependency>
+
+    <!-- Apache Parquet -->
+    <dependency>
+        <groupId>org.apache.parquet</groupId>
+        <artifactId>parquet-avro</artifactId>
+        <version>1.12.3</version>
+    </dependency>
+
+    <!-- AWS SDK for S3 -->
+    <dependency>
+        <groupId>software.amazon.awssdk</groupId>
+        <artifactId>s3</artifactId>
+        <version>2.20.120</version>
+    </dependency>
+
+    <!-- Jackson for JSON handling (Optional) -->
+    <dependency>
+        <groupId>com.fasterxml.jackson.core</groupId>
+        <artifactId>jackson-databind</artifactId>
+        <version>2.15.0</version>
+    </dependency>
+</dependencies>
+2. Java Code
+This code will:
+
+Fetch data from Oracle database.
+Convert it into a Parquet file.
+Upload to AWS S3 with partitioning by IGI_LOG_TIME (Date-based partitioning).
+java
+Copy
+Edit
+import org.apache.parquet.hadoop.ParquetWriter;
+import org.apache.parquet.hadoop.metadata.CompressionCodecName;
+import org.apache.parquet.avro.AvroParquetWriter;
+import org.apache.avro.Schema;
+import org.apache.avro.generic.GenericData;
+import org.apache.avro.generic.GenericRecord;
+import software.amazon.awssdk.auth.credentials.ProfileCredentialsProvider;
+import software.amazon.awssdk.core.sync.RequestBody;
+import software.amazon.awssdk.services.s3.S3Client;
+import software.amazon.awssdk.services.s3.model.PutObjectRequest;
+
+import java.io.*;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.sql.*;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+
+public class OracleToS3Uploader {
+    private static final String DB_URL = "jdbc:oracle:thin:@your-db-host:1521:your-db";
+    private static final String DB_USER = "your_user";
+    private static final String DB_PASSWORD = "your_password";
+    private static final String BUCKET_NAME = "your-s3-bucket";
+    private static final String BASE_S3_PATH = "logs/";
+
+    private static final String QUERY = "SELECT IGI_LOG_REFERENCE, IGI_LOG_TIME, IGI_MACHINE_NAME, IGI_MACHINE_IP_ADDRESS, IGI_LOG_TEXT FROM your_table WHERE IGI_LOG_TIME >= SYSDATE - 30";
+
+    private static final String AVRO_SCHEMA_JSON = "{"
+            + "\"type\": \"record\","
+            + "\"name\": \"LogEntry\","
+            + "\"fields\": ["
+            + "{\"name\": \"log_reference\", \"type\": \"string\"},"
+            + "{\"name\": \"log_time\", \"type\": \"string\"},"
+            + "{\"name\": \"machine_name\", \"type\": \"string\"},"
+            + "{\"name\": \"ip_address\", \"type\": \"string\"},"
+            + "{\"name\": \"log_text\", \"type\": \"string\"}"
+            + "]}";
+
+    public static void main(String[] args) {
+        try (Connection connection = DriverManager.getConnection(DB_URL, DB_USER, DB_PASSWORD);
+             PreparedStatement statement = connection.prepareStatement(QUERY);
+             ResultSet resultSet = statement.executeQuery()) {
+
+            Schema schema = new Schema.Parser().parse(AVRO_SCHEMA_JSON);
+            Path tempFilePath = Files.createTempFile("logs", ".parquet");
+            
+            try (ParquetWriter<GenericRecord> writer = AvroParquetWriter.<GenericRecord>builder(new org.apache.parquet.hadoop.Path(tempFilePath.toString()))
+                    .withSchema(schema)
+                    .withCompressionCodec(CompressionCodecName.SNAPPY)
+                    .build()) {
+
+                while (resultSet.next()) {
+                    GenericRecord record = new GenericData.Record(schema);
+                    record.put("log_reference", resultSet.getString("IGI_LOG_REFERENCE"));
+                    record.put("log_time", resultSet.getString("IGI_LOG_TIME"));
+                    record.put("machine_name", resultSet.getString("IGI_MACHINE_NAME"));
+                    record.put("ip_address", resultSet.getString("IGI_MACHINE_IP_ADDRESS"));
+                    record.put("log_text", resultSet.getString("IGI_LOG_TEXT"));
+
+                    writer.write(record);
+                }
+            }
+
+            // Upload to S3 with partitioning
+            String partitionPath = getPartitionPath();
+            uploadToS3(tempFilePath, partitionPath);
+
+            System.out.println("Data uploaded successfully to S3.");
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    private static String getPartitionPath() {
+        LocalDate today = LocalDate.now();
+        return String.format("%syear=%d/month=%02d/day=%02d/logs.parquet",
+                BASE_S3_PATH, today.getYear(), today.getMonthValue(), today.getDayOfMonth());
+    }
+
+    private static void uploadToS3(Path filePath, String s3Path) {
+        S3Client s3 = S3Client.builder()
+                .credentialsProvider(ProfileCredentialsProvider.create())
+                .build();
+
+        try {
+            s3.putObject(PutObjectRequest.builder()
+                            .bucket(BUCKET_NAME)
+                            .key(s3Path)
+                            .build(),
+                    RequestBody.fromFile(filePath));
+
+            System.out.println("File uploaded to: s3://" + BUCKET_NAME + "/" + s3Path);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+}
+3. Explanation
+Fetch logs from Oracle for the last 30 days.
+Convert data into Parquet format using Apache Parquet.
+Partition data by year/month/day (e.g., s3://your-bucket/logs/year=2024/month=01/day=16/logs.parquet).
+Upload file to AWS S3 using AWS SDK.
+4. AWS Lifecycle Policy
+After uploading, apply an S3 Lifecycle Policy:
+
+json
+Copy
+Edit
+[
+  {
+    "ID": "MoveToIA",
+    "Prefix": "logs/",
+    "Status": "Enabled",
+    "Transitions": [
+      { "Days": 30, "StorageClass": "STANDARD_IA" },
+      { "Days": 90, "StorageClass": "GLACIER" },
+      { "Days": 365, "StorageClass": "DEEP_ARCHIVE" }
+    ],
+    "Expiration": { "Days": 1095 }
+  }
+]
+5. Running the Program
+Replace database credentials in DB_URL, DB_USER, DB_PASSWORD.
+Replace AWS S3 bucket name in BUCKET_NAME.
+Run using:
+sh
+Copy
+Edit
+mvn clean package
+java -jar target/your-app.jar
+6. Querying with AWS Athena
+After logs are stored in Parquet, create an AWS Glue Table to query via AWS Athena:
+
+sql
+Copy
+Edit
+CREATE EXTERNAL TABLE log_data (
+    log_reference STRING,
+    log_time STRING,
+    machine_name STRING,
+    ip_address STRING,
+    log_text STRING
+) 
+PARTITIONED BY (year INT, month INT, day INT)
+STORED AS PARQUET
+LOCATION 's3://your-bucket/logs/';
+Now, you can query logs using:
+
+sql
+Copy
+Edit
+SELECT * FROM log_data WHERE year=2024 AND month=1 AND day=16;
+Final Thoughts
+Parquet reduces storage costs and improves Athena query speed.
+Partitioning optimizes queries based on log dates.
+AWS S3 Lifecycle rules manage storage costs.
+Would you like enhancements like Lambda triggers for automation?
+
+
+
+
+
+
+
+You said:
+Add igi log reference in file name
+ChatGPT said:
+ChatGPT
+To include IGI_LOG_REFERENCE in the file name when saving logs to AWS S3, modify the logic that generates the file name. Since multiple log references exist in a batch, we'll use the first log reference in the batch as part of the file name.
+
+Updated Code
+Changes:
+
+Extract the first IGI_LOG_REFERENCE from the batch.
+Modify file naming format:
+Format: logs/year=YYYY/month=MM/day=DD/igi_<IGI_LOG_REFERENCE>.parquet
+Example: logs/year=2024/month=01/day=16/igi_1011691246791.parquet
+Updated Java Code
+java
+Copy
+Edit
+import org.apache.parquet.hadoop.ParquetWriter;
+import org.apache.parquet.hadoop.metadata.CompressionCodecName;
+import org.apache.parquet.avro.AvroParquetWriter;
+import org.apache.avro.Schema;
+import org.apache.avro.generic.GenericData;
+import org.apache.avro.generic.GenericRecord;
+import software.amazon.awssdk.auth.credentials.ProfileCredentialsProvider;
+import software.amazon.awssdk.core.sync.RequestBody;
+import software.amazon.awssdk.services.s3.S3Client;
+import software.amazon.awssdk.services.s3.model.PutObjectRequest;
+
+import java.io.*;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.sql.*;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+
+public class OracleToS3Uploader {
+    private static final String DB_URL = "jdbc:oracle:thin:@your-db-host:1521:your-db";
+    private static final String DB_USER = "your_user";
+    private static final String DB_PASSWORD = "your_password";
+    private static final String BUCKET_NAME = "your-s3-bucket";
+    private static final String BASE_S3_PATH = "logs/";
+
+    private static final String QUERY = "SELECT IGI_LOG_REFERENCE, IGI_LOG_TIME, IGI_MACHINE_NAME, IGI_MACHINE_IP_ADDRESS, IGI_LOG_TEXT FROM your_table WHERE IGI_LOG_TIME >= SYSDATE - 30";
+
+    private static final String AVRO_SCHEMA_JSON = "{"
+            + "\"type\": \"record\","
+            + "\"name\": \"LogEntry\","
+            + "\"fields\": ["
+            + "{\"name\": \"log_reference\", \"type\": \"string\"},"
+            + "{\"name\": \"log_time\", \"type\": \"string\"},"
+            + "{\"name\": \"machine_name\", \"type\": \"string\"},"
+            + "{\"name\": \"ip_address\", \"type\": \"string\"},"
+            + "{\"name\": \"log_text\", \"type\": \"string\"}"
+            + "]}";
+
+    public static void main(String[] args) {
+        try (Connection connection = DriverManager.getConnection(DB_URL, DB_USER, DB_PASSWORD);
+             PreparedStatement statement = connection.prepareStatement(QUERY);
+             ResultSet resultSet = statement.executeQuery()) {
+
+            Schema schema = new Schema.Parser().parse(AVRO_SCHEMA_JSON);
+            
+            // Get the first IGI_LOG_REFERENCE for file naming
+            String firstLogReference = null;
+            Path tempFilePath = Files.createTempFile("logs", ".parquet");
+
+            try (ParquetWriter<GenericRecord> writer = AvroParquetWriter.<GenericRecord>builder(new org.apache.parquet.hadoop.Path(tempFilePath.toString()))
+                    .withSchema(schema)
+                    .withCompressionCodec(CompressionCodecName.SNAPPY)
+                    .build()) {
+
+                while (resultSet.next()) {
+                    if (firstLogReference == null) {
+                        firstLogReference = resultSet.getString("IGI_LOG_REFERENCE");
+                    }
+
+                    GenericRecord record = new GenericData.Record(schema);
+                    record.put("log_reference", resultSet.getString("IGI_LOG_REFERENCE"));
+                    record.put("log_time", resultSet.getString("IGI_LOG_TIME"));
+                    record.put("machine_name", resultSet.getString("IGI_MACHINE_NAME"));
+                    record.put("ip_address", resultSet.getString("IGI_MACHINE_IP_ADDRESS"));
+                    record.put("log_text", resultSet.getString("IGI_LOG_TEXT"));
+
+                    writer.write(record);
+                }
+            }
+
+            // If no records were found, exit
+            if (firstLogReference == null) {
+                System.out.println("No logs found for upload.");
+                return;
+            }
+
+            // Generate partitioned file path
+            String partitionPath = getPartitionPath(firstLogReference);
+            uploadToS3(tempFilePath, partitionPath);
+
+            System.out.println("Data uploaded successfully to S3: " + partitionPath);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    private static String getPartitionPath(String logReference) {
+        LocalDate today = LocalDate.now();
+        return String.format("%syear=%d/month=%02d/day=%02d/igi_%s.parquet",
+                BASE_S3_PATH, today.getYear(), today.getMonthValue(), today.getDayOfMonth(), logReference);
+    }
+
+    private static void uploadToS3(Path filePath, String s3Path) {
+        S3Client s3 = S3Client.builder()
+                .credentialsProvider(ProfileCredentialsProvider.create())
+                .build();
+
+        try {
+            s3.putObject(PutObjectRequest.builder()
+                            .bucket(BUCKET_NAME)
+                            .key(s3Path)
+                            .build(),
+                    RequestBody.fromFile(filePath));
+
+            System.out.println("File uploaded to: s3://" + BUCKET_NAME + "/" + s3Path);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+}
+Changes in This Code
+Extracts the first IGI_LOG_REFERENCE in the result set.
+Uses this value in the S3 object name.
+Partitioned S3 path follows:
+bash
+Copy
+Edit
+s3://your-s3-bucket/logs/year=2024/month=01/day=16/igi_1011691246791.parquet
+Example S3 Folder Structure
+sql
+Copy
+Edit
+s3://your-s3-bucket/logs/
+    ├── year=2024/
+        ├── month=01/
+            ├── day=16/
+                ├── igi_1011691246791.parquet
+                ├── igi_1011691246792.parquet
+Query in AWS Athena
+After logs are partitioned in Parquet, create an AWS Glue Table for Athena queries:
+
+sql
+Copy
+Edit
+CREATE EXTERNAL TABLE log_data (
+    log_reference STRING,
+    log_time STRING,
+    machine_name STRING,
+    ip_address STRING,
+    log_text STRING
+) 
+PARTITIONED BY (year INT, month INT, day INT)
+STORED AS PARQUET
+LOCATION 's3://your-s3-bucket/logs/';
+Query Example:
+
+sql
+Copy
+Edit
+SELECT * FROM log_data WHERE year=2024 AND month=1 AND day=16;
+Storage Optimization Using S3 Lifecycle Rules
+To move files across S3 Storage Tiers, apply this policy:
+
+json
+Copy
+Edit
+[
+  {
+    "ID": "MoveToIA",
+    "Prefix": "logs/",
+    "Status": "Enabled",
+    "Transitions": [
+      { "Days": 30, "StorageClass": "STANDARD_IA" },
+      { "Days": 90, "StorageClass": "GLACIER" },
+      { "Days": 365, "StorageClass": "DEEP_ARCHIVE" }
+    ],
+    "Expiration": { "Days": 1095 }
+  }
+]
+Next Steps
+Run the Java program to move Oracle logs to S3.
+Validate the Parquet file in S3.
+Query logs using AWS Athena.
+Set up S3 lifecycle policies to manage storage costs.
+Would you like Lambda automation to trigger this process?
+
+
+
+
+
+
+
+You said:
+IGI log time should be use to partition the s3
+ChatGPT said:
+ChatGPT
+To partition the S3 storage based on IGI_LOG_TIME instead of the current date, we need to:
+
+Extract the IGI_LOG_TIME value from each record.
+Convert IGI_LOG_TIME (e.g., "25-MAR-24") into YYYY/MM/DD format.
+Use this date for partitioning in S3.
+Updated Java Code
+This version partitions the logs by IGI_LOG_TIME instead of the current system date.
+
+java
+Copy
+Edit
+import org.apache.parquet.hadoop.ParquetWriter;
+import org.apache.parquet.hadoop.metadata.CompressionCodecName;
+import org.apache.parquet.avro.AvroParquetWriter;
+import org.apache.avro.Schema;
+import org.apache.avro.generic.GenericData;
+import org.apache.avro.generic.GenericRecord;
+import software.amazon.awssdk.auth.credentials.ProfileCredentialsProvider;
+import software.amazon.awssdk.core.sync.RequestBody;
+import software.amazon.awssdk.services.s3.S3Client;
+import software.amazon.awssdk.services.s3.model.PutObjectRequest;
+
+import java.io.*;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.sql.*;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
+
+public class OracleToS3Uploader {
+    private static final String DB_URL = "jdbc:oracle:thin:@your-db-host:1521:your-db";
+    private static final String DB_USER = "your_user";
+    private static final String DB_PASSWORD = "your_password";
+    private static final String BUCKET_NAME = "your-s3-bucket";
+    private static final String BASE_S3_PATH = "logs/";
+
+    private static final String QUERY = "SELECT IGI_LOG_REFERENCE, IGI_LOG_TIME, IGI_MACHINE_NAME, IGI_MACHINE_IP_ADDRESS, IGI_LOG_TEXT FROM your_table WHERE IGI_LOG_TIME >= SYSDATE - 30";
+
+    private static final String AVRO_SCHEMA_JSON = "{"
+            + "\"type\": \"record\","
+            + "\"name\": \"LogEntry\","
+            + "\"fields\": ["
+            + "{\"name\": \"log_reference\", \"type\": \"string\"},"
+            + "{\"name\": \"log_time\", \"type\": \"string\"},"
+            + "{\"name\": \"machine_name\", \"type\": \"string\"},"
+            + "{\"name\": \"ip_address\", \"type\": \"string\"},"
+            + "{\"name\": \"log_text\", \"type\": \"string\"}"
+            + "]}";
+
+    public static void main(String[] args) {
+        try (Connection connection = DriverManager.getConnection(DB_URL, DB_USER, DB_PASSWORD);
+             PreparedStatement statement = connection.prepareStatement(QUERY);
+             ResultSet resultSet = statement.executeQuery()) {
+
+            Schema schema = new Schema.Parser().parse(AVRO_SCHEMA_JSON);
+
+            while (resultSet.next()) {
+                String logReference = resultSet.getString("IGI_LOG_REFERENCE");
+                String logTime = resultSet.getString("IGI_LOG_TIME"); // e.g., "25-MAR-24"
+
+                // Convert IGI_LOG_TIME to YYYY/MM/DD format
+                String partitionPath = getPartitionPath(logTime, logReference);
+                Path tempFilePath = Files.createTempFile("logs", ".parquet");
+
+                try (ParquetWriter<GenericRecord> writer = AvroParquetWriter.<GenericRecord>builder(new org.apache.parquet.hadoop.Path(tempFilePath.toString()))
+                        .withSchema(schema)
+                        .withCompressionCodec(CompressionCodecName.SNAPPY)
+                        .build()) {
+
+                    GenericRecord record = new GenericData.Record(schema);
+                    record.put("log_reference", logReference);
+                    record.put("log_time", logTime);
+                    record.put("machine_name", resultSet.getString("IGI_MACHINE_NAME"));
+                    record.put("ip_address", resultSet.getString("IGI_MACHINE_IP_ADDRESS"));
+                    record.put("log_text", resultSet.getString("IGI_LOG_TEXT"));
+
+                    writer.write(record);
+                }
+
+                // Upload file to S3
+                uploadToS3(tempFilePath, partitionPath);
+            }
+
+            System.out.println("Data uploaded successfully to S3.");
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    private static String getPartitionPath(String logTime, String logReference) {
+        LocalDate logDate = convertLogTimeToDate(logTime);
+        if (logDate == null) {
+            throw new IllegalArgumentException("Invalid IGI_LOG_TIME format: " + logTime);
+        }
+
+        return String.format("%syear=%d/month=%02d/day=%02d/igi_%s.parquet",
+                BASE_S3_PATH, logDate.getYear(), logDate.getMonthValue(), logDate.getDayOfMonth(), logReference);
+    }
+
+    private static LocalDate convertLogTimeToDate(String logTime) {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MMM-yy");
+        try {
+            return LocalDate.parse(logTime, formatter);
+        } catch (DateTimeParseException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    private static void uploadToS3(Path filePath, String s3Path) {
+        S3Client s3 = S3Client.builder()
+                .credentialsProvider(ProfileCredentialsProvider.create())
+                .build();
+
+        try {
+            s3.putObject(PutObjectRequest.builder()
+                            .bucket(BUCKET_NAME)
+                            .key(s3Path)
+                            .build(),
+                    RequestBody.fromFile(filePath));
+
+            System.out.println("File uploaded to: s3://" + BUCKET_NAME + "/" + s3Path);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+}
+Changes in This Code
+Partitions S3 files based on IGI_LOG_TIME instead of the current date.
+Converts "25-MAR-24" → "2024/03/25" using DateTimeFormatter.
+File Naming Format in S3:
+logs/year=YYYY/month=MM/day=DD/igi_<IGI_LOG_REFERENCE>.parquet
+Example:
+bash
+Copy
+Edit
+s3://your-s3-bucket/logs/year=2024/month=03/day=25/igi_1011691246791.parquet
+Each file contains logs for one specific IGI_LOG_REFERENCE.
+Example S3 Folder Structure
+sql
+Copy
+Edit
+s3://your-s3-bucket/logs/
+    ├── year=2024/
+        ├── month=01/
+            ├── day=12/
+                ├── igi_1011691246791.parquet
+            ├── day=25/
+                ├── igi_1011691195298.parquet
+                ├── igi_1011691195299.parquet
+Athena Table for Querying Logs
+sql
+Copy
+Edit
+CREATE EXTERNAL TABLE log_data (
+    log_reference STRING,
+    log_time STRING,
+    machine_name STRING,
+    ip_address STRING,
+    log_text STRING
+) 
+PARTITIONED BY (year INT, month INT, day INT)
+STORED AS PARQUET
+LOCATION 's3://your-s3-bucket/logs/';
+Query Example
+sql
+Copy
+Edit
+SELECT * FROM log_data WHERE year=2024 AND month=3 AND day=25;
+S3 Lifecycle Rules for Cost Optimization
+Move logs to different storage layers:
+
+30 days → Move to STANDARD_IA
+90 days → Move to GLACIER
+365 days → Move to DEEP_ARCHIVE
+3 years → Delete
+JSON Policy for S3 Lifecycle Rules:
+
+json
+Copy
+Edit
+[
+  {
+    "ID": "MoveToIA",
+    "Prefix": "logs/",
+    "Status": "Enabled",
+    "Transitions": [
+      { "Days": 30, "StorageClass": "STANDARD_IA" },
+      { "Days": 90, "StorageClass": "GLACIER" },
+      { "Days": 365, "StorageClass": "DEEP_ARCHIVE" }
+    ],
+    "Expiration": { "Days": 1095 }
+  }
+]
+Next Steps
+Run the Java program to extract logs from Oracle and upload them to S3.
+Verify logs in S3 with the correct partitions.
+Use AWS Athena to query the logs.
+Apply S3 lifecycle policies for storage cost optimization.
+Would you like to automate this using AWS Lambda or Step Functions?
+
+
+
+
+
+
+
+You said:
+If the date is older then 3 month directly push to standard IA folder path and if older then 1 year directly move to glacier deep archival folder
+ChatGPT said:
+ChatGPT
+To implement this logic, we will modify the S3 upload logic to determine the appropriate storage tier based on IGI_LOG_TIME.
+
+Updated Logic for S3 Storage Class & Folder Path
+If the date is within the last 3 months → Store in:
+
+bash
+Copy
+Edit
+s3://your-s3-bucket/logs/year=YYYY/month=MM/day=DD/igi_<IGI_LOG_REFERENCE>.parquet
+Storage class: STANDARD (Default)
+If the date is older than 3 months but within 1 year → Store in:
+
+bash
+Copy
+Edit
+s3://your-s3-bucket/logs-IA/year=YYYY/month=MM/day=DD/igi_<IGI_LOG_REFERENCE>.parquet
+Storage class: STANDARD_IA
+If the date is older than 1 year → Store in:
+
+bash
+Copy
+Edit
+s3://your-s3-bucket/logs-GLACIER/year=YYYY/month=MM/day=DD/igi_<IGI_LOG_REFERENCE>.parquet
+Storage class: GLACIER_DEEP_ARCHIVE
+Updated Java Code
+This code automatically determines the correct S3 path and storage class based on IGI_LOG_TIME before uploading.
+
+java
+Copy
+Edit
+import org.apache.parquet.hadoop.ParquetWriter;
+import org.apache.parquet.hadoop.metadata.CompressionCodecName;
+import org.apache.parquet.avro.AvroParquetWriter;
+import org.apache.avro.Schema;
+import org.apache.avro.generic.GenericData;
+import org.apache.avro.generic.GenericRecord;
+import software.amazon.awssdk.auth.credentials.ProfileCredentialsProvider;
+import software.amazon.awssdk.core.sync.RequestBody;
+import software.amazon.awssdk.services.s3.S3Client;
+import software.amazon.awssdk.services.s3.model.PutObjectRequest;
+import software.amazon.awssdk.services.s3.model.StorageClass;
+
+import java.io.*;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.sql.*;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
+
+public class OracleToS3Uploader {
+    private static final String DB_URL = "jdbc:oracle:thin:@your-db-host:1521:your-db";
+    private static final String DB_USER = "your_user";
+    private static final String DB_PASSWORD = "your_password";
+    private static final String BUCKET_NAME = "your-s3-bucket";
+
+    private static final String QUERY = "SELECT IGI_LOG_REFERENCE, IGI_LOG_TIME, IGI_MACHINE_NAME, IGI_MACHINE_IP_ADDRESS, IGI_LOG_TEXT FROM your_table WHERE IGI_LOG_TIME >= SYSDATE - 365";
+
+    private static final String AVRO_SCHEMA_JSON = "{"
+            + "\"type\": \"record\","
+            + "\"name\": \"LogEntry\","
+            + "\"fields\": ["
+            + "{\"name\": \"log_reference\", \"type\": \"string\"},"
+            + "{\"name\": \"log_time\", \"type\": \"string\"},"
+            + "{\"name\": \"machine_name\", \"type\": \"string\"},"
+            + "{\"name\": \"ip_address\", \"type\": \"string\"},"
+            + "{\"name\": \"log_text\", \"type\": \"string\"}"
+            + "]}";
+
+    public static void main(String[] args) {
+        try (Connection connection = DriverManager.getConnection(DB_URL, DB_USER, DB_PASSWORD);
+             PreparedStatement statement = connection.prepareStatement(QUERY);
+             ResultSet resultSet = statement.executeQuery()) {
+
+            Schema schema = new Schema.Parser().parse(AVRO_SCHEMA_JSON);
+            LocalDate today = LocalDate.now();
+
+            while (resultSet.next()) {
+                String logReference = resultSet.getString("IGI_LOG_REFERENCE");
+                String logTime = resultSet.getString("IGI_LOG_TIME");
+
+                // Convert IGI_LOG_TIME to LocalDate format
+                LocalDate logDate = convertLogTimeToDate(logTime);
+                if (logDate == null) continue;
+
+                // Determine S3 path and storage class based on log date
+                StorageClass storageClass;
+                String basePath;
+
+                if (logDate.isAfter(today.minusMonths(3))) {
+                    basePath = "logs/";
+                    storageClass = StorageClass.STANDARD;
+                } else if (logDate.isAfter(today.minusYears(1))) {
+                    basePath = "logs-IA/";
+                    storageClass = StorageClass.STANDARD_IA;
+                } else {
+                    basePath = "logs-GLACIER/";
+                    storageClass = StorageClass.DEEP_ARCHIVE;
+                }
+
+                String partitionPath = String.format("%syear=%d/month=%02d/day=%02d/igi_%s.parquet",
+                        basePath, logDate.getYear(), logDate.getMonthValue(), logDate.getDayOfMonth(), logReference);
+
+                Path tempFilePath = Files.createTempFile("logs", ".parquet");
+
+                try (ParquetWriter<GenericRecord> writer = AvroParquetWriter.<GenericRecord>builder(new org.apache.parquet.hadoop.Path(tempFilePath.toString()))
+                        .withSchema(schema)
+                        .withCompressionCodec(CompressionCodecName.SNAPPY)
+                        .build()) {
+
+                    GenericRecord record = new GenericData.Record(schema);
+                    record.put("log_reference", logReference);
+                    record.put("log_time", logTime);
+                    record.put("machine_name", resultSet.getString("IGI_MACHINE_NAME"));
+                    record.put("ip_address", resultSet.getString("IGI_MACHINE_IP_ADDRESS"));
+                    record.put("log_text", resultSet.getString("IGI_LOG_TEXT"));
+
+                    writer.write(record);
+                }
+
+                // Upload file to S3 with correct storage class
+                uploadToS3(tempFilePath, partitionPath, storageClass);
+            }
+
+            System.out.println("Data uploaded successfully to S3.");
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    private static LocalDate convertLogTimeToDate(String logTime) {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MMM-yy");
+        try {
+            return LocalDate.parse(logTime, formatter);
+        } catch (DateTimeParseException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    private static void uploadToS3(Path filePath, String s3Path, StorageClass storageClass) {
+        S3Client s3 = S3Client.builder()
+                .credentialsProvider(ProfileCredentialsProvider.create())
+                .build();
+
+        try {
+            s3.putObject(PutObjectRequest.builder()
+                            .bucket(BUCKET_NAME)
+                            .key(s3Path)
+                            .storageClass(storageClass)
+                            .build(),
+                    RequestBody.fromFile(filePath));
+
+            System.out.println("File uploaded to: s3://" + BUCKET_NAME + "/" + s3Path + " with storage class: " + storageClass);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+}
+S3 Folder Structure
+Logs from the last 3 months (STANDARD Storage)
+
+bash
+Copy
+Edit
+s3://your-s3-bucket/logs/year=2024/month=03/day=25/igi_1011691246791.parquet
+Logs older than 3 months but within 1 year (STANDARD_IA Storage)
+
+bash
+Copy
+Edit
+s3://your-s3-bucket/logs-IA/year=2023/month=12/day=10/igi_1011691195298.parquet
+Logs older than 1 year (DEEP_ARCHIVE Storage)
+
+bash
+Copy
+Edit
+s3://your-s3-bucket/logs-GLACIER/year=2022/month=09/day=05/igi_1011691195299.parquet
+Athena Table for Querying Logs
+sql
+Copy
+Edit
+CREATE EXTERNAL TABLE log_data (
+    log_reference STRING,
+    log_time STRING,
+    machine_name STRING,
+    ip_address STRING,
+    log_text STRING
+) 
+PARTITIONED BY (year INT, month INT, day INT)
+STORED AS PARQUET
+LOCATION 's3://your-s3-bucket/logs/';
+Query Example
+sql
+Copy
+Edit
+SELECT * FROM log_data WHERE year=2023 AND month=12;
+Final Summary
+✅ Automatically selects the correct storage class based on IGI_LOG_TIME
+✅ Uploads logs to different S3 folders based on date range
+✅ Efficient Parquet storage for Athena queries
+✅ Optimized S3 costs with deep archival storage for old logs
+
+Would you like to add AWS Lambda or Step Functions to automate this further?
+
+
+
+
+
+
+
+
+
+
+
+
+
+ChatGPT can make mistakes. Check important info.
+?
+
+
+
+
+
+
+
+
 Title: Sequence Diagram - i-Prompt Log Migration (Spring Boot with Java)
 
 participant Oracle_DB as "Oracle Database"
