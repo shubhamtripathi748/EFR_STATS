@@ -1,3 +1,109 @@
+If you have Parquet files stored in S3, you can easily query them using AWS Athena. Parquet is a columnar storage format that allows for more efficient querying, especially when dealing with large datasets. Here's how you can set up Athena to query your Parquet files based on the columns you have and use the date and IGI_LOG_REFERENCE for filtering.
+
+1. Athena Table for Parquet Files
+Assuming your Parquet files are already stored in S3 in a directory structure based on dates, you can create an Athena table that points to your S3 location and reads the Parquet files.
+
+Here’s how you can create the Athena table for Parquet:
+
+sql
+Copy
+Edit
+CREATE EXTERNAL TABLE IF NOT EXISTS your_log_table (
+    IGI_LOG_REFERENCE STRING,
+    IGI_LOG_TIME STRING,
+    IGI_MACHINE_NME STRING,
+    IGI_MACHINE_IP_ADDRESS STRING,
+    IGI_LOG_TEXT STRING,
+    IGI_LOG_LEVEL STRING
+)
+PARTITIONED BY (year STRING, month STRING, day STRING)
+STORED AS PARQUET
+LOCATION 's3://your-bucket/log/';
+This query does the following:
+
+Defines columns based on your Oracle table structure.
+Partitioning is done by year, month, and day to optimize query performance.
+Data is stored as Parquet and located in the s3://your-bucket/log/ folder (adjust as per your actual location).
+2. Querying Parquet Files Based on Date
+To query logs for a specific day, use partitioning in your query to narrow down the files Athena needs to scan. For example, to get logs for January 20th, 2025:
+
+sql
+Copy
+Edit
+SELECT IGI_LOG_REFERENCE, IGI_LOG_TIME, IGI_MACHINE_NME, IGI_MACHINE_IP_ADDRESS, IGI_LOG_TEXT, IGI_LOG_LEVEL
+FROM your_log_table
+WHERE day = '2025-01-20' AND year = '2025' AND month = '01';
+Since the table is partitioned by year, month, and day, Athena will only scan the files corresponding to that date, making it efficient.
+
+3. Querying by IGI_LOG_REFERENCE
+If you want to filter the logs by IGI_LOG_REFERENCE for the same day:
+
+sql
+Copy
+Edit
+SELECT IGI_LOG_REFERENCE, IGI_LOG_TIME, IGI_MACHINE_NME, IGI_MACHINE_IP_ADDRESS, IGI_LOG_TEXT, IGI_LOG_LEVEL
+FROM your_log_table
+WHERE day = '2025-01-20' AND year = '2025' AND month = '01'
+AND IGI_LOG_REFERENCE = 'specific-reference-id';
+This query will filter the logs for January 20th, 2025 and for the specific IGI_LOG_REFERENCE.
+
+4. Querying Parquet Files by Time Range (Optional)
+If you need to filter logs by a time range, you can filter based on the IGI_LOG_TIME column. For example:
+
+sql
+Copy
+Edit
+SELECT IGI_LOG_REFERENCE, IGI_LOG_TIME, IGI_MACHINE_NME, IGI_MACHINE_IP_ADDRESS, IGI_LOG_TEXT, IGI_LOG_LEVEL
+FROM your_log_table
+WHERE day = '2025-01-20' AND year = '2025' AND month = '01'
+AND IGI_LOG_TIME >= '2025-01-20T10:00:00' AND IGI_LOG_TIME <= '2025-01-20T12:00:00';
+5. Querying Specific Files in the log Folder
+If you want to ensure that you are only querying logs from a particular date (based on file path in S3), you can use the $path system column in your query to filter based on the file location in S3:
+
+sql
+Copy
+Edit
+SELECT IGI_LOG_REFERENCE, IGI_LOG_TIME, IGI_MACHINE_NME, IGI_MACHINE_IP_ADDRESS, IGI_LOG_TEXT, IGI_LOG_LEVEL
+FROM your_log_table
+WHERE "$path" LIKE 's3://your-bucket/log/2025/01/20/%'
+AND IGI_LOG_REFERENCE = 'specific-reference-id';
+This query ensures that Athena only scans files stored under the January 20th, 2025 path in S3.
+
+6. Optimize Athena Querying with Partitioning and Parquet
+Partitioning by Date (year, month, day): This allows Athena to read only the relevant data for the selected day, reducing the amount of data scanned and improving performance.
+Columnar format (Parquet): Parquet files are more efficient for querying because Athena can read only the necessary columns instead of scanning the entire file.
+Compression: If your Parquet files are compressed, it will further reduce the amount of data read by Athena.
+7. Summary of Queries for Parquet Files
+Query logs for a specific day:
+
+sql
+Copy
+Edit
+SELECT * FROM your_log_table WHERE day = '2025-01-20' AND year = '2025' AND month = '01';
+Query logs by IGI_LOG_REFERENCE:
+
+sql
+Copy
+Edit
+SELECT * FROM your_log_table WHERE day = '2025-01-20' AND year = '2025' AND month = '01' AND IGI_LOG_REFERENCE = 'specific-reference-id';
+Query logs by IGI_LOG_TIME range:
+
+sql
+Copy
+Edit
+SELECT * FROM your_log_table WHERE day = '2025-01-20' AND year = '2025' AND month = '01' AND IGI_LOG_TIME >= '2025-01-20T10:00:00' AND IGI_LOG_TIME <= '2025-01-20T12:00:00';
+Query specific files from log folder:
+
+sql
+Copy
+Edit
+SELECT * FROM your_log_table WHERE "$path" LIKE 's3://your-bucket/log/2025/01/20/%' AND IGI_LOG_REFERENCE = 'specific-reference-id';
+Final Recommendations:
+Use Partitioning: Partitioning by year, month, and day helps Athena optimize queries, especially when querying by date.
+Parquet Files: Ensure your logs are in Parquet format for better performance.
+Cost Optimization: Athena charges based on the amount of data scanned, so partitioning and using columnar formats (like Parquet) reduces costs.
+
+
 Automating with AWS Lifecycle Policy
 Instead of manually moving files, you can configure S3 Lifecycle Rules:
 
