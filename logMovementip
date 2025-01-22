@@ -1,3 +1,6 @@
+ALTER TABLE i_general_info
+ADD COLUMN migration_status VARCHAR(20) DEFAULT 'PENDING';
+
 Summary (Assumption)	Alternatives Not Taken
 AWS S3 as the primary storage solution	Using alternative storage options like Azure Blob Storage, Google Cloud Storage, or on-premises solutions.
 Lifecycle policies will manage data archiving	Manually monitoring and transferring data to Glacier or other storage tiers.
