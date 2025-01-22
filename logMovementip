@@ -1,3 +1,51 @@
+Application Support Handover: Monitoring for Athena, S3, and Spring Boot Migration Job
+Objective
+Ensure smooth monitoring and support for the Spring Boot application running on Tomcat, which migrates logs from on-premises servers to AWS S3 and integrates with AWS Athena for querying.
+
+Monitoring Overview
+Spring Boot Migration Job (On-Premises Tomcat):
+
+Log Monitoring: Use logback or SLF4J for logging. Monitor log files to track job execution, status, and errors.
+Job Health: Set up periodic checks for job execution status (successful or failed) through monitoring tools like Prometheus or Nagios.
+Alerting: Set alerts for job failures, high latency, or resource consumption (memory, CPU) through CloudWatch or On-Premises Tools.
+AWS S3 Monitoring:
+
+S3 Bucket Health: Monitor the status of the S3 bucket (e.g., file uploads, storage consumption) using AWS CloudWatch and configure custom metrics for S3.
+File Integrity: Verify that logs are successfully uploaded to S3 in the correct format (Parquet/ORC) using AWS SDK logging or CloudTrail logs.
+Storage Costs: Set up notifications for storage usage and cost thresholds in AWS Cost Explorer.
+Athena Monitoring:
+
+Query Performance: Use AWS CloudWatch to monitor Athena query performance and optimize query execution for cost and time.
+Query Errors: Set up error tracking for failed queries via CloudWatch logs or AWS Glue Data Catalog.
+Cost Management: Monitor Athena query execution costs and set limits or alerts for high costs due to inefficient queries.
+Support Details
+Common Issues:
+
+Job failures due to connectivity issues (e.g., database, S3).
+Delays in log processing due to high resource usage on the Tomcat server.
+S3 upload failures or incomplete migrations due to network interruptions.
+Troubleshooting:
+
+Review Spring Boot logs for job failures.
+Check S3 bucket settings and permissions (IAM roles, policies).
+Use AWS CloudWatch Logs for both Spring Boot job logs and Athena/ S3-related issues.
+Escalation:
+
+Contact infrastructure or cloud team for on-premises or AWS infrastructure issues (e.g., connectivity, permissions).
+Raise support tickets for persistent AWS issues with CloudWatch, Athena, or S3.
+Maintenance Tasks
+Job Scheduling: Ensure the migration job runs on schedule, use cron expressions or AWS Lambda for automation.
+Backup and Restore: Regularly back up the logs in S3 and validate restore procedures.
+Query Optimization: Periodically review Athena queries and optimize them for cost and performance.
+
+
+
+
+
+
+
+
+------------------------
 Objective: Migrate logs from Oracle to AWS S3 for long-term storage, enable querying via AWS Athena, and update migration status in Oracle.
 
 Key Steps:
