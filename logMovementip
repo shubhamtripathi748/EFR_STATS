@@ -1,3 +1,20 @@
+Objective: Migrate logs from Oracle to AWS S3 for long-term storage, enable querying via AWS Athena, and update migration status in Oracle.
+
+Key Steps:
+
+Extract Logs: Retrieve logs from Oracle (e.g., older than 30 days).
+Transform Data: Convert logs to Parquet/ORC format for efficient querying.
+Load to S3: Store transformed logs in S3 with a structured format (e.g., partitioned by year/month/day).
+Query with Athena: Set up an Athena table pointing to S3 for direct querying of logs.
+Update Oracle: After migration, update the migration_status column in Oracle to reflect the migration status.
+
+
+
+
+
+
+
+
 ALTER TABLE i_general_info
 ADD COLUMN migration_status VARCHAR(20) DEFAULT 'PENDING';
 
