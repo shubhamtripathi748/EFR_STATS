@@ -1,3 +1,20 @@
+Summary (Assumption)	Alternatives Not Taken
+AWS S3 as the primary storage solution	Using alternative storage options like Azure Blob Storage, Google Cloud Storage, or on-premises solutions.
+Lifecycle policies will manage data archiving	Manually monitoring and transferring data to Glacier or other storage tiers.
+Data will be transferred securely using HTTPS	Using less secure transfer methods like unencrypted FTP or non-SSL endpoints.
+Logs will be stored in Parquet format	Using alternative formats like JSON, CSV, or Avro, which may result in larger storage requirements.
+AWS Athena will be used for querying logs	Using third-party querying tools or custom ETL pipelines for log analysis.
+IAM roles provide secure access	Relying on static access keys, which are more prone to security vulnerabilities.
+Encryption (at-rest and in-transit) will be used	Keeping logs unencrypted, potentially exposing sensitive data.
+AWS CloudWatch monitors migration	Using third-party monitoring tools or no monitoring, which could lead to undetected issues.
+All logs are non-critical during testing	Testing with live critical data, which increases the risk of data loss or corruption.
+Versioning is enabled for S3 buckets	Disabling versioning, which makes recovery from accidental deletions more difficult.
+
+
+
+
+
+
 Summary	Recommended Testing	Impact
 Data Loss	Simulate network failures or migration interruptions to test data integrity and retries.	Loss of critical logs leading to gaps in audit trails or compliance breaches.
 Unauthorized Access	Conduct penetration testing and validate IAM roles and policies for proper access controls.	Breach of sensitive data resulting in compliance violations and reputational damage.
