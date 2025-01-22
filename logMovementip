@@ -1,3 +1,23 @@
+I have drafted the documentation for the log migration process from Oracle to AWS S3, which will also include querying with Athena and updating the migration status back to Oracle.
+
+The document outlines:
+
+The steps involved in the log migration process.
+Monitoring details for AWS S3 and Athena.
+Data format transformation (e.g., converting logs to Parquet).
+The automation of this process and necessary support procedures.
+Kindly review the document and provide any feedback or suggestions by [specify date] to ensure we are aligned on all aspects.
+
+The document is available at the following link:
+[Insert link to document or attachment]
+
+Should you have any questions or require clarification, please don’t hesitate to reach out.
+
+Looking forward to your input.
+
+
+
+
 Application Support Handover: Monitoring for Athena, S3, and Spring Boot Migration Job
 Objective
 Ensure smooth monitoring and support for the Spring Boot application running on Tomcat, which migrates logs from on-premises servers to AWS S3 and integrates with AWS Athena for querying.
