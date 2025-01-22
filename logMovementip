@@ -1,3 +1,33 @@
+Risk	Summary	Mitigation	Likelihood	Impact
+Data Loss	Logs could be lost during migration due to network failures or process errors.	Implement retries, validate data integrity with checksums, and maintain backups during migration.	Medium	High
+Unauthorized Access	Logs may contain sensitive data and could be accessed by unauthorized parties.	Enable encryption (at-rest and in-transit), use IAM roles, and enforce strict access controls.	Low	High
+Data Corruption	Log files could become corrupted during transfer or storage.	Validate data integrity using checksums and regularly audit S3 data.	Low	Medium
+Compliance Violations	Logs may not meet data retention, encryption, or privacy compliance requirements in AWS.	Ensure compliance with regulatory standards (e.g., GDPR) and use appropriate S3 storage classes.	Low	High
+Cost Overruns	Storing large volumes of data in AWS S3 can lead to unexpectedly high costs.	Monitor storage costs, use lifecycle policies, and enable S3 storage analytics.	Medium	Medium
+Latency in Querying	Delayed retrieval of logs due to improper structuring or storage in less accessible classes (e.g., Glacier).	Optimize data structure (e.g., Parquet), use S3 Standard-IA for frequently accessed data, and configure Athena queries.	Medium	Medium
+Migration Failure	Migration process might fail midway due to system or script issues.	Use robust ETL tools, monitor the migration process, and test thoroughly before implementation.	Medium	High
+Accidental Deletion	Logs may be accidentally deleted or lifecycle rules may remove logs prematurely.	Enable versioning and MFA Delete on S3 buckets.	Low	High
+Access Performance Issues	Poor performance due to incorrect partitioning or grouping of logs.	Partition data logically (e.g., by date) and optimize for AWS Athena querying.	Medium	Medium
+Security Misconfigurations	Misconfigured S3 bucket policies could lead to public exposure of logs.	Regularly review bucket policies and enable S3 Block Public Access settings.	Low	High
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 3. Delete Migrated Records from Oracle
 Once records are successfully uploaded to S3, you can delete the migrated records from the Oracle table. The query to delete records with migration_status = 'MIGRATED' is:
 
