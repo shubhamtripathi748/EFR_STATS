@@ -1,3 +1,26 @@
+1️⃣ User sends a PUT request with GUID and updated document to API-C.
+2️⃣ API-C forwards the request to API Gateway.
+3️⃣ API Gateway triggers UpdateDocumentLambda.
+4️⃣ Lambda checks in DynamoDB if the document exists.
+
+✅ If exists: Proceed to update.
+❌ If not found: Return an error message.
+5️⃣ Lambda updates the document in S3 (overwrites existing file).
+6️⃣ Lambda updates metadata (modification timestamp, version, etc.) in DynamoDB.
+7️⃣ Lambda returns a success response to API Gateway.
+8️⃣ API Gateway forwards response to API-C and then to the client.
+
+
+User sends PUT request → API-C → API Gateway
+API Gateway invokes Lambda
+Lambda checks DynamoDB (Yes: Update S3 & metadata, No: Return error)
+Lambda sends response to API Gateway → API-C → On-Premises App → User
+
+
+
+
+
+
 Process Flow
 1️⃣ User sends a GET request with GUID to API-C.
 2️⃣ API-C forwards the request to API Gateway.
