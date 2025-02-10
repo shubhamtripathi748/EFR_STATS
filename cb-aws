@@ -1,3 +1,13 @@
+Process Flow
+1️⃣ User sends a GET request with GUID to API-C.
+2️⃣ API-C forwards the request to API Gateway.
+3️⃣ API Gateway triggers the Read Lambda function.
+4️⃣ Lambda fetches metadata from DynamoDB to locate the document in S3.
+5️⃣ Lambda retrieves the document from S3.
+6️⃣ Lambda sends the document back to the client via API Gateway.
+7️⃣ API Gateway returns the document to API-C, which sends it to the user.
+
+
 Explanation of the Flow
 ✅ User Initiates Delete Request: The on-premises application sends a request via API-C.
 ✅ API Gateway Routes Request: The request is routed to Lambda.
