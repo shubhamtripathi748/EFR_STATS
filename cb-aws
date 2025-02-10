@@ -1,3 +1,15 @@
+Sequence Flow for Document Update
+1️⃣ User (On-Premises App) requests to update a document using the GUID.
+2️⃣ API-C acts as an intermediary, forwarding the request securely to API Gateway.
+3️⃣ API Gateway forwards the request to the Lambda function.
+4️⃣ Lambda function queries DynamoDB to verify document existence.
+5️⃣ Lambda function uploads the updated document to S3, replacing the old version.
+6️⃣ Lambda updates metadata in DynamoDB (e.g., modified timestamp, version).
+7️⃣ Lambda function returns a success response to the calling application.
+
+
+
+
 1️⃣ User (On-Premises App) requests a document using the GUID.
 2️⃣ API Gateway forwards the request to Lambda.
 3️⃣ Lambda queries DynamoDB for the S3 path of the document.
