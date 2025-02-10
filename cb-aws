@@ -1,0 +1,17 @@
+Flow:
+Create Document (Upload)
+
+Client → API Gateway → Lambda (Create) → S3 (Store File)
+Lambda → DynamoDB (Store Metadata) → Response to Client
+Read Document (Retrieve)
+
+Client → API Gateway → Lambda (Read) → DynamoDB (Get Metadata)
+Lambda → S3 (Generate Signed URL) → Response to Client
+Update Document
+
+Client → API Gateway → Lambda (Update) → S3 (Replace File)
+Lambda → DynamoDB (Update Metadata) → Response to Client
+Delete Document
+
+Client → API Gateway → Lambda (Delete) → S3 (Delete File)
+Lambda → DynamoDB (Remove Metadata) → Response to Client
