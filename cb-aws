@@ -1,3 +1,54 @@
+🛠 Step-by-Step Document Upload Flow
+1️⃣ User sends a POST request with a document file to API-C.
+2️⃣ API-C forwards the request to API Gateway.
+3️⃣ API Gateway routes the request to CreateDocumentLambda.
+4️⃣ Lambda generates a unique GUID for tracking the document.
+5️⃣ Lambda uploads the document to S3, using GUID as the filename (s3://bucket-name/GUID.pdf).
+6️⃣ Lambda stores metadata in DynamoDB, including:
+
+GUID
+S3 object path
+Upload timestamp
+7️⃣ Lambda returns GUID in the response.
+8️⃣ API Gateway sends the response to API-C.
+9️⃣ API-C delivers the response to the on-premises application.
+📌 Process Flow Diagram (PlantUML Code)
+Use this PlantUML code to generate the exact upload flow:
+
+plantuml
+Copy
+Edit
+@startuml
+title Document Upload Process Flow
+
+actor User
+participant "On-Premises App" as App
+participant "API-C" as API_C
+participant "API Gateway" as APIGW
+participant "CreateDocumentLambda" as Lambda
+participant "Amazon S3" as S3
+participant "Amazon DynamoDB" as DynamoDB
+
+User -> App: Send POST request (Document)
+App -> API_C: Forward request
+API_C -> APIGW: Forward to API Gateway
+APIGW -> Lambda: Invoke CreateDocumentLambda
+
+Lambda -> Lambda: Generate GUID
+Lambda -> S3: Upload document (GUID-based filename)
+Lambda -> DynamoDB: Store metadata (GUID, S3 path, timestamp)
+
+Lambda -> APIGW: Return GUID
+APIGW -> API_C: Forward GUID response
+API_C -> App: Deliver GUID
+App -> User: Show GUID for future reference
+
+@enduml
+
+
+
+
+--------------------------
 @startuml
 title Document Update Process Flow
 
