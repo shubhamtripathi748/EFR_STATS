@@ -8,6 +8,21 @@ Process Flow
 7️⃣ API Gateway returns the document to API-C, which sends it to the user.
 
 
+Flow of the Diagram
+1️⃣ User sends a GET request (GUID) → (Process Shape)
+2️⃣ API-C forwards request to API Gateway → (Process Shape)
+3️⃣ API Gateway triggers Read Lambda → (Process Shape)
+4️⃣ Lambda queries DynamoDB for metadata → (Process Shape)
+5️⃣ Decision: Document exists in DynamoDB? (Diamond Shape)
+
+Yes → Retrieve document from S3 → Lambda returns document to API Gateway → API Gateway forwards document to API-C → API-C delivers document to User.
+No → Return "Document Not Found" error → API Gateway forwards error to API-C → API-C shows error message to User.
+6️⃣ End (Oval Shape)
+
+
+
+
+-------------------------------
 Explanation of the Flow
 ✅ User Initiates Delete Request: The on-premises application sends a request via API-C.
 ✅ API Gateway Routes Request: The request is routed to Lambda.
