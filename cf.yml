@@ -1,0 +1,124 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Resources:
+  DocumentS3Bucket:
+    Type: AWS::S3::Bucket
+    Properties:
+      BucketName: document-storage-bucket
+      PublicAccessBlockConfiguration:
+        BlockPublicAcls: true
+        BlockPublicPolicy: true
+        IgnorePublicAcls: true
+        RestrictPublicBuckets: true
+
+  DocumentMetadataTable:
+    Type: AWS::DynamoDB::Table
+    Properties:
+      TableName: DocumentMetadata
+      AttributeDefinitions:
+        - AttributeName: GUID
+          AttributeType: S
+      KeySchema:
+        - AttributeName: GUID
+          KeyType: HASH
+      BillingMode: PAY_PER_REQUEST  # On-demand mode
+
+  LambdaExecutionRole:
+    Type: AWS::IAM::Role
+    Properties:
+      RoleName: LambdaExecutionRole
+      AssumeRolePolicyDocument:
+        Version: '2012-10-17'
+        Statement:
+          - Effect: Allow
+            Principal:
+              Service: lambda.amazonaws.com
+            Action: sts:AssumeRole
+      Policies:
+        - PolicyName: LambdaS3DynamoDBPolicy
+          PolicyDocument:
+            Version: '2012-10-17'
+            Statement:
+              - Effect: Allow
+                Action:
+                  - s3:PutObject
+                  - s3:GetObject
+                  - s3:DeleteObject
+                Resource: !Sub arn:aws:s3:::document-storage-bucket/*
+              - Effect: Allow
+                Action:
+                  - dynamodb:PutItem
+                  - dynamodb:GetItem
+                  - dynamodb:UpdateItem
+                  - dynamodb:DeleteItem
+                Resource: !GetAtt DocumentMetadataTable.Arn
+              - Effect: Allow
+                Action:
+                  - logs:CreateLogGroup
+                  - logs:CreateLogStream
+                  - logs:PutLogEvents
+                Resource: '*'
+
+  CreateDocumentLambda:
+    Type: AWS::Lambda::Function
+    Properties:
+      FunctionName: CreateDocument
+      Runtime: python3.8
+      Handler: create_document.lambda_handler
+      Role: !GetAtt LambdaExecutionRole.Arn
+      Code:
+        S3Bucket: my-lambda-code-bucket
+        S3Key: create_document.zip
+
+  ReadDocumentLambda:
+    Type: AWS::Lambda::Function
+    Properties:
+      FunctionName: ReadDocument
+      Runtime: python3.8
+      Handler: read_document.lambda_handler
+      Role: !GetAtt LambdaExecutionRole.Arn
+      Code:
+        S3Bucket: my-lambda-code-bucket
+        S3Key: read_document.zip
+
+  UpdateDocumentLambda:
+    Type: AWS::Lambda::Function
+    Properties:
+      FunctionName: UpdateDocument
+      Runtime: python3.8
+      Handler: update_document.lambda_handler
+      Role: !GetAtt LambdaExecutionRole.Arn
+      Code:
+        S3Bucket: my-lambda-code-bucket
+        S3Key: update_document.zip
+
+  DeleteDocumentLambda:
+    Type: AWS::Lambda::Function
+    Properties:
+      FunctionName: DeleteDocument
+      Runtime: python3.8
+      Handler: delete_document.lambda_handler
+      Role: !GetAtt LambdaExecutionRole.Arn
+      Code:
+        S3Bucket: my-lambda-code-bucket
+        S3Key: delete_document.zip
+
+  ApiGateway:
+    Type: AWS::ApiGateway::RestApi
+    Properties:
+      Name: DocumentAPI
+
+  GatewayEndpointS3:
+    Type: AWS::EC2::VPCEndpoint
+    Properties:
+      VpcId: vpc-123456
+      ServiceName: com.amazonaws.eu-west-1.s3
+      RouteTableIds:
+        - rtb-123456
+
+  GatewayEndpointDynamoDB:
+    Type: AWS::EC2::VPCEndpoint
+    Properties:
+      VpcId: vpc-123456
+      ServiceName: com.amazonaws.eu-west-1.dynamodb
+      RouteTableIds:
+        - rtb-123456
