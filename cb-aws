@@ -1,3 +1,37 @@
+@startuml
+title Document Update Process Flow
+
+actor User
+participant "On-Premises App" as App
+participant "API-C" as API_C
+participant "API Gateway" as APIGW
+participant "UpdateDocumentLambda" as Lambda
+participant "Amazon S3" as S3
+participant "Amazon DynamoDB" as DynamoDB
+
+User -> App: Send PUT request (GUID, Updated Document)
+App -> API_C: Forward request
+API_C -> APIGW: Forward to API Gateway
+APIGW -> Lambda: Invoke UpdateDocumentLambda
+
+Lambda -> DynamoDB: Check if GUID exists
+alt Document Found
+    Lambda -> S3: Overwrite existing document
+    Lambda -> DynamoDB: Update metadata (timestamp, version)
+    Lambda -> APIGW: Return success (200 OK)
+else Document Not Found
+    Lambda -> APIGW: Return error (404 Not Found)
+end
+
+APIGW -> API_C: Forward response
+API_C -> App: Deliver response
+App -> User: Show success/error message
+
+@enduml
+
+
+
+
 1️⃣ User sends a PUT request with GUID and updated document to API-C.
 2️⃣ API-C forwards the request to API Gateway.
 3️⃣ API Gateway triggers UpdateDocumentLambda.
