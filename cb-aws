@@ -1,3 +1,72 @@
+Document Upload Flow
+User uploads a document from the on-premises application.
+The request is routed via AWS Direct Connect to API Gateway.
+API Gateway triggers a Lambda function to process the upload.
+Lambda performs the following actions:
+Generates a unique GUID for tracking.
+Uploads the document to an S3 bucket (s3://document-bucket/GUID.pdf).
+Stores metadata (GUID, filename, upload time, S3 path) in DynamoDB.
+Lambda returns the GUID to the client for future reference.
+4. API Endpoint
+Method	Endpoint	Description
+POST	/upload	Uploads a document, stores metadata, and returns a GUID.
+Request Example
+json
+Copy
+Edit
+{
+  "filename": "contract.pdf",
+  "content": "<base64-encoded-file>"
+}
+Response Example
+json
+Copy
+Edit
+{
+  "guid": "abc123-xyz789",
+  "message": "Document uploaded successfully."
+}
+5. Security Measures
+✅ IAM Policies restrict API and S3 access.
+✅ S3 Encryption ensures document security.
+✅ Pre-signed URLs prevent unauthorized access.
+✅ CloudWatch Logs monitor API activity.
+
+Would you like me to add Lucidchart diagrams or additional Confluence formatting (tables, code blocks, macros)? 🚀
+
+
+
+
+
+
+You said:
+document upload flow diagram in chart format
+ChatGPT said:
+You can create a document upload flow diagram in chart format using Lucidchart or the Confluence draw.io integration. Here's how the flow should look:
+
+Document Upload Flow (Chart Format)
+Flow Steps:
+1️⃣ On-Premises Application → Sends document via AWS Direct Connect
+2️⃣ API Gateway → Receives request & forwards to Lambda
+3️⃣ Lambda Function → Generates GUID & uploads to S3
+4️⃣ S3 Bucket → Stores the document securely
+5️⃣ DynamoDB → Stores metadata (GUID, filename, timestamp, S3 path)
+6️⃣ Lambda Response → Returns GUID to client
+
+Diagram Representation (Flowchart Format)
+scss
+Copy
+Edit
+[On-Premises App] → (AWS Direct Connect) → [API Gateway] → [Lambda Function]  
+→ [Amazon S3] (Stores File)  
+→ [DynamoDB] (Stores Metadata)  
+→ [Lambda Response] → [Returns
+
+
+
+
+
+------------------------
 Objective
 The goal of this solution is to implement a highly scalable, secure, and efficient document management system that supports Create, Read, Update, and Delete (CRUD) operations. The system will leverage AWS cloud services, ensuring reliability, security, and performance while integrating with existing infrastructure via AWS Direct Connect.
 
