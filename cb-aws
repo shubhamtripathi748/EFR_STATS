@@ -1,3 +1,24 @@
+Explanation of the Flow
+✅ User Initiates Delete Request: The on-premises application sends a request via API-C.
+✅ API Gateway Routes Request: The request is routed to Lambda.
+✅ Lambda Checks Metadata: It verifies if the document exists in DynamoDB.
+✅ If Document Exists:
+
+Fetch metadata from DynamoDB.
+Delete the document from S3.
+Remove the metadata entry from DynamoDB.
+Send success response.
+✅ If Document Does Not Exist:
+Return a "Document Not Found" error.
+✅ API Gateway & API-C Forward Response: The response is sent back to the user.
+
+
+
+
+
+
+
+
 Step 2: Add Shapes for Process Flow
 1️⃣ From the left panel, drag the following shapes onto the canvas:
 
