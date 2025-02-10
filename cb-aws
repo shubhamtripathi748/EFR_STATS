@@ -1,3 +1,28 @@
+Step 2: Add Shapes for Process Flow
+1️⃣ From the left panel, drag the following shapes onto the canvas:
+
+Oval (Terminator) → For "Start" and "End".
+Rectangle (Process) → For API calls and actions.
+Diamond (Decision) → For checking document existence.
+2️⃣ Arrange the shapes in the following order:
+
+Start (Oval)
+User Sends DELETE Request (Rectangle)
+API-C Forwards Request (Rectangle)
+API Gateway Routes Request (Rectangle)
+Lambda Function Invoked (Rectangle)
+Decision: Document Exists in DynamoDB? (Diamond)
+If Yes → Fetch metadata → Delete from S3 → Remove metadata from DynamoDB → Send Success Response.
+If No → Return "Document Not Found" Error.
+API Gateway & API-C Send Response (Rectangle)
+User Receives Response (Rectangle)
+End (Oval)
+
+
+
+
+
+
 Sequence Flow for Document Deletion
 1️⃣ User (On-Premises App) requests to delete a document using the GUID.
 2️⃣ API-C acts as an intermediary, forwarding the request securely to API Gateway.
