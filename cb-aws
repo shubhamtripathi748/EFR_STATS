@@ -1,3 +1,16 @@
+CloudFormation template to include:
+
+S3 Bucket for document storage.
+DynamoDB Table for metadata storage (with on-demand billing mode).
+API Gateway for handling requests.
+Separate Lambda Functions for Create, Read, Update, and Delete operations.
+IAM Roles with the necessary permissions for Lambda, S3, and DynamoDB.
+VPC Gateway Endpoints for S3 and DynamoDB (configured for EU-WEST region).
+
+
+
+
+
 🛠 Step-by-Step Document Upload Flow
 1️⃣ User sends a POST request with a document file to API-C.
 2️⃣ API-C forwards the request to API Gateway.
