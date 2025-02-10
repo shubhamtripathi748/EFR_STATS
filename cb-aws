@@ -1,3 +1,49 @@
+Objective
+The goal of this solution is to implement a highly scalable, secure, and efficient document management system that supports Create, Read, Update, and Delete (CRUD) operations. The system will leverage AWS cloud services, ensuring reliability, security, and performance while integrating with existing infrastructure via AWS Direct Connect.
+
+Architecture Overview
+The solution consists of the following AWS components:
+
+API Gateway: Acts as an entry point, handling API requests from external services.
+AWS Lambda: Manages separate functions for each CRUD operation.
+Amazon S3: Stores documents securely with access control.
+Amazon DynamoDB: Maintains metadata such as document GUID, S3 URL, timestamps, and other attributes.
+AWS Direct Connect: Provides a dedicated, low-latency connection between on-premise infrastructure and AWS services.
+Key Functionalities
+Create Document:
+
+Client uploads a document via API Gateway.
+Lambda generates a GUID, stores metadata in DynamoDB, and uploads the document to S3.
+GUID is returned to the client for future reference.
+Read Document:
+
+Client requests a document using its GUID.
+Lambda retrieves metadata from DynamoDB and generates a signed URL from S3.
+The signed URL is sent to the client for secure access.
+Update Document:
+
+Client sends a request with GUID and a new document.
+Lambda updates the document in S3 and updates metadata in DynamoDB.
+Delete Document:
+
+Client sends a delete request with GUID.
+Lambda removes the document from S3 and metadata from DynamoDB.
+Benefits of the Solution
+✅ Scalability: Serverless architecture scales automatically.
+✅ Security: AWS IAM policies, encryption, and signed URLs ensure data protection.
+✅ Performance: Low-latency access via AWS Direct Connect.
+✅ Cost-Effective: Pay-as-you-go model with serverless functions reducing infrastructure costs.
+✅ Reliability: Highly available AWS services ensure system uptime.
+
+Next Steps
+Develop API contracts and security policies.
+Deploy infrastructure using Infrastructure as Code (IaC) like Terraform or AWS CloudFormation.
+Implement and test Lambda functions.
+Optimize performance and monitoring with AWS CloudWatch and AWS X-Ray.
+
+
+
+------------------------------------------------------------------------------
 {
   "type": "document",
   "version": "1.0",
