@@ -1,3 +1,14 @@
+Sequence Flow for Document Deletion
+1️⃣ User (On-Premises App) requests to delete a document using the GUID.
+2️⃣ API-C acts as an intermediary, forwarding the request securely to API Gateway.
+3️⃣ API Gateway routes the request to the Lambda function.
+4️⃣ Lambda function queries DynamoDB to verify document existence.
+5️⃣ Lambda function deletes the document from S3.
+6️⃣ Lambda function removes metadata from DynamoDB.
+7️⃣ Lambda function returns a success response to the calling application.
+
+
+
 Sequence Flow for Document Update
 1️⃣ User (On-Premises App) requests to update a document using the GUID.
 2️⃣ API-C acts as an intermediary, forwarding the request securely to API Gateway.
