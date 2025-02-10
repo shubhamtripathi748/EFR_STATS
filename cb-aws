@@ -1,10 +1,9 @@
 1️⃣ User (On-Premises App) requests a document using the GUID.
-2️⃣ API Gateway forwards the request to the appropriate Lambda function.
-3️⃣ Lambda function queries DynamoDB for metadata (S3 path).
-4️⃣ Lambda function generates a pre-signed URL for secure S3 access.
-5️⃣ Lambda function returns the pre-signed URL to the client.
-6️⃣ User accesses the document using the pre-signed URL.
-
+2️⃣ API Gateway forwards the request to Lambda.
+3️⃣ Lambda queries DynamoDB for the S3 path of the document.
+4️⃣ Lambda fetches the document from S3.
+5️⃣ Lambda returns the actual document content to the calling application.
+6️⃣ Application receives the document and processes it.
 
 Document Upload Flow
 User uploads a document from the on-premises application.
