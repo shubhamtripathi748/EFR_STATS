@@ -1,3 +1,176 @@
+{
+  "type": "document",
+  "version": "1.0",
+  "objects": [
+    {
+      "type": "shape",
+      "id": "client",
+      "x": 100,
+      "y": 100,
+      "width": 120,
+      "height": 60,
+      "text": "Client (Calling Service)"
+    },
+    {
+      "type": "shape",
+      "id": "direct_connect",
+      "x": 250,
+      "y": 100,
+      "width": 140,
+      "height": 60,
+      "text": "AWS Direct Connect"
+    },
+    {
+      "type": "shape",
+      "id": "api_gateway",
+      "x": 400,
+      "y": 100,
+      "width": 120,
+      "height": 60,
+      "text": "API Gateway"
+    },
+    {
+      "type": "shape",
+      "id": "lambda_create",
+      "x": 550,
+      "y": 50,
+      "width": 140,
+      "height": 60,
+      "text": "Lambda (Create)"
+    },
+    {
+      "type": "shape",
+      "id": "lambda_read",
+      "x": 550,
+      "y": 120,
+      "width": 140,
+      "height": 60,
+      "text": "Lambda (Read)"
+    },
+    {
+      "type": "shape",
+      "id": "lambda_update",
+      "x": 550,
+      "y": 190,
+      "width": 140,
+      "height": 60,
+      "text": "Lambda (Update)"
+    },
+    {
+      "type": "shape",
+      "id": "lambda_delete",
+      "x": 550,
+      "y": 260,
+      "width": 140,
+      "height": 60,
+      "text": "Lambda (Delete)"
+    },
+    {
+      "type": "shape",
+      "id": "s3",
+      "x": 750,
+      "y": 100,
+      "width": 120,
+      "height": 60,
+      "text": "S3 (Document Storage)"
+    },
+    {
+      "type": "shape",
+      "id": "dynamodb",
+      "x": 750,
+      "y": 200,
+      "width": 140,
+      "height": 60,
+      "text": "DynamoDB (Metadata Storage)"
+    },
+    {
+      "type": "line",
+      "from": "client",
+      "to": "direct_connect",
+      "text": "Secure Connection"
+    },
+    {
+      "type": "line",
+      "from": "direct_connect",
+      "to": "api_gateway",
+      "text": "API Requests"
+    },
+    {
+      "type": "line",
+      "from": "api_gateway",
+      "to": "lambda_create",
+      "text": "POST /documents"
+    },
+    {
+      "type": "line",
+      "from": "api_gateway",
+      "to": "lambda_read",
+      "text": "GET /documents/{id}"
+    },
+    {
+      "type": "line",
+      "from": "api_gateway",
+      "to": "lambda_update",
+      "text": "PUT /documents/{id}"
+    },
+    {
+      "type": "line",
+      "from": "api_gateway",
+      "to": "lambda_delete",
+      "text": "DELETE /documents/{id}"
+    },
+    {
+      "type": "line",
+      "from": "lambda_create",
+      "to": "s3",
+      "text": "Upload Document"
+    },
+    {
+      "type": "line",
+      "from": "lambda_create",
+      "to": "dynamodb",
+      "text": "Store Metadata (GUID, S3 URL)"
+    },
+    {
+      "type": "line",
+      "from": "lambda_read",
+      "to": "dynamodb",
+      "text": "Fetch Metadata"
+    },
+    {
+      "type": "line",
+      "from": "lambda_read",
+      "to": "s3",
+      "text": "Generate Signed URL"
+    },
+    {
+      "type": "line",
+      "from": "lambda_update",
+      "to": "s3",
+      "text": "Replace Document"
+    },
+    {
+      "type": "line",
+      "from": "lambda_update",
+      "to": "dynamodb",
+      "text": "Update Metadata"
+    },
+    {
+      "type": "line",
+      "from": "lambda_delete",
+      "to": "s3",
+      "text": "Delete Document"
+    },
+    {
+      "type": "line",
+      "from": "lambda_delete",
+      "to": "dynamodb",
+      "text": "Remove Metadata"
+    }
+  ]
+}
+
+------------
 Flow:
 Create Document (Upload)
 
