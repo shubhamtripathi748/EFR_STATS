@@ -1,3 +1,9 @@
+An Interface Matrix is used to document the communication between different components in your architecture. Since you're using API Gateway, Lambda, and DynamoDB for CRUD operations and have on-premises components like Migration Service and API-C, here’s how you can structure your Interface Matrix:
+Now, all S3 and DynamoDB interactions happen through API Gateway Endpoints, ensuring secure and controlled access. 
+
+
+
+
 On-Premises Migration Service	API-C	HTTPS	Migration service calls API-C for data processing before integration.
 API-C	AWS API Gateway	HTTPS	API-C sends document CRUD requests to API Gateway.
 AWS API Gateway	AWS Lambda (CRUD functions)	HTTPS	API Gateway triggers the appropriate Lambda function for CRUD operations.
