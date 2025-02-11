@@ -1,3 +1,69 @@
+Sequential Order of Processing: Document Migration from On-Premises to AWS
+The migration follows a step-by-step sequence ensuring secure transfer, metadata storage, and validation. Below is the exact order of processing:
+
+1. Extraction from On-Premises
+✅ Step 1: Spring Scheduler Job (On-Premises) triggers the migration process at scheduled intervals.
+✅ Step 2: The scheduler extracts document data and metadata from the on-prem file system or database.
+✅ Step 3: The extracted document and metadata are sent to API-C (On-Premises API Gateway) over HTTPS.
+
+2. Secure Transfer to AWS
+✅ Step 4: API-C forwards the request to AWS API Gateway (exposed via HTTPS).
+✅ Step 5: AWS API Gateway validates the request and forwards it to the appropriate AWS Lambda function.
+✅ Step 6: Lambda (CreateDocument function) processes the request and generates a GUID (Unique Identifier) for tracking.
+
+3. Uploading Document to AWS S3
+✅ Step 7: Lambda calls the API Gateway Endpoint for S3, which ensures a secure transfer.
+✅ Step 8: The document is uploaded to S3 and a pre-signed S3 URL is generated.
+
+4. Storing Metadata in DynamoDB
+✅ Step 9: Lambda calls the API Gateway Endpoint for DynamoDB.
+✅ Step 10: The document metadata (GUID, S3 URL, timestamps) is stored in DynamoDB.
+
+5. Acknowledgment & Status Update
+✅ Step 11: Lambda sends a response back to API Gateway, containing the GUID and success status.
+✅ Step 12: API Gateway forwards the response to API-C (On-Premises Gateway).
+✅ Step 13: API-C updates the migration status in the on-prem database (Oracle, if applicable).
+
+6. Post-Migration Validation
+✅ Step 14: On-premises system verifies if the migrated document exists in S3 by checking DynamoDB records.
+✅ Step 15: If validation is successful, the migration status in Oracle is updated to SUCCESS.
+✅ Step 16: If validation fails, a retry mechanism is triggered or an alert is raised for manual intervention.
+
+7. Error Handling & Retry Mechanism
+🔄 Step 17: If any failure occurs in S3 upload or DynamoDB update:
+
+Retry up to 3 times with exponential backoff.
+If all retries fail, the failure is logged for manual resolution.
+Migration status in Oracle is marked as FAILED, and the document is queued for reattempt.
+Final Process Flow Summary
+mathematica
+Copy
+Edit
+1️⃣ Extract document → 2️⃣ API-C (On-Prem) → 3️⃣ AWS API Gateway → 4️⃣ AWS Lambda  
+5️⃣ Upload to S3 → 6️⃣ Store Metadata in DynamoDB → 7️⃣ Return GUID & Status  
+8️⃣ Update On-Prem Migration Table → 9️⃣ Validate Document in S3 →  🔟 Mark Success/Failure
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 This service facilitates the migration of documents from an on-premises environment to AWS, leveraging API Gateway, AWS Lambda, S3, and DynamoDB. It ensures a secure, scalable, and automated process for transferring and managing documents in AWS.
 
 
