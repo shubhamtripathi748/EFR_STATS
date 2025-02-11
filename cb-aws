@@ -1,6 +1,44 @@
 The Upload New Document service enables an application to securely store documents in AWS S3 and maintain metadata in DynamoDB. It follows a serverless architecture, using API Gateway, AWS Lambda, S3, and DynamoDB to ensure scalability, security, and reliability.
 
 
+Service Flow & Steps
+Step No.	Component	Action	Description
+1	Application (On-Premises or Cloud)	Initiate Upload Request	Sends a document and metadata to API-C (On-Premises API Gateway) over HTTPS.
+2	API-C (On-Premises)	Forward Request to AWS	Forwards the document and metadata to AWS API Gateway over HTTPS.
+3	AWS API Gateway	Invoke Upload Lambda	Validates request and triggers AWS Lambda (CreateDocument Function).
+4	AWS Lambda (CreateDocument Function)	Generate GUID	Generates a GUID (Unique Identifier) for tracking.
+5	AWS Lambda → API Gateway Endpoint (S3)	Upload Document to S3	Calls S3 API to store the document and receives the S3 URL.
+6	S3	Store Document	The document is saved in an S3 bucket with encryption enabled.
+7	AWS Lambda → API Gateway Endpoint (DynamoDB)	Store Metadata in DynamoDB	Saves the document metadata (GUID, S3 URL, timestamps, etc.) in DynamoDB.
+8	AWS API Gateway	Return Response	Returns GUID & success status to API-C (On-Premises).
+9	API-C (On-Premises)	Confirm Upload	Updates the migration status in Oracle (if applicable) and notifies the application.
+Service Features & Considerations
+🔹 Security:
+✅ HTTPS for secure data transfer.
+✅ IAM roles & policies to restrict access to S3 and DynamoDB.
+✅ Server-Side Encryption (S3 SSE-KMS or SSE-S3) for document security.
+
+🔹 Scalability & Performance:
+✅ Multipart Uploads for large file handling.
+✅ On-Demand Lambda & DynamoDB Billing to handle variable workloads.
+✅ VPC Gateway Endpoints for S3 & DynamoDB to avoid public internet exposure.
+
+🔹 Reliability & Failure Handling:
+✅ Retry Mechanism (for S3 upload, DynamoDB write failures).
+✅ API Rate Limiting & Throttling (to prevent overload).
+✅ Logging & Monitoring via CloudWatch & X-Ray.
+
+Final Output
+📌 Success Response:
+
+GUID (Unique Identifier)
+S3 URL (for document retrieval)
+HTTP 200 (Success)
+📌 Failure Handling:
+
+Retry on transient failures (S3, DynamoDB errors)
+Fallback to logging & manual reprocessing for failed documents
+
 
 
 
