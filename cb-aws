@@ -1,3 +1,55 @@
+This service facilitates the migration of documents from an on-premises environment to AWS, leveraging API Gateway, AWS Lambda, S3, and DynamoDB. It ensures a secure, scalable, and automated process for transferring and managing documents in AWS.
+
+
+
+Service Components & Flow
+1. Source (On-Premises)
+Application & API-C: The on-premises system initiates the migration.
+Spring Scheduler Job: Automates the migration process by triggering API calls at scheduled intervals.
+Existing Document Storage: Documents reside in on-prem file servers or databases before migration.
+2. Migration Process
+Step 1: Document Extraction
+
+Spring Scheduler extracts document data and metadata from the source system.
+Calls API-C (On-Premises Gateway) to initiate the migration request.
+Step 2: Secure Transfer via API Gateway
+
+API-C forwards the request to AWS API Gateway over HTTPS.
+API Gateway invokes the AWS Lambda "CreateDocument" function for processing.
+Step 3: Upload to S3
+
+Lambda generates a GUID for document tracking.
+Document is uploaded to S3 via API Gateway Endpoint.
+The S3 URL is generated for retrieval.
+Step 4: Metadata Storage in DynamoDB
+
+Lambda stores document metadata (GUID, S3 URL, timestamps) in DynamoDB using API Gateway Endpoint.
+Step 5: Acknowledgment & Status Update
+
+Success Response: GUID is returned to API-C and the on-prem system updates the migration status.
+Failure Handling: If migration fails, retries occur. If all retries fail, the failure is logged in Oracle (if tracking is enabled).
+3. AWS Services Used
+AWS Service	Role in Migration
+API Gateway	Securely exposes endpoints for document migration.
+AWS Lambda	Processes requests, handles GUID generation, and interacts with S3 & DynamoDB.
+S3	Stores migrated documents securely.
+DynamoDB	Stores document metadata (GUID, S3 URL, timestamps).
+API Gateway Endpoint	Ensures private, fast access to S3 and DynamoDB without traversing the internet.
+4. Error Handling & Retry Strategy
+DynamoDB Update Failure → Retry up to 3 times (exponential backoff).
+S3 Upload Failure → Retry via API Gateway, log errors in CloudWatch.
+API-C/AWS Communication Issues → Implement circuit breaker pattern & fallback mechanism.
+5. Security Considerations
+IAM Policies → Enforce least privilege access for Lambda & API Gateway.
+Data Encryption → Documents stored in S3 are encrypted (SSE-S3/KMS).
+VPC Endpoints → API Gateway Endpoints used for private S3/DynamoDB access.
+6. Post-Migration Validation
+Scheduled job compares Oracle Migration Status Table (on-prem) with DynamoDB entries to ensure data consistency.
+API for validating document availability in S3 before marking migration as complete.
+
+
+
+
 To handle failed status in the database update flow, we need to introduce a retry mechanism. This ensures that if updating the metadata in DynamoDB fails, the system will retry a few times before marking the operation as failed.
 
 Key Additions:
