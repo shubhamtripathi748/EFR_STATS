@@ -1,3 +1,70 @@
+Design Decisions & Rationale for Upload New Document Service
+The document upload service is designed with security, scalability, reliability, and cost-efficiency in mind. Below are key design decisions and the rationale behind each.
+
+1. Architecture Selection: Serverless (API Gateway + Lambda + S3 + DynamoDB)
+✅ Design Decision: Use API Gateway, Lambda, S3, and DynamoDB instead of EC2-based services.
+💡 Rationale:
+
+Serverless autoscaling eliminates the need for infrastructure management.
+Pay-per-use pricing optimizes cost (Lambda runs only when triggered).
+Seamless integration with AWS native services (S3, DynamoDB).
+High availability & fault tolerance with AWS-managed services.
+2. Data Storage: S3 for Documents, DynamoDB for Metadata
+✅ Design Decision: Store documents in S3 and metadata in DynamoDB rather than keeping both in a database.
+💡 Rationale:
+
+S3 optimized for large object storage with built-in durability (99.999999999% reliability).
+DynamoDB provides fast metadata access with scalable, low-latency lookups.
+Separation of concerns: Keeping metadata in a DB prevents expensive queries on S3.
+3. Security: IAM Policies & Encryption
+✅ Design Decision: Use IAM role-based access control and S3 Server-Side Encryption (SSE-KMS).
+💡 Rationale:
+
+Least privilege access ensures only specific Lambda functions can access S3 & DynamoDB.
+Encryption at rest protects document data from unauthorized access.
+VPC Gateway Endpoints for S3/DynamoDB ensure private communication (no exposure to the public internet).
+4. API Gateway & Lambda for Stateless Processing
+✅ Design Decision: API Gateway invokes separate Lambda functions for each operation (Upload, Read, Update, Delete).
+💡 Rationale:
+
+Stateless Lambda functions improve modularity and fault isolation.
+Decoupling of business logic allows independent scaling of functions.
+Automatic retries for transient failures (network errors, S3 upload issues).
+5. Unique Identifier (GUID) for Document Tracking
+✅ Design Decision: Generate a GUID instead of using filenames or database auto-increment IDs.
+💡 Rationale:
+
+Ensures uniqueness even across multiple AWS regions.
+Prevents conflicts in concurrent document uploads.
+Eases tracking & indexing in DynamoDB.
+6. Failure Handling & Retries
+✅ Design Decision: Implement retry logic and store migration status in Oracle for tracking.
+💡 Rationale:
+
+Retries reduce transient failures (e.g., temporary S3/DynamoDB issues).
+Migration tracking in Oracle allows auditability of failed records.
+Dead-letter queue (DLQ) for failed requests enables manual reprocessing if needed.
+7. Performance Optimization: Multipart Upload for Large Files
+✅ Design Decision: Use S3 Multipart Upload API for files >5MB.
+💡 Rationale:
+
+Faster uploads by breaking files into chunks and uploading in parallel.
+Resumability ensures failure recovery for large files.
+Reduces API Gateway & Lambda timeout risks for large document uploads.
+8. Cost Optimization: On-Demand Services
+✅ Design Decision: Use on-demand billing for DynamoDB and Lambda instead of provisioned capacity.
+💡 Rationale:
+
+Minimizes AWS costs by scaling resources based on actual traffic.
+Avoids over-provisioning during low usage periods.
+DynamoDB auto-scaling handles dynamic workloads efficiently.
+Conclusion
+The chosen design prioritizes security, scalability, reliability, and cost-efficiency while ensuring seamless integration with both on-premises systems and AWS services.
+
+
+
+
+
 The Upload New Document service enables an application to securely store documents in AWS S3 and maintain metadata in DynamoDB. It follows a serverless architecture, using API Gateway, AWS Lambda, S3, and DynamoDB to ensure scalability, security, and reliability.
 
 
