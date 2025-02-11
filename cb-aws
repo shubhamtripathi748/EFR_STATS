@@ -1,3 +1,15 @@
+
+
+Method	URI	Description
+POST	/documents	Uploads a new document (returns GUID).
+GET	/documents/{guid}	Retrieves document metadata by GUID.
+PUT	/documents/{guid}	Updates document metadata (e.g., tags, descriptions).
+DELETE	/documents/{guid}	Deletes a document and its metadata.
+
+
+
+
+
 Design Decisions & Rationale for Upload New Document Service
 The document upload service is designed with security, scalability, reliability, and cost-efficiency in mind. Below are key design decisions and the rationale behind each.
 
