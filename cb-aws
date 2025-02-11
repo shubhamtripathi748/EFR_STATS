@@ -1,3 +1,26 @@
+On-Premises Migration Service	API-C	HTTPS	Migration service calls API-C for data processing before integration.
+API-C	AWS API Gateway	HTTPS	API-C sends document CRUD requests to API Gateway.
+AWS API Gateway	AWS Lambda (CRUD functions)	HTTPS	API Gateway triggers the appropriate Lambda function for CRUD operations.
+AWS Lambda (Create Function)	API Gateway Endpoint for S3	HTTPS	Lambda uploads the document to S3 via API Gateway Endpoint.
+AWS Lambda (Create Function)	API Gateway Endpoint for DynamoDB	HTTPS	Lambda stores document metadata (GUID, S3 URL) in DynamoDB via API Gateway Endpoint.
+AWS Lambda (Read Function)	API Gateway Endpoint for DynamoDB	HTTPS	Lambda retrieves metadata for requested documents via API Gateway Endpoint.
+AWS Lambda (Read Function)	API Gateway Endpoint for S3	HTTPS	Lambda fetches document from S3 via API Gateway Endpoint.
+AWS Lambda (Update Function)	API Gateway Endpoint for DynamoDB	HTTPS	Lambda updates document metadata in DynamoDB via API Gateway Endpoint.
+AWS Lambda (Update Function)	API Gateway Endpoint for S3	HTTPS	Lambda updates or overwrites document in S3 via API Gateway Endpoint.
+AWS Lambda (Delete Function)	API Gateway Endpoint for DynamoDB	HTTPS	Lambda deletes document metadata from DynamoDB via API Gateway Endpoint.
+AWS Lambda (Delete Function)	API Gateway Endpoint for S3	HTTPS	Lambda deletes document from S3 via API Gateway Endpoint.
+On-Premises API-C	API Gateway Endpoint for DynamoDB	HTTPS	API-C directly interacts with DynamoDB via API Gateway Endpoint for querying metadata (if required).
+
+
+
+
+
+
+
+
+
+
+
 import json
 import boto3
 import uuid
