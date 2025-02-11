@@ -1,3 +1,12 @@
+To handle failed status in the database update flow, we need to introduce a retry mechanism. This ensures that if updating the metadata in DynamoDB fails, the system will retry a few times before marking the operation as failed.
+
+Key Additions:
+✔ Retry Logic: Introduced up to 3 retries in case metadata update fails.
+✔ Failure Handling: If retries fail, the system logs the failure and stores a FAILED status.
+✔ Seamless Recovery: If retry succeeds, the operation completes as us
+
+
+
 An Interface Matrix is used to document the communication between different components in your architecture. Since you're using API Gateway, Lambda, and DynamoDB for CRUD operations and have on-premises components like Migration Service and API-C, here’s how you can structure your Interface Matrix:
 Now, all S3 and DynamoDB interactions happen through API Gateway Endpoints, ensuring secure and controlled access. 
 
