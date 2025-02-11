@@ -1,3 +1,18 @@
+The Upload New Document service enables an application to securely store documents in AWS S3 and maintain metadata in DynamoDB. It follows a serverless architecture, using API Gateway, AWS Lambda, S3, and DynamoDB to ensure scalability, security, and reliability.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 Invalid API Request	API-C sends malformed or unauthorized request to API Gateway	API-C → API Gateway	400 (Bad Request) / 403 (Forbidden)
 Authentication Failure	API request missing or incorrect IAM credentials	API-C → API Gateway	401 (Unauthorized)
 Rate Limit Exceeded	API Gateway rate limits exceeded due to high migration load	API-C → API Gateway	429 (Too Many Requests)
