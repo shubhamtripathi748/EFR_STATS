@@ -1,3 +1,30 @@
+Invalid API Request	API-C sends malformed or unauthorized request to API Gateway	API-C → API Gateway	400 (Bad Request) / 403 (Forbidden)
+Authentication Failure	API request missing or incorrect IAM credentials	API-C → API Gateway	401 (Unauthorized)
+Rate Limit Exceeded	API Gateway rate limits exceeded due to high migration load	API-C → API Gateway	429 (Too Many Requests)
+Lambda Invocation Failure	AWS Lambda execution error due to internal issue	API Gateway → Lambda	500 (Internal Server Error)
+S3 Upload Failure	Document failed to upload to S3 (e.g., timeout, permission issue)	Lambda → API Gateway Endpoint (S3) → S3	500 (Internal Server Error)
+S3 Multipart Upload Failure	Large document upload fails mid-transfer	Lambda → S3	500 (Internal Server Error)
+DynamoDB Write Failure	Metadata storage failure due to capacity limits or table issues	Lambda → API Gateway Endpoint (DynamoDB) → DynamoDB	500 (Internal Server Error)
+Network Timeout	API Gateway request to Lambda/S3/DynamoDB takes too long and times out	API Gateway → Lambda/S3/DynamoDB	504 (Gateway Timeout)
+Database Connection Failure	Oracle DB not reachable from API-C or migration job	API-C → Oracle	500 (Internal Server Error)
+GUID Generation Error	GUID creation fails due to unexpected Lambda execution issue	Lambda	500 (Internal Server Error)
+Validation Failure	Validation step fails (S3 document not found, metadata mismatch)	On-Prem Validation Job → API Gateway → DynamoDB	404 (Not Found)
+Retry Exhausted	Multiple retries failed, marking migration as permanently failed	Retry Handler	No HTTP Code (Logged for tracking)
+VPC Endpoint Connectivity Failure	API Gateway Endpoint cannot reach S3 or DynamoDB due to misconfiguration	API Gateway Endpoint → S3/DynamoDB	503 (Service Unavailable)
+Circuit Breaker Triggered	API-C prevents excessive retries due to continuous failures	API-C	No HTTP Code (Logged and flagged)
+Key Takeaways
+Client-Side Errors (4xx): Authentication, authorization, rate limits, invalid requests
+Server-Side Errors (5xx): Failures in AWS services, Lambda execution, S3/DynamoDB issues
+Retries & Timeouts: Built-in retry logic for transient failures (S3/DynamoDB updates)
+
+
+
+
+
+
+
+
+
 Sequential Order of Processing: Document Migration from On-Premises to AWS
 The migration follows a step-by-step sequence ensuring secure transfer, metadata storage, and validation. Below is the exact order of processing:
 
