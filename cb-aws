@@ -1,3 +1,134 @@
+PI Management Documentation
+1. Overview
+This document provides an overview of API management for document CRUD operations using API Connect (API-C) on-premises and AWS API Gateway. It covers API endpoints, authentication, request/response formats, and integration with AWS services.
+
+2. Architecture
+On-Premises: API-C routes requests from internal applications to AWS.
+AWS:
+API Gateway with separate endpoints for CRUD operations
+Direct Connect for secure communication between API-C and AWS
+Separate AWS Lambda functions for each operation
+S3 for document storage
+DynamoDB for metadata storage (GUID, date, S3 URL)
+3. API Endpoints & Methods
+Operation	HTTP Method	On-Prem API-C Endpoint	AWS API Gateway Endpoint	Description
+Create	POST	/api/documents	/documents	Uploads a new document, generates a GUID, and stores it in S3 and DynamoDB.
+Read Metadata	GET	/api/documents/{guid}	/documents/{guid}	Retrieves document metadata from DynamoDB.
+Download	GET	/api/documents/{guid}/download	/documents/{guid}/download	Generates a pre-signed URL to download the document from S3.
+Update Metadata	PUT	/api/documents/{guid}	/documents/{guid}	Updates metadata of an existing document.
+Delete	DELETE	/api/documents/{guid}	/documents/{guid}	Deletes the document from S3 and removes metadata from DynamoDB.
+4. Request & Response Format
+(A) Create Document (POST /documents)
+Request:
+
+json
+Copy
+Edit
+{
+  "file_name": "document.pdf",
+  "metadata": {
+    "author": "John Doe",
+    "category": "Legal"
+  }
+}
+Response:
+
+json
+Copy
+Edit
+{
+  "guid": "abc123",
+  "status": "success"
+}
+(B) Get Document Metadata (GET /documents/{guid})
+Response:
+
+json
+Copy
+Edit
+{
+  "guid": "abc123",
+  "s3_url": "s3://my-bucket/document.pdf",
+  "uploaded_at": "2025-02-11T12:00:00Z"
+}
+5. Security & Authentication
+API-C enforces authentication before routing requests to AWS API Gateway.
+API Gateway uses IAM roles and JWT-based authentication (e.g., Cognito).
+S3 pre-signed URLs ensure secure document access.
+6. Error Handling & Retry Mechanism
+Exception	HTTP Status Code	Description
+Invalid request payload	400	Request body is malformed or missing parameters.
+Unauthorized access	401	API request lacks valid credentials.
+Document not found	404	Requested document does not exist.
+S3 upload failure	500	AWS S3 failed to store the document.
+Direct Connect failure	502	Network issue between on-prem and AWS.
+7. Logging & Monitoring
+CloudWatch Logs for API Gateway & Lambda execution monitoring.
+AWS X-Ray for tracing API calls across services.
+API-C Logging for on-prem API request tracking.
+Would you like me to format this as a Confluence-compatible markdown file for direct upload? 🚀
+
+
+
+
+
+
+You said:
+i need interface metrix with from,OT,protocol,description as header and all functions(for e.g create) with header function,method URI AND DESCRIPTION
+ChatGPT said:
+Here's your Interface Matrix and API Function Details in table format for documentation in Confluence.
+
+1. Interface Matrix
+From	To	Protocol	Description
+Application	API-C (On-Prem)	HTTPS	Application sends requests to API Connect.
+API-C (On-Prem)	AWS API Gateway	HTTPS	API-C routes requests to AWS API Gateway over Direct Connect.
+AWS API Gateway	AWS Lambda	HTTPS	API Gateway triggers the corresponding Lambda function for CRUD operations.
+AWS Lambda	S3	HTTPS	Lambda stores or retrieves documents in S3.
+AWS Lambda	DynamoDB	HTTPS	Lambda stores or updates document metadata in DynamoDB.
+AWS Lambda	API Gateway	HTTPS	Lambda returns responses to API Gateway.
+API Gateway	API-C (On-Prem)	HTTPS	API Gateway sends responses back to API-C.
+API-C (On-Prem)	Application	HTTPS	API-C forwards the response to the calling application.
+2. API Function Details
+Function	Method	URI	Description
+Create Document	POST	/documents	Uploads a new document, generates a GUID, and stores it in S3 & DynamoDB.
+Read Document Metadata	GET	/documents/{guid}	Retrieves metadata (S3 URL, timestamp) for a given document.
+Download Document	GET	/documents/{guid}/download	Generates a pre-signed URL to download the document from S3.
+Update Document Metadata	PUT	/documents/{guid}	Updates the metadata of an existing document.
+Delete Document	DELETE	/documents/{guid}	Deletes the document from S3 and removes metadata from DynamoDB.
+List All Documents	GET	/documents	Retrieves a paginated list of all stored documents.
+Would you like this in Confluence-compatible markdown or CSV format for easy upload? 🚀
+
+
+
+
+
+
+You said:
+DOWNLAOD last 2 answer in .docx format
+ChatGPT said:
+I have generated a Word document containing the Interface Matrix and API Function Details. You can download it using the link below:
+
+📥 Download API_Interface_Matrix.docx
+
+
+
+
+
+
+You said:
+not able to download last two result docx file
+ChatGPT said:
+I'll regenerate the Word document containing both the Interface Matrix and API Function Details for you. Let me create the file again.
+
+You can download the Word document containing the Interface Matrix and API Function Details using the link below:
+
+
+
+
+
+
+
+
 
 
 Method	URI	Description
