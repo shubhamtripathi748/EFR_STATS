@@ -1,3 +1,6 @@
+Serverless design using AWS: API Gateway routes requests to separate Lambda functions for each CRUD operation. S3 stores documents, and DynamoDB (on-demand) holds metadata (S3 URL, GUID, date). Integrated with on-prem API Connect.
+
+
 PI Management Documentation
 1. Overview
 This document provides an overview of API management for document CRUD operations using API Connect (API-C) on-premises and AWS API Gateway. It covers API endpoints, authentication, request/response formats, and integration with AWS services.
