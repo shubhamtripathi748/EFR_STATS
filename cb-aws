@@ -1,3 +1,33 @@
+Final Flow (Updated)
+Spring Batch (On-Premises)
+
+Queries Oracle DB for documents.
+Calls API Connect (On-Prem).
+API Connect (On-Premises)
+
+Routes request via Direct Connect to AWS API Gateway.
+AWS API Gateway
+
+Triggers AWS Lambda (Create Function).
+AWS Lambda (Create Function)
+
+Stores document in S3.
+Saves GUID, S3 path, timestamp in DynamoDB.
+Returns GUID back to API Connect.
+API Connect (On-Premises)
+
+Sends GUID to Spring Batch.
+Spring Batch
+
+Updates Oracle Database with GUID.
+Lucidchart Enhancements
+Add a new arrow from AWS Lambda → API Connect (Return GUID).
+Add an arrow from API Connect → Spring Batch.
+Add an arrow from Spring Batch → Oracle DB (Store GUID).
+
+
+
+
 Serverless design using AWS: API Gateway routes requests to separate Lambda functions for each CRUD operation. S3 stores documents, and DynamoDB (on-demand) holds metadata (S3 URL, GUID, date). Integrated with on-prem API Connect.
 
 
