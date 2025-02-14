@@ -1,3 +1,5 @@
+The diagram below illustrates the AWS-based document management architecture, highlighting key services such as API Gateway, Lambda, S3, and DynamoDB.
+
 1. Overview
 Purpose: High-level summary of the AWS architecture, its objectives, and how it supports document management.
 
