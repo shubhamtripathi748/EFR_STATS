@@ -1,3 +1,11 @@
+
+For your architecture (API Gateway → Lambda → S3/DynamoDB):
+✅ Python is ideal due to fast cold starts, lower memory usage, and AWS SDK support.
+✅ Node.js is also a good choice if you have event-driven, high-concurrency workloads.
+❌ Java is less optimal unless you have long-running, CPU-heavy processes.
+
+
+
 Dear [Senior’s Name],
 
 I hope you are doing well.
