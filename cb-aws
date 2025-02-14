@@ -1,3 +1,5 @@
+One of the key objectives should be to establish a new, scalable service that enables efficient and secure document management for document binaries outside of i-Prompt. This service should provide seamless storage, retrieval, and metadata management, ensuring high availability, interoperability, and compliance with security and access control policies. It should be designed to support multiple consumers, integrate with AWS-native services, and facilitate future enhancements such as advanced search, tagging, and lifecycle management.
+
 ✅ Fast, scalable, and serverless for CRUD operations.
 ✅ Lower cost with on-demand pricing compared to RDS.
 ✅ Seamless AWS integration (IAM, API Gateway, Lambda, and S3).
