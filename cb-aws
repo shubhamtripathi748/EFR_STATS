@@ -1,3 +1,28 @@
+Revised Key Objective Statement
+One of the key objectives of this solution is to establish a new, scalable service that enables efficient and secure document management for document binaries outside of i-Prompt. This service will support seamless storage, retrieval, and metadata management, ensuring high availability, interoperability, and compliance with security and access control policies. For a detailed breakdown of the architectural considerations and implementation strategy, refer to Appendix A.
+
+Appendix A: Detailed Breakdown of Document Management Service
+1. Need for a Separate Document Management Service
+i-Prompt currently serves as a document repository but may have limitations in scalability, accessibility, or integration with external systems.
+A dedicated service ensures that document binaries can be managed independently of i-Prompt, supporting new use cases without architectural constraints.
+2. Architectural Considerations
+Storage: S3 for secure, scalable document storage.
+Metadata: DynamoDB for fast lookup of document details (GUID, S3 URL, timestamps).
+Access Control: IAM-based security to define granular access.
+API Integration: REST APIs via API Gateway & Lambda for CRUD operations.
+Scalability: Fully serverless model to handle dynamic workloads efficiently.
+3. Key Features & Benefits
+✅ Multi-service access: Allows multiple applications to interact with the document storage system.
+✅ Improved Performance: Optimized for fast retrieval and querying.
+✅ Security & Compliance: Ensures proper access control and encryption at rest & transit.
+✅ Future-Ready: Designed to support future enhancements like AI-based search, tagging, and retention policies.
+
+
+
+
+
+
+
 One of the key objectives should be to establish a new, scalable service that enables efficient and secure document management for document binaries outside of i-Prompt. This service should provide seamless storage, retrieval, and metadata management, ensuring high availability, interoperability, and compliance with security and access control policies. It should be designed to support multiple consumers, integrate with AWS-native services, and facilitate future enhancements such as advanced search, tagging, and lifecycle management.
 
 ✅ Fast, scalable, and serverless for CRUD operations.
