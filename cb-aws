@@ -1,3 +1,22 @@
+1. Overview
+Purpose: High-level summary of the AWS architecture, its objectives, and how it supports document management.
+
+2. Architecture Diagram
+Purpose: Visual representation of the end-to-end architecture, including API Gateway, Lambda, S3, DynamoDB, Direct Connect, and API Connect.
+
+3. AWS Services and Components
+Purpose: Breakdown of key AWS services used and their roles in the architecture. Example:
+
+API Gateway – Exposes RESTful APIs for document operations.
+AWS Lambda – Serverless compute for CRUD operations.
+Amazon S3 – Storage for document binaries.
+Amazon DynamoDB – Metadata storage for documents.
+AWS Direct Connect – Secure on-prem to AWS connectivity.
+IAM Roles & Security – Access control mechanisms.
+
+
+
+
 Short-term (Day 1): Implement a simple GET API that retrieves documents by aws_guid from DynamoDB and fetches the S3 URL.
 Future Enhancement (Search API):
 Use DynamoDB Global Secondary Indexes (GSIs) on fields like user_id, file_name, and upload_date to enable efficient search.
