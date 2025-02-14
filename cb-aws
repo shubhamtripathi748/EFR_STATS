@@ -1,3 +1,14 @@
+Category	Decision Explanation
+Security Risk	To mitigate security risks, IAM policies and role-based access control (RBAC) will be enforced to limit access to S3 and DynamoDB. Data encryption (both in transit using TLS and at rest using AWS KMS) will be enabled to protect sensitive documents. AWS VPC Endpoints will be used to prevent data exposure over the internet.
+Performance Bottlenecks	To ensure high performance, S3 Multipart Upload will be used for large files, and DynamoDB Global Tables will be enabled to distribute metadata across multiple regions if needed. API Gateway and Lambda concurrency settings will be optimized to handle peak loads efficiently. CloudFront will be used for caching frequently accessed files.
+Fault Tolerance and Resiliency	The solution will leverage multi-AZ S3 storage, ensuring high availability. DynamoDB offers built-in fault tolerance with replication across multiple Availability Zones (AZs). AWS Lambda retries will be configured, and AWS Step Functions can handle complex workflows with built-in retries and error handling.
+Monitoring and Observability	AWS CloudWatch Logs and Metrics will be enabled to monitor API Gateway, Lambda, S3, and DynamoDB performance. AWS X-Ray will be used for distributed tracing. CloudTrail logging will track access to S3 and DynamoDB for security audits. Real-time alerts via Amazon SNS will notify stakeholders of failures.
+Compliance and Retention Policies	S3 Object Lifecycle Policies will be enforced to automatically archive or delete documents based on regulatory requirements. AWS Config and Audit Manager will be used for compliance tracking. Data versioning and WORM (Write Once Read Many) policies can be applied to meet industry-specific regulations.
+
+
+
+
+
 During the initial requirement gathering discussions, it was identified that the organization needs to migrate approximately 6TB of data to Amazon S3. This significant data volume presents several architectural and operational considerations, including data transfer strategy, performance optimization, cost management, and security compliance.
 
 
