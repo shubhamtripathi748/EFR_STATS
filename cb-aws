@@ -1,3 +1,9 @@
+✅ Fast, scalable, and serverless for CRUD operations.
+✅ Lower cost with on-demand pricing compared to RDS.
+✅ Seamless AWS integration (IAM, API Gateway, Lambda, and S3).
+✅ Schema flexibility makes it easy to evolve over time.
+
+
 
 For your architecture (API Gateway → Lambda → S3/DynamoDB):
 ✅ Python is ideal due to fast cold starts, lower memory usage, and AWS SDK support.
