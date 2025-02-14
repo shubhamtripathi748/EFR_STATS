@@ -1,3 +1,14 @@
+Purpose: This page documents the CloudFormation templates used to provision AWS resources for the document management system. It helps DevOps, Cloud Engineers, and Security teams understand how infrastructure is defined, deployed, and maintained as code.
+
+Intended Audience:
+
+DevOps Engineers: To automate AWS resource provisioning.
+Cloud Architects: To ensure the infrastructure aligns with best practices.
+Security & Compliance Teams: To review IAM roles, policies, and security settings.
+Developers: To understand how services like Lambda, API Gateway, S3, and DynamoDB are deployed.
+
+
+
 The diagram below illustrates the AWS-based document management architecture, highlighting key services such as API Gateway, Lambda, S3, and DynamoDB.
 
 1. Overview
