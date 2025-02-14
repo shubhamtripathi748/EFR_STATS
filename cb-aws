@@ -1,3 +1,12 @@
+Short-term (Day 1): Implement a simple GET API that retrieves documents by aws_guid from DynamoDB and fetches the S3 URL.
+Future Enhancement (Search API):
+Use DynamoDB Global Secondary Indexes (GSIs) on fields like user_id, file_name, and upload_date to enable efficient search.
+Implement a query-based Lambda function that allows filtering based on multiple metadata fields.
+If full-text search is needed, consider integrating Amazon OpenSearch (Elasticsearch) for advanced searching.
+
+
+
+
 aws_guid → Generate and map AWS GUIDs for existing records.
 Use migration_status for tracking → Helps manage and troubleshoot migration.
 
