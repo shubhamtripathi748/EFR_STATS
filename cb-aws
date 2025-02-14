@@ -1,3 +1,6 @@
+During the initial requirement gathering discussions, it was identified that the organization needs to migrate approximately 6TB of data to Amazon S3. This significant data volume presents several architectural and operational considerations, including data transfer strategy, performance optimization, cost management, and security compliance.
+
+
 Revised Key Objective Statement
 One of the key objectives of this solution is to establish a new, scalable service that enables efficient and secure document management for document binaries outside of i-Prompt. This service will support seamless storage, retrieval, and metadata management, ensuring high availability, interoperability, and compliance with security and access control policies. For a detailed breakdown of the architectural considerations and implementation strategy, refer to Appendix A.
 
