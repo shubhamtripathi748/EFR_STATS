@@ -1,3 +1,24 @@
+Here’s a brief explanation of each of the constraints you mentioned:
+
+Migration Constraints: These constraints involve technical, operational, and resource limitations that affect the process of migrating documents from Oracle to AWS, such as dependencies, tool compatibility, and migration speed.
+
+Downtime: The acceptable or planned duration of system unavailability during the migration process, which should be minimized to ensure business continuity.
+
+Data Transfer Costs: The expenses associated with moving data between on-premises systems and AWS, including the cost of using services like Direct Connect or the internet.
+
+Security: The measures taken to ensure that data is protected during migration and storage in AWS, addressing encryption, access control, and compliance with security policies.
+
+Latency: The time delay experienced in the system, especially during data transfer or access between on-premises systems and AWS, which needs to be minimized for performance reasons.
+
+Data Retention: The policies and requirements regarding how long data should be stored in AWS, including compliance with regulatory standards and business needs for data archiving.
+
+Naming Conventions: The standardized naming rules applied to AWS resources, such as S3 buckets, DynamoDB tables, and Lambda functions, to ensure consistency and manageability in the environment.
+
+
+
+
+
+
 This service facilitates the migration of documents from Oracle i-Prompt (on-premises) to AWS. The process ensures that documents are stored securely and efficiently in AWS, with metadata tracked in both DynamoDB (for cloud operations) and Oracle (for legacy systems).
 
 Key Benefits:
