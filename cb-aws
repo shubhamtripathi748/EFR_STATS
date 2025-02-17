@@ -1,3 +1,12 @@
+Measure	Current Stats
+Scalability	The system should be able to scale to accommodate 6TB of current data, with an additional 0.8TB of data growth annually.
+Batch Size	The batch size for migration should be determined based on the available network and system capacity, but it needs to be efficient to handle 6TB of data initially and accommodate 0.8TB per year.
+Volume of Image Data	Approximately 6TB of image data is currently stored in the Oracle database, with 0.8TB of annual growth in volume.
+
+
+
+
+
 Here’s a brief explanation of each of the constraints you mentioned:
 
 Migration Constraints: These constraints involve technical, operational, and resource limitations that affect the process of migrating documents from Oracle to AWS, such as dependencies, tool compatibility, and migration speed.
