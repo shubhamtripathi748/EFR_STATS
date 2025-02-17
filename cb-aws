@@ -1,3 +1,16 @@
+To clarify where each service fits within the architecture, here's an updated explanation with a focus on the placement of AWS services:
+
+Service	Description	Where it sits in the architecture
+S3	Provides scalable, durable, and low-cost object storage for storing document binaries.	Sits at the backend for document storage, receiving and storing files uploaded through API Gateway and Lambda functions. Accessible directly via URLs generated and stored in DynamoDB.
+DynamoDB	A NoSQL database for storing document metadata (e.g., GUID, S3 URL), offering high performance and scalability.	Sits in the backend, storing metadata that references documents stored in S3. Interacted with by Lambda functions for CRUD operations.
+Lambda	Executes serverless code in response to API Gateway events, handling CRUD operations on documents and interacting with S3 and DynamoDB.	Sits between API Gateway and backend services (S3, DynamoDB). It processes requests from the API Gateway, executes business logic, and interacts with other AWS services to store/retrieve data.
+These services together form the backbone of your solution, with Lambda handling the business logic and interacting with both S3 for document storage and DynamoDB for metadata management.
+
+
+
+
+
+
 Purpose: This page documents the CloudFormation templates used to provision AWS resources for the document management system. It helps DevOps, Cloud Engineers, and Security teams understand how infrastructure is defined, deployed, and maintained as code.
 
 Intended Audience:
