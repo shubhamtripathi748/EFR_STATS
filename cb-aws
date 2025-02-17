@@ -1,3 +1,8 @@
+If your solution involves tracking historical versions of documents or meeting compliance standards that require version control, enabling versioning would be a good choice. Otherwise, you can avoid it.
+
+If you're unsure, you can consult with your senior about the specific business and technical needs regarding document version management.
+
+
 Measure	Current Stats
 Scalability	The system should be able to scale to accommodate 6TB of current data, with an additional 0.8TB of data growth annually.
 Batch Size	The batch size for migration should be determined based on the available network and system capacity, but it needs to be efficient to handle 6TB of data initially and accommodate 0.8TB per year.
