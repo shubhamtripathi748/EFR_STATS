@@ -1,3 +1,13 @@
+This service facilitates the migration of documents from Oracle i-Prompt (on-premises) to AWS. The process ensures that documents are stored securely and efficiently in AWS, with metadata tracked in both DynamoDB (for cloud operations) and Oracle (for legacy systems).
+
+Key Benefits:
+Scalability: Using Lambda, S3, and DynamoDB, the system can scale easily to handle large numbers of documents without managing infrastructure.
+Legacy Integration: Storing the GUID in both DynamoDB and Oracle i-Prompt ensures smooth integration between cloud services and the existing on-premises Oracle system.
+Cost Efficiency: The use of serverless services like Lambda and on-demand storage in DynamoDB and S3 minimizes infrastructure costs.
+This service ensures a seamless migration path, keeping document storage in AWS while maintaining backward compatibility with existing systems. Let me know if you need further details!
+
+
+
 To clarify where each service fits within the architecture, here's an updated explanation with a focus on the placement of AWS services:
 
 Service	Description	Where it sits in the architecture
