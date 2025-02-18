@@ -1,3 +1,21 @@
+Real-time Lifecycle Management in AWS S3
+Lifecycle Rules Configuration
+
+You define lifecycle rules in an S3 bucket to automate actions like moving objects to cheaper storage tiers (e.g., S3 Glacier) or deleting them after a specific time.
+Object Transitioning
+
+When an object reaches the specified age (e.g., 30 days after upload), AWS automatically transitions it to the next storage class.
+This transition happens asynchronously, meaning it doesn’t occur at the exact moment an object meets the criteria but within a short processing window.
+Automatic Deletion
+
+If the rule includes expiration, objects are deleted after reaching the defined retention period.
+AWS manages this process internally without user intervention.
+Real-time vs. Asynchronous Processing
+Not truly "real-time": The lifecycle policy is evaluated periodically, and transitions happen in batches rather than immediately upon meeting conditions.
+No user-triggered action needed: Once the lifecycle rule is set, AWS handles it without requiring API calls or scripts.
+
+
+
 It depends on your requirements and risk tolerance:
 
 Delete Periodically:
