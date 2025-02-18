@@ -1,3 +1,24 @@
+It depends on your requirements and risk tolerance:
+
+Delete Periodically:
+
+This allows verification of migrated data before deletion.
+Useful if you want to keep records for a retention period (e.g., 7 or 30 days) before deletion.
+Helps in auditing and rollback if needed.
+Delete Immediately After Migration:
+
+Reduces storage overhead in Oracle.
+Ensures the database is always clean and contains only active records.
+If something goes wrong, you must rely on S3 as the single source of truth.
+A hybrid approach can also work:
+
+Mark records as "migrated" in Oracle.
+Periodically (e.g., weekly/monthly) delete only records that have been marked as "migrated" for a certain period.
+
+
+
+
+
 If your solution involves tracking historical versions of documents or meeting compliance standards that require version control, enabling versioning would be a good choice. Otherwise, you can avoid it.
 
 If you're unsure, you can consult with your senior about the specific business and technical needs regarding document version management.
