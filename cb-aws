@@ -1,3 +1,27 @@
+Does the User Create the Athena Table Every Time?
+No, the user does not need to create an Athena table every time unless the dataset structure changes. Once an Athena table is created, it persists and can be queried repeatedly as long as the data remains in S3.
+
+How Does the Table Get Destroyed Once the Work is Done?
+Athena itself does not automatically delete tables unless explicitly dropped. Here are ways to manage table lifecycle:
+
+Manual Cleanup:
+
+The user can run DROP TABLE table_name; when the table is no longer needed.
+This removes the table metadata but does not delete the data in S3.
+Automated Cleanup via AWS Glue:
+
+If you use AWS Glue as the metadata catalog, you can schedule jobs to remove old tables after a certain period.
+Temporary Tables with Presto Queries:
+
+Instead of creating permanent tables, users can run WITH queries or CTAS (CREATE TABLE AS SELECT) for temporary processing.
+These tables exist for the session but can be discarded after use.
+S3 Lifecycle Rules for Data Expiration:
+
+If the data itself has a limited retention period, you can configure S3 Lifecycle Policies to delete old Parquet files, making the Athena table obsolete.
+
+
+
+
 Real-time Lifecycle Management in AWS S3
 Lifecycle Rules Configuration
 
