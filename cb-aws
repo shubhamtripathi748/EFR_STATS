@@ -1,3 +1,5 @@
+As per the documentation or WSR, I understand that we are required to migrate only the i_general_info table logs. However, Nilesh/David have now indicated that additional log data tables may also need to be migrated. Could you please confirm with them which specific tables are included in the migration scope and ensure that the requirements are documented on the requirement page first?
+
 Does the User Create the Athena Table Every Time?
 No, the user does not need to create an Athena table every time unless the dataset structure changes. Once an Athena table is created, it persists and can be queried repeatedly as long as the data remains in S3.
 
