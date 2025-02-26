@@ -1,3 +1,74 @@
+1️⃣ Technical Growth & Expertise (Q1-Q4)
+✅ Master Advanced Cloud & Data Engineering Solutions
+
+Deep dive into AWS services (Glue, Redshift, EMR, DynamoDB, Lake Formation, SageMaker, etc.).
+Learn Snowflake or Databricks to handle advanced analytics workloads.
+Optimize data pipeline performance and cost efficiency.
+✅ Achieve Professional Certification
+
+Complete AWS Certified Solutions Architect – Professional OR Google Cloud Professional Data Engineer by Q3.
+Explore Databricks or Snowflake certification for data warehousing & analytics.
+✅ Implement Best Practices in Security & Compliance
+
+Define RBAC, encryption, IAM policies, and data retention strategies for cloud security.
+Align data governance practices with GDPR, HIPAA, or industry-specific standards.
+2️⃣ Leadership & Strategic Initiatives (Q2-Q4)
+✅ Lead a Major Data Migration or Cloud Modernization Project
+
+Architect and execute a data migration from on-prem to AWS/Snowflake.
+Optimize Redshift and S3-based data lake architectures.
+Implement data quality frameworks with monitoring & observability.
+✅ Mentor & Build a High-Performance Team
+
+Conduct training sessions for junior engineers on data engineering best practices.
+Set up a technical community or guild within Birlasoft to share knowledge.
+✅ Improve Data Processing Efficiency & Reduce Costs
+
+Optimize ETL workloads to reduce cloud computing costs by at least 20%.
+Implement serverless architecture for cost-effective data processing.
+3️⃣ Business Impact & Client Engagement (Q2-Q4)
+✅ Improve Decision-Making Through Data-Driven Insights
+
+Deliver a key analytics solution for business leaders using Redshift, QuickSight, or Tableau.
+Build an automated reporting dashboard for real-time business insights.
+✅ Engage in Key Client Solutions & Advisory Role
+
+Work closely with clients on data architecture and cloud modernization strategies.
+Provide technical advisory for enterprise-level data strategies at Birlasoft.
+✅ Drive AI & Machine Learning Adoption
+
+Implement ML-based anomaly detection in data pipelines using AWS SageMaker.
+Explore GenAI and LLMs for enterprise data use cases.
+4️⃣ Thought Leadership & Industry Recognition (Q3-Q4)
+✅ Publish Whitepapers or Blogs on Data & Cloud Trends
+
+Write at least 2 blogs or case studies on AWS data solutions or best practices.
+Speak at internal tech meetups or external conferences.
+✅ Build Network & Community Presence
+
+Contribute to LinkedIn posts, AWS community events, and webinars.
+Participate in data engineering forums and cloud summits.
+📌 Key Performance Indicators (KPIs)
+📍 Q1: Complete AWS certification, optimize one critical ETL pipeline.
+📍 Q2: Lead a data migration project, mentor at least two team members.
+📍 Q3: Publish a blog or present at an internal/external event.
+📍 Q4: Reduce cloud data costs by 20%, implement an AI-based analytics use case.
+
+Next Steps
+Set up quarterly check-ins to track progress.
+Align goals with Birlasoft leadership & business objectives.
+Identify cross-functional collaboration opportunities within the company.
+
+
+
+
+
+
+
+
+
+
+
 This application will listen to Two streams of data. One having record from ADCB and one is having record from CB.
 It should be able to identify unmatched records coming both the stream within a timeframe of few minutes.
 
