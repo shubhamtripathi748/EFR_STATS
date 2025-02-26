@@ -1,3 +1,45 @@
+1️⃣ Define Outage Scenarios
+You need to specify how your application should behave in case of:
+✅ Planned Maintenance (Experian-CDP scheduled downtime)
+✅ Unexpected Downtime (Experian-CDP service outage)
+✅ High Latency Issues (Experian-CDP responds slowly)
+✅ Partial Failures (Some endpoints fail, others work)
+
+2️⃣ Implement a Fallback Mechanism
+🔹 Retry Strategy: Use exponential backoff (e.g., retry after 2s, 4s, 8s, etc., up to a max limit).
+🔹 Circuit Breaker: Implement a circuit breaker pattern (e.g., Resilience4j) to avoid repeated failures affecting performance.
+🔹 Graceful Degradation: Provide a default response or cached data when Experian is down.
+
+✅ Example Requirement:
+
+"If Experian-CDP API is down, retry 3 times with exponential backoff (max 30s) before returning an error."
+"If Experian-CDP is unreachable for more than 10 minutes, disable API calls temporarily and notify support."
+3️⃣ Error Handling & Logging
+Your outage requirement should cover:
+🔹 Error Codes Handling (4xx, 5xx, timeouts)
+🔹 Logging & Monitoring (Log failures and alert teams via CloudWatch, Splunk, or ELK)
+🔹 Alerting Mechanism (Trigger alerts via PagerDuty, Slack, or email when failures exceed a threshold)
+
+✅ Example Requirement:
+
+"Log all failed API calls with error details and response time."
+"Trigger an alert if failure rate exceeds 5% within 10 minutes."
+4️⃣ Communication & SLA Considerations
+🔹 Check Experian’s SLA: Define acceptable response times & downtime limits.
+🔹 Escalation Process: Document whom to contact at Experian during outages.
+
+✅ Example Requirement:
+
+"If Experian's response time exceeds 5s consistently for 15 minutes, escalate to Level 2 support."
+"If Experian is down for more than 30 minutes, notify the business team and enable a backup process."
+
+
+
+
+
+
+
+
 1️⃣ Detect and log Experian-CDP API failures.
 2️⃣ Implement retry logic (3 attempts, exponential backoff).
 3️⃣ Use a circuit breaker to avoid overwhelming Experian.
